@@ -117,15 +117,12 @@ body {
   border: 1px solid #ffd9d9;
   border-radius: 10px;
   padding: 10px;
-<<<<<<< codex/create-static-page-to-display-random-note.com-urls
   overflow-wrap: anywhere;
 }
 
 .fallback a {
   color: inherit;
   font-weight: 600;
-=======
->>>>>>> main
 }
 
 .hidden {

@@ -1,0 +1,48 @@
+name: Build note urls
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "tools/build_urls.py"
+      - ".github/workflows/build_urls.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-note-urls
+  cancel-in-progress: true
+
+jobs:
+  build-urls:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build urls.json
+        run: python tools/build_urls.py
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet -- public/urls.json; then
+            echo "No changes in public/urls.json"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/urls.json
+          git commit -m "chore: update public/urls.json"
+          git push

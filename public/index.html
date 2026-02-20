@@ -2,17 +2,9 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-<<<<<<< codex/create-static-page-to-display-random-note.com-urls
-    <meta http-equiv="refresh" content="0; url=./public/index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>random_note</title>
-  </head>
-  <body>
-    <p><a href="./public/index.html">public/index.html へ移動</a></p>
-=======
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>random_note</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <main class="app">
@@ -38,13 +30,12 @@
         ></iframe>
 
         <div id="fallback" class="fallback hidden">
-          <p>このページは iframe 埋め込みが許可されていない可能性があります。</p>
+          <p>iframeで表示できない可能性があります。</p>
           <a id="fallbackLink" href="#" target="_blank" rel="noopener noreferrer">新しいタブで記事を開く</a>
         </div>
       </section>
     </main>
 
-    <script src="script.js"></script>
->>>>>>> main
+    <script src="./app.js"></script>
   </body>
 </html>

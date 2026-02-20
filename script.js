@@ -1,3 +1,8 @@
+<<<<<<< codex/create-static-page-to-display-random-note.com-urls
+// Deprecated entrypoint.
+// Use public/app.js instead.
+console.warn("This entrypoint is deprecated. Open /public/index.html instead.");
+=======
 const SITEMAP_INDEX_URL = "https://note.com/sitemap.xml.gz";
 const TIME_WINDOW_HOURS = 100;
 const MAX_SITEMAP_RETRIES = 10;
@@ -184,3 +189,4 @@ async function loadRandomArticle() {
     setLoading(false);
   }
 }
+>>>>>>> main
