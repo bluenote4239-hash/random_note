@@ -1,6 +1,6 @@
 # random_note
 
-GitHub Actions で `public/urls.json` を定期生成し、静的サイト側はその JSON を読んで note 記事の**embed URLカードをランダム10件**表示する構成です。
+GitHub Actions で `urls.json` を定期生成し、静的サイト側はその JSON を読んで note 記事の**embed URLカードをランダム10件**表示する構成です。
 
 ## 目的
 
@@ -12,9 +12,9 @@ GitHub Actions で `public/urls.json` を定期生成し、静的サイト側は
 ## リポジトリ構成
 
 - `index.html` : UI本体（ヘッダー + 一覧）
-- `public/app.js` : ランダム10件表示ロジック
-- `public/style.css` : スマホ対応2分割 + カード一覧スタイル
-- `public/urls.json` : 生成物（記事URLまたはカード情報）
+- `app.js` : ランダム10件表示ロジック
+- `style.css` : スマホ対応2分割 + カード一覧スタイル
+- `urls.json` : 生成物（記事URLまたはカード情報）
 - `tools/build_urls.py` : URLs生成スクリプト
 - `tools/preview_embed_conversion.js` : `/n/<id>` から embed URL への変換確認スクリプト（Node.js）
 - `.github/workflows/build_urls.yml` : 定期実行
@@ -23,7 +23,7 @@ GitHub Actions で `public/urls.json` を定期生成し、静的サイト側は
 
 - ボタン「ランダム10件」押下で毎回10件を再抽選
 - 初期表示時にも自動で1回読み込み
-- `public/urls.json` から重複なしで最大10件を選択（前回表示URLは可能な範囲で回避）
+- `urls.json` から重複なしで最大10件を選択（前回表示URLは可能な範囲で回避）
 - 取得した URL を `https://note.com/embed/notes/<id>` に変換し、カードとして表示
 - カードクリックで embed URL を `_blank` で開く
 - `urls.json` fetch失敗時はエラー表示

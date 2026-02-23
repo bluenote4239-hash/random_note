@@ -33,7 +33,7 @@ jobs:
 
       - name: Validate frontend and script syntax
         run: |
-          node --check public/app.js
+          node --check app.js
           node --check tools/preview_embed_conversion.js
           python -m py_compile tools/build_urls.py
 
@@ -42,13 +42,13 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          if git diff --quiet -- public/urls.json; then
-            echo "No changes in public/urls.json"
+          if git diff --quiet -- urls.json; then
+            echo "No changes in urls.json"
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/urls.json
-          git commit -m "chore: update public/urls.json"
+          git add urls.json
+          git commit -m "chore: update urls.json"
           git push

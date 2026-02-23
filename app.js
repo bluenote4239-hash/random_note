@@ -1,4 +1,4 @@
-const URLS_JSON_PATH = "./public/urls.json";
+const URLS_JSON_PATH = "./urls.json";
 const CARD_COUNT = 10;
 
 const randomButton = document.getElementById("randomButton");

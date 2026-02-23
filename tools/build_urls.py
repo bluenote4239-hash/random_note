@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 SITEMAP_INDEX_URL = "https://note.com/sitemap.xml.gz"
-DEFAULT_OUTPUT_PATH = Path("public/urls.json")
+DEFAULT_OUTPUT_PATH = Path("urls.json")
 NAMESPACE = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
 
@@ -197,7 +197,7 @@ def build_urls(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build public/urls.json from note sitemap")
+    parser = argparse.ArgumentParser(description="Build urls.json from note sitemap")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--max-children", type=int, default=30)
     parser.add_argument("--max-urls", type=int, default=5000)
