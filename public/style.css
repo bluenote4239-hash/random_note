@@ -1,0 +1,162 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --text: #1c1c1c;
+  --muted: #555;
+  --primary: #3454d1;
+  --primary-hover: #2a44ab;
+  --danger: #9c2f2f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  min-height: 100dvh;
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  min-height: 72px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel);
+  border-bottom: 1px solid #e6e9f0;
+}
+
+.site-title {
+  margin: 0;
+  font-size: clamp(1rem, 3.5vw, 1.25rem);
+  font-weight: 700;
+}
+
+.random-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.random-button:hover {
+  background: var(--primary-hover);
+}
+
+.random-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 0.92rem;
+  min-height: 1.2rem;
+}
+
+.loading {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #c8d2ff;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-box {
+  background: #fff4f4;
+  color: var(--danger);
+  border: 1px solid #ffd9d9;
+  border-radius: 10px;
+  padding: 10px;
+  overflow-wrap: anywhere;
+}
+
+.card-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.url-card {
+  background: var(--panel);
+  border: 1px solid #e8edf7;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.url-card-title {
+  margin: 0 0 6px;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.url-card-url {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
+.note-frame {
+  width: 100%;
+  height: 220px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .top-bar {
+    padding-inline: 24px;
+  }
+
+  .content {
+    padding: 18px 24px;
+  }
+
+  .card-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
