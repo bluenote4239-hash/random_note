@@ -1,33 +1,26 @@
 # random_note
 
-GitHub Actions で `urls.json` を定期生成し、静的サイト側はその JSON を読んで note 記事の**embed URLカードをランダム10件**表示する構成です。
 
 ## 目的
 
 - ブラウザから `note.com` を直接取得しない（403回避）
 - GitHub Pages / Cloudflare Pages の静的配信だけでランダム表示を実現
-- ルート `index.html` を公開エントリに統一
-- GitHub Pages のキャッシュ影響を避けるため、`index.html` で CSS/JS にバージョンクエリを付与
 
 ## リポジトリ構成
 
-- `index.html` : UI本体（ヘッダー + 一覧）
-- `app.js` : ランダム10件表示ロジック
-- `style.css` : スマホ対応2分割 + カード一覧スタイル
-- `urls.json` : 生成物（記事URLまたはカード情報）
+- `public/index.html` : UI本体
+- `public/app.js` : ランダム表示ロジック
+- `public/style.css` : スマホ対応2分割レイアウト
+- `public/urls.json` : 生成物（記事URL配列）
 - `tools/build_urls.py` : URLs生成スクリプト
-- `tools/preview_embed_conversion.js` : `/n/<id>` から embed URL への変換確認スクリプト（Node.js）
 - `.github/workflows/build_urls.yml` : 定期実行
 
 ## フロント仕様
 
-- ボタン「ランダム10件」押下で毎回10件を再抽選
-- 初期表示時にも自動で1回読み込み
-- `urls.json` から重複なしで最大10件を選択（前回表示URLは可能な範囲で回避）
-- 取得した URL を `https://note.com/embed/notes/<id>` に変換し、カードとして表示
-- カードクリックで embed URL を `_blank` で開く
-- `urls.json` fetch失敗時はエラー表示
-- 候補が10件未満の場合は可能な件数のみ表示して警告
+- `public/urls.json` を fetch
+- `urls` から1件ランダム選択して `iframe.src` へ反映
+- ローディング表示、`urls.json` 取得失敗時メッセージ表示
+- `iframe` 失敗時は新規タブリンクUIへ自動切替
 
 ## Actions 生成仕様
 
@@ -35,26 +28,51 @@ GitHub Actions で `urls.json` を定期生成し、静的サイト側はその 
 - 取得元: `https://note.com/sitemap.xml.gz`
 - child sitemap を複数取得して `/n/` URL を抽出
 - 100時間以内 (`now - lastmod <= 100h`) を優先しつつ、候補不足時はそれ以外も補完
-- URL生存チェックを行い、404/410 のURLを除外
 - 重複除去、上限5000件
+- 出力形式:
+
+```json
+{
+  "generated_at": "ISO8601",
+  "source": "note sitemap",
+  "urls": ["..."]
+}
+```
+
+## 更新方式
+
+- Actions 実行後、`public/urls.json` に差分があればコミット＆push
+- フロントは `generated_at` を使ったキャッシュ回避付きで `urls.json` を再取得
 
 ## ローカル確認
+note.com の記事 URL を sitemap からランダムに取得して表示する静的 Web ページです。
+
+## 仕様
+
+- スマホ対応の上下二分割レイアウト
+  - 上: サイト名 + ランダム表示ボタン
+  - 下: iframe で記事表示
+- ボタン押下時の取得フロー
+  1. `https://note.com/sitemap.xml.gz` を取得
+  2. child sitemap をランダムに選択
+  3. `/n/` を含む記事 URL を抽出
+  4. `lastmod` が現在時刻から 100 時間以内の候補に絞る
+  5. 1件をランダム選択して iframe に反映
+- 失敗時の挙動
+  - ローディング表示
+  - HTTP エラーや解析失敗時に再試行
+  - iframe 埋め込みが難しい場合は新規タブ用リンクを表示
+
+## ローカル実行
+>>>>>>> main
 
 ```bash
 python3 -m http.server 8000
 ```
 
-- 画面: `http://localhost:8000/index.html`
+ブラウザで `http://localhost:8000` を開いて確認してください。
 
-## 注意
+## 補足
 
-- フロントで sitemap 取得は行いません（note.com 直fetchしない）。
-- sitemap 取得は Actions（サーバー側処理）に限定します。
-
-
-### 変換確認（手動）
-
-```bash
-node tools/preview_embed_conversion.js https://note.com/yusukin_smoke/n/nca2acd72eda8
-```
-
+ブラウザの CORS 制約を回避するため、スクリプト内で複数の取得経路（直接アクセス + 公開プロキシ）を順番に試します。
+>>>>>>> main

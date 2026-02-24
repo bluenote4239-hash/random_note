@@ -9,12 +9,15 @@ import json
 import random
 import re
 import urllib.error
+import io
+import json
+import random
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 SITEMAP_INDEX_URL = "https://note.com/sitemap.xml.gz"
-DEFAULT_OUTPUT_PATH = Path("urls.json")
+DEFAULT_OUTPUT_PATH = Path("public/urls.json")
 NAMESPACE = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
 
@@ -56,9 +59,10 @@ def find_text(node: ET.Element, path: str) -> str | None:
 
 def load_sitemap_index(timeout_s: int) -> list[dict[str, str | dt.datetime | None]]:
     raw = fetch_bytes(SITEMAP_INDEX_URL, timeout_s)
-    root = parse_xml_bytes(maybe_gunzip(raw))
-    entries: list[dict[str, str | dt.datetime | None]] = []
+    xml_bytes = maybe_gunzip(raw)
+    root = parse_xml_bytes(xml_bytes)
 
+    entries: list[dict[str, str | dt.datetime | None]] = []
     for sitemap in root.findall("sm:sitemap", NAMESPACE):
         loc = find_text(sitemap, "sm:loc")
         if not loc:
@@ -81,12 +85,29 @@ def pick_child_sitemaps(index_entries: list[dict[str, str | dt.datetime | None]]
     rng = random.Random(random_seed)
     rng.shuffle(top)
     selected = top[:max_children]
+    sortable = []
+    no_time = []
+    for entry in index_entries:
+        if entry["lastmod"] is None:
+            no_time.append(entry)
+        else:
+            sortable.append(entry)
+
+    sortable.sort(key=lambda item: item["lastmod"], reverse=True)
+    ordered = sortable + no_time
+    top = ordered[: max_children * 2]
+
+    rng = random.Random(random_seed)
+    rng.shuffle(top)
+    selected = top[:max_children]
+
     return [item["loc"] for item in selected if isinstance(item.get("loc"), str)]
 
 
 def extract_urls_from_child_sitemap(url: str, now: dt.datetime, within_hours: int, timeout_s: int) -> tuple[list[str], list[str]]:
     raw = fetch_bytes(url, timeout_s)
-    root = parse_xml_bytes(maybe_gunzip(raw))
+    xml_bytes = maybe_gunzip(raw)
+    root = parse_xml_bytes(xml_bytes)
 
     prioritized: list[str] = []
     fallback: list[str] = []
@@ -109,85 +130,49 @@ def extract_urls_from_child_sitemap(url: str, now: dt.datetime, within_hours: in
     return prioritized, fallback
 
 
-def is_live_note_url(url: str, timeout_s: int) -> bool:
-    req = urllib.request.Request(url, headers={"User-Agent": "random_note_url_validator/1.0"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            return 200 <= resp.status < 400
-    except urllib.error.HTTPError as err:
-        return err.code not in (404, 410)
-    except Exception:
-        return False
-
-
-def extract_note_id(article_url: str) -> str | None:
-    match = re.search(r"/n/([^/?#]+)", article_url)
-    if not match:
-        return None
-    return match.group(1)
-
-
-def pick_meta(html_text: str, prop: str) -> str:
-    pattern = re.compile(
-        rf'<meta[^>]+(?:property|name)=["\']{re.escape(prop)}["\'][^>]+content=["\']([^"\']+)["\']',
-        flags=re.IGNORECASE,
-    )
-    match = pattern.search(html_text)
-    return html.unescape(match.group(1).strip()) if match else ""
-
-
-def build_urls(
-    max_children: int,
-    max_urls: int,
-    min_urls: int,
-    within_hours: int,
-    timeout_s: int,
-    random_seed: int,
-    validate_urls: bool,
-    validation_timeout_s: int,
-) -> dict:
+def build_urls(max_children: int, max_urls: int, min_urls: int, within_hours: int, timeout_s: int, random_seed: int) -> dict:
     now = dt.datetime.now(dt.timezone.utc)
     index_entries = load_sitemap_index(timeout_s)
     child_sitemaps = pick_child_sitemaps(index_entries, max_children=max_children, random_seed=random_seed)
+
     if not child_sitemaps:
         raise RuntimeError("No child sitemaps found in sitemap index")
 
     prioritized_urls: list[str] = []
     fallback_urls: list[str] = []
+
     for child_url in child_sitemaps:
         try:
-            pri, fb = extract_urls_from_child_sitemap(child_url, now=now, within_hours=within_hours, timeout_s=timeout_s)
+            pri, fb = extract_urls_from_child_sitemap(
+                child_url,
+                now=now,
+                within_hours=within_hours,
+                timeout_s=timeout_s,
+            )
             prioritized_urls.extend(pri)
             fallback_urls.extend(fb)
+
             if len(set(prioritized_urls)) >= min_urls:
+                # 100h 優先で十分な候補があれば終了
                 break
         except Exception:
+            # 失敗 child はスキップ
             continue
 
     merged = prioritized_urls + fallback_urls
-    deduped = list(dict.fromkeys(merged))
 
-    if validate_urls:
-        validated: list[str] = []
-        scan_limit = min(len(deduped), max_urls * 3)
-        for item in deduped[:scan_limit]:
-            if is_live_note_url(item, timeout_s=validation_timeout_s):
-                validated.append(item)
-            if len(validated) >= max_urls:
-                break
-        deduped = validated
-    else:
-        deduped = deduped[:max_urls]
-
-    embed_urls: list[str] = []
-    for article_url in deduped:
-        note_id = extract_note_id(article_url)
-        if not note_id:
+    deduped: list[str] = []
+    seen = set()
+    for item in merged:
+        if item in seen:
             continue
-        embed_urls.append(f"https://note.com/embed/notes/{note_id}")
+        seen.add(item)
+        deduped.append(item)
+        if len(deduped) >= max_urls:
+            break
 
-    if not embed_urls:
-        raise RuntimeError("No embed URLs could be generated")
+    if not deduped:
+        raise RuntimeError("No candidate URLs could be generated")
 
     return {
         "generated_at": now.isoformat().replace("+00:00", "Z"),
@@ -197,7 +182,7 @@ def build_urls(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build urls.json from note sitemap")
+    parser = argparse.ArgumentParser(description="Build public/urls.json from note sitemap")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--max-children", type=int, default=30)
     parser.add_argument("--max-urls", type=int, default=5000)
@@ -205,8 +190,6 @@ def main() -> None:
     parser.add_argument("--within-hours", type=int, default=100)
     parser.add_argument("--timeout", type=int, default=20)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--validate-urls", action=argparse.BooleanOptionalAction, default=True)
-    parser.add_argument("--validation-timeout", type=int, default=10)
     args = parser.parse_args()
 
     payload = build_urls(
@@ -216,8 +199,6 @@ def main() -> None:
         within_hours=args.within_hours,
         timeout_s=args.timeout,
         random_seed=args.seed,
-        validate_urls=args.validate_urls,
-        validation_timeout_s=args.validation_timeout,
     )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
