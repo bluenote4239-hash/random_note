@@ -1,0 +1,54 @@
+name: Build note urls
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "tools/build_urls.py"
+      - ".github/workflows/build_urls.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-note-urls
+  cancel-in-progress: true
+
+jobs:
+  build-urls:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate frontend and script syntax
+        run: |
+          node --check app.js
+          node --check tools/preview_embed_conversion.js
+          python -m py_compile tools/build_urls.py
+
+      - name: Build urls.json
+        run: python tools/build_urls.py
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet -- urls.json; then
+            echo "No changes in urls.json"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add urls.json
+          git commit -m "chore: update urls.json"
+          git push

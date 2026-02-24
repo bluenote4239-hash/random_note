@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>random_note</title>
+    <script>
+      if (location.pathname.endsWith('/main/index.html')) {
+        const target = location.pathname.replace('/main/index.html', '/index.html');
+        location.replace(`${target}${location.search}${location.hash}`);
+      }
+    </script>
+    <link rel="stylesheet" href="./style.css?v=20260221a" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top-bar">
+        <h1 class="site-title">random_note</h1>
+        <button id="randomButton" class="random-button" type="button">ランダム表示</button>
+      </header>
+
+      <section class="content">
+        <div id="status" class="status" aria-live="polite">URLを読み込みます...</div>
+
+        <div id="loading" class="loading hidden" role="status" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          <span>取得中...</span>
+        </div>
+
+        <div id="errorBox" class="error-box hidden" aria-live="polite"></div>
+
+        <div id="cardList" class="card-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="./app.js?v=20260221a"></script>
+  </body>
+</html>
