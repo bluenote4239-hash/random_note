@@ -4,6 +4,11 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import gzip
+import html
+import json
+import random
+import re
+import urllib.error
 import io
 import json
 import random
@@ -20,6 +25,10 @@ def fetch_bytes(url: str, timeout_s: int) -> bytes:
     req = urllib.request.Request(url, headers={"User-Agent": "random_note_url_builder/1.0"})
     with urllib.request.urlopen(req, timeout=timeout_s) as resp:
         return resp.read()
+
+
+def fetch_text(url: str, timeout_s: int) -> str:
+    return fetch_bytes(url, timeout_s).decode("utf-8", errors="ignore")
 
 
 def maybe_gunzip(data: bytes) -> bytes:
@@ -68,6 +77,14 @@ def pick_child_sitemaps(index_entries: list[dict[str, str | dt.datetime | None]]
     if not index_entries:
         return []
 
+    with_time = [e for e in index_entries if e["lastmod"] is not None]
+    without_time = [e for e in index_entries if e["lastmod"] is None]
+    with_time.sort(key=lambda item: item["lastmod"], reverse=True)
+
+    top = (with_time + without_time)[: max_children * 2]
+    rng = random.Random(random_seed)
+    rng.shuffle(top)
+    selected = top[:max_children]
     sortable = []
     no_time = []
     for entry in index_entries:
@@ -160,7 +177,7 @@ def build_urls(max_children: int, max_urls: int, min_urls: int, within_hours: in
     return {
         "generated_at": now.isoformat().replace("+00:00", "Z"),
         "source": "note sitemap",
-        "urls": deduped,
+        "urls": embed_urls,
     }
 
 

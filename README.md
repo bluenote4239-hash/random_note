@@ -1,7 +1,5 @@
 # random_note
 
-<<<<<<< codex/create-static-page-to-display-random-note.com-urls
-GitHub Actions で `public/urls.json` を定期生成し、静的サイト側はその JSON を読んでランダム表示する構成です。
 
 ## 目的
 
@@ -47,7 +45,6 @@ GitHub Actions で `public/urls.json` を定期生成し、静的サイト側は
 - フロントは `generated_at` を使ったキャッシュ回避付きで `urls.json` を再取得
 
 ## ローカル確認
-=======
 note.com の記事 URL を sitemap からランダムに取得して表示する静的 Web ページです。
 
 ## 仕様
@@ -73,26 +70,6 @@ note.com の記事 URL を sitemap からランダムに取得して表示する
 python3 -m http.server 8000
 ```
 
-<<<<<<< codex/create-static-page-to-display-random-note.com-urls
-- 画面: `http://localhost:8000/public/index.html`
-- ルート `index.html` は `public/index.html` へリダイレクト
-
-## 注意（矛盾回避）
-
-- 「ブラウザから note.com を直接叩かない」方針のため、フロントで sitemap 取得は行いません。
-- sitemap 取得は Actions（サーバー側処理）に限定します。
-
-
-## トラブルシューティング
-
-- `ランダム表示` で 403 が出る場合
-  - 旧フロント（ブラウザが note.com を直接取得する版）が配信されている可能性があります。
-  - `https://<user>.github.io/<repo>/public/index.html` を直接開いて、新版が表示されるか確認してください。
-
-- `tools/build_urls.py` が実行された形跡がない場合
-  - GitHub Actions の `Build note urls` を `workflow_dispatch` で手動実行して初回の `public/urls.json` を生成してください。
-  - Actions が `main` ブランチで有効化されているか、リポジトリ設定で `Read and write permissions` が有効か確認してください。
-=======
 ブラウザで `http://localhost:8000` を開いて確認してください。
 
 ## 補足

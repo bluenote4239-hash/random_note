@@ -31,18 +31,37 @@ jobs:
         with:
           python-version: "3.11"
 
+<<<<<<< codex/create-static-page-to-display-random-note.com-urls-zdpf7i
+      - name: Validate frontend and script syntax
+        run: |
+          node --check app.js
+          node --check tools/preview_embed_conversion.js
+          python -m py_compile tools/build_urls.py
+
+=======
+>>>>>>> main
       - name: Build urls.json
         run: python tools/build_urls.py
 
       - name: Commit and push if changed
         run: |
+<<<<<<< codex/create-static-page-to-display-random-note.com-urls-zdpf7i
+          if git diff --quiet -- urls.json; then
+            echo "No changes in urls.json"
+=======
           if git diff --quiet -- public/urls.json; then
             echo "No changes in public/urls.json"
+>>>>>>> main
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+<<<<<<< codex/create-static-page-to-display-random-note.com-urls-zdpf7i
+          git add urls.json
+          git commit -m "chore: update urls.json"
+=======
           git add public/urls.json
           git commit -m "chore: update public/urls.json"
+>>>>>>> main
           git push
