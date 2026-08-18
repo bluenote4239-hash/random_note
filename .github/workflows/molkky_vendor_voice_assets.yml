@@ -1,0 +1,45 @@
+name: Vendor Molkky voice assets
+on:
+  push:
+    paths:
+      - '.github/workflows/molkky_vendor_voice_assets.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Amitaro voice files into repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p molkky/audio/voices/gal01
+          ua='Mozilla/5.0 MolkkyGameAssetVendor/1.0'
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/401_ainote/yeah_01.wav' -o molkky/audio/voices/gal01/yeah_01.wav
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/401_ainote/yeah_03.wav' -o molkky/audio/voices/gal01/yeah_03.wav
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/401_ainote/nice_01.wav' -o molkky/audio/voices/gal01/nice_01.wav
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/401_ainote/nice_02.wav' -o molkky/audio/voices/gal01/nice_02.wav
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/103_yorokobu/yatta_01.wav' -o molkky/audio/voices/gal01/yatta_01.wav
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/103_yorokobu/yarii_01.wav' -o molkky/audio/voices/gal01/yarii_01.wav
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/111_ganbaru/sugoi_01.wav' -o molkky/audio/voices/gal01/sugoi_01.wav
+          curl -fL --retry 4 -A "$ua" 'https://amitaro.net/download/voice/111_ganbaru/sassugaa_02.wav' -o molkky/audio/voices/gal01/sassugaa_02.wav
+          python - <<'PY'
+          from pathlib import Path
+          for p in Path('molkky/audio/voices/gal01').glob('*.wav'):
+              b=p.read_bytes()
+              assert len(b)>1000, (p,len(b))
+              assert b[:4]==b'RIFF' and b[8:12]==b'WAVE', (p,b[:12])
+              print(p,len(b))
+          PY
+      - name: Commit vendored voice files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add molkky/audio/voices/gal01/*.wav
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Vendor Amitaro gal01 voice WAV assets'
+          git push
