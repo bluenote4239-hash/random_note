@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MÖLKKY GAL ARCADE</title>
-<link rel="stylesheet" href="style.css?v=7">
-<link rel="stylesheet" href="ipad.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="ipad.css?v=8">
 </head>
 <body>
 <div id="game">
@@ -21,15 +21,18 @@
     <div class="row"><span>POWER</span><div class="bar"><div id="pf" class="fill"></div></div><span id="pv">0</span></div>
     <div class="row"><span>ACCURACY</span><div class="bar"><div id="af" class="fill acc"></div></div><span id="av">0</span></div>
   </div>
-  <div id="cutin"><div id="cutinSpeed"></div><div id="cutinPanel"></div><img id="cutinImg"><div id="cutinText"></div></div>
+  <div id="cutin"><div id="cutinSpeed"></div><div id="cutinPanel"></div><img id="cutinImg" alt=""><div id="cutinText"></div></div>
   <div id="statusTip">指で照準移動 / タップ：POWER → ACCURACY → THROW</div>
   <div id="log">READY</div>
   <div id="gameover"><div class="box"><h1 id="goTitle">PERFECT 50!</h1><p id="goText"></p><button onclick="resetGame()">もう一戦</button></div></div>
 </div>
-<script src="bootstrap.js?v=7"></script>
-<script src="assets.js?v=7"></script>
-<script src="game.js?v=7"></script>
-<script src="ipad.js?v=7"></script>
-<script src="selftest.js?v=7"></script>
+<script src="bootstrap.js?v=8"></script>
+<script src="assets.js?v=8"></script>
+<script src="galcompat.js?v=8"></script>
+<script src="game.js?v=8"></script>
+<script src="galfix.js?v=8"></script>
+<script src="audiofix.js?v=8"></script>
+<script src="ipad.js?v=8"></script>
+<script src="selftest.js?v=8"></script>
 </body>
 </html>
