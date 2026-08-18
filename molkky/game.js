@@ -1,7 +1,8 @@
 const c=document.getElementById('c'),ctx=c.getContext('2d');c.width=1100;c.height=720;const W=c.width,H=c.height;
 const $=id=>document.getElementById(id),ui={score:$('score'),turn:$('turn'),miss:$('miss'),pf:$('pf'),af:$('af'),pv:$('pv'),av:$('av'),msg:$('centerMsg'),bubble:$('galBubble'),icon:$('galIcon'),cutin:$('cutin'),cutinImg:$('cutinImg'),cutinText:$('cutinText'),log:$('log'),go:$('gameover'),goTitle:$('goTitle'),goText:$('goText')};
-let pins=[],score=0,misses=0,turn=1,phase=0,meter=0,dir=1,power=0,accuracy=.5,raf=0,busy=false,aim={x:550,y:330},projectile=null;
-const OFFICIAL_FIELD=Object.freeze({initialDistanceM:3.5,initialPinY:425,molkkaariY:690,throwOriginY:720,worldUnitsPerMetre:(690-425)/3.5,molkkaariDrawWidth:156,molkkaariDrawHeight:68});
+const FIELD_Y_SHIFT=80;
+let pins=[],score=0,misses=0,turn=1,phase=0,meter=0,dir=1,power=0,accuracy=.5,raf=0,busy=false,aim={x:550,y:330+FIELD_Y_SHIFT},projectile=null;
+const OFFICIAL_FIELD=Object.freeze({initialDistanceM:3.5,initialPinY:425+FIELD_Y_SHIFT,molkkaariY:690+FIELD_Y_SHIFT,throwOriginY:720+FIELD_Y_SHIFT,worldUnitsPerMetre:(690-425)/3.5,molkkaariDrawWidth:156,molkkaariDrawHeight:68});
 const PIN_RENDER=Object.freeze({sourceWidth:72,sourceHeight:144,width:56,height:112,top:-70,shadowY:40});
 const pinSprites=Array.from({length:13},(_,n)=>{if(!n)return null;let img=new Image();img.decoding='async';img.onload=()=>draw();img.src=`objects/skittles/official90s/images/pin_${String(n).padStart(2,'0')}.webp?v=31`;return img});
 const molkkaariSprite=new Image();molkkaariSprite.decoding='async';molkkaariSprite.onload=()=>draw();molkkaariSprite.src='objects/field/official/images/molkkaari.webp?v=31';
