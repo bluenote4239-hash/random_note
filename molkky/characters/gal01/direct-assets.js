@@ -1,0 +1,1 @@
+(function(){'use strict';window.MOLKKY_CHARACTER_ASSETS=window.MOLKKY_CHARACTER_ASSETS||{};window.MOLKKY_CHARACTER_ASSETS.gal01={full:'characters/gal01/full.webp',normal:'characters/gal01/normal.webp',joy:'characters/gal01/joy.webp',surprise:'characters/gal01/surprise.webp',thinking:'characters/gal01/thinking.webp',regret:'characters/gal01/regret.webp'};})();
