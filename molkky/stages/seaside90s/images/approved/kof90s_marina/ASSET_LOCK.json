@@ -1,0 +1,24 @@
+{
+  "status": "approved_and_locked",
+  "approved_on": "2026-08-18",
+  "asset": "background.webp",
+  "format": "webp",
+  "width": 1550,
+  "height": 1015,
+  "bytes": 315148,
+  "sha256": "479362aa158655ca4b0f8ee97fb216e570a4e9b9df0a9782a86f02e6777ac7a7",
+  "rule": "Approved final playtest background. Do not regenerate, replace, crop, recolor, rename, relocate, or modify without explicit user instruction.",
+  "runtime": {
+    "active": true,
+    "path": "stages/seaside90s/images/approved/kof90s_marina/background.webp"
+  },
+  "protected_systems": [
+    "game logic",
+    "collision detection",
+    "score processing",
+    "pin formation and recovery",
+    "character assets",
+    "audio assets",
+    "runtime architecture"
+  ]
+}
