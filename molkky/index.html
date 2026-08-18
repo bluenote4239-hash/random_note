@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MÖLKKY GAL ARCADE</title>
-<link rel="stylesheet" href="style.css?v=12">
-<link rel="stylesheet" href="ipad.css?v=12">
+<link rel="stylesheet" href="style.css?v=13">
+<link rel="stylesheet" href="ipad.css?v=13">
 </head>
 <body>
 <div id="game">
@@ -26,15 +26,24 @@
   <div id="log">READY</div>
   <div id="gameover"><div class="box"><h1 id="goTitle">PERFECT 50!</h1><p id="goText"></p><button onclick="resetGame()">もう一戦</button></div></div>
 </div>
-<script src="bootstrap.js?v=12"></script>
-<script src="assets.js?v=12"></script>
-<script src="characters.js?v=12"></script>
-<script src="galcompat.js?v=12"></script>
-<script src="game.js?v=12"></script>
-<script src="galfix.js?v=12"></script>
-<script src="bgm29.js?v=12"></script>
-<script src="audiofix.js?v=12"></script>
-<script src="ipad.js?v=12"></script>
-<script src="selftest.js?v=12"></script>
+<script src="bootstrap.js?v=13"></script>
+<!-- character data: temporary legacy atlas store; presentation is modular below -->
+<script src="assets.js?v=13"></script>
+<script src="core/character-manager.js?v=13"></script>
+<script src="characters/gal01/pack.js?v=13"></script>
+<script src="core/stage-manager.js?v=13"></script>
+<script src="stages/seaside90s/pack.js?v=13"></script>
+<script src="core/audio-manager.js?v=13"></script>
+<script src="audio/voices/gal01/pack.js?v=13"></script>
+<!-- fixed game rules / collision / scoring -->
+<script src="game.js?v=13"></script>
+<script src="core/presentation-runtime.js?v=13"></script>
+<script src="core/stage-runtime.js?v=13"></script>
+<!-- stage BGM engine and audio routing -->
+<script src="bgm29.js?v=13"></script>
+<script src="audio/bgm/ievan_v29/pack.js?v=13"></script>
+<script src="core/audio-runtime.js?v=13"></script>
+<script src="ipad.js?v=13"></script>
+<script src="core/selftest.js?v=13"></script>
 </body>
 </html>
