@@ -40,12 +40,7 @@
 
     var targetW=el.clientWidth||crop.w;
     var targetH=el.clientHeight||crop.h;
-    var scale;
-    if(kind==='full'){
-      scale=Math.max(targetW/crop.w,targetH/crop.h);
-    }else{
-      scale=Math.max(targetW/crop.w,targetH/crop.h);
-    }
+    var scale=Math.max(targetW/crop.w,targetH/crop.h);
 
     el.style.backgroundImage='url("'+def.atlasUrl+'")';
     el.style.backgroundRepeat='no-repeat';
@@ -62,13 +57,13 @@
   function bindSlot(name,el){
     if(!(name in slots))throw new Error('Unknown character slot: '+name);
     slots[name]=el;
-    renderSlot(name,name==='full'?'normal':'normal');
+    renderSlot(name,name==='cutin'?'joy':'normal');
   }
 
   function renderSlot(name,expr){
     var el=slots[name];
     if(!el)return false;
-    return render(el,name==='icon'?'face':name,expr||'normal');
+    return render(el,name,expr||'normal');
   }
 
   function renderAll(expr){
@@ -82,7 +77,7 @@
     activeId=id;
     renderAll('normal');
     try{localStorage.setItem('molkky.character',id);}catch(e){}
-    window.dispatchEvent(new CustomEvent('molkky:characterchange',{detail:{id:id}}));
+    try{window.dispatchEvent(new CustomEvent('molkky:characterchange',{detail:{id:id}}));}catch(e){}
     return id;
   }
 
@@ -98,23 +93,25 @@
     get activeId(){return activeId;}
   };
 
-  // Character 01: current gal. Expression cells in the original atlas are unreliable
-  // on iPad, so every expression currently uses a verified face crop from the
-  // full-body cell. Future character packs can provide distinct expression crops.
-  if(typeof GAL_ATLAS_URL!=='undefined'){
-    var safeFace={x:38,y:12,w:110,h:110};
+  /*
+   * Character 01: current gal.
+   * IMPORTANT: use the authoritative crops created with the atlas itself.
+   * Do not invent fallback crop coordinates here; that caused the transparent
+   * character regression on iPad Safari.
+   */
+  if(typeof GAL_ATLAS_URL!=='undefined' && typeof GAL_CROPS!=='undefined'){
     register({
       id:'gal01',
       name:'Mölkky Gal',
       atlasUrl:GAL_ATLAS_URL,
-      atlasSize:{w:560,h:460},
-      full:{x:0,y:0,w:180,h:450},
+      atlasSize:{w:GAL_ATLAS.w,h:GAL_ATLAS.h},
+      full:cloneCrop(GAL_CROPS.full),
       expressions:{
-        normal:cloneCrop(safeFace),
-        joy:cloneCrop(safeFace),
-        surprise:cloneCrop(safeFace),
-        thinking:cloneCrop(safeFace),
-        regret:cloneCrop(safeFace)
+        normal:cloneCrop(GAL_CROPS.normal),
+        joy:cloneCrop(GAL_CROPS.joy),
+        surprise:cloneCrop(GAL_CROPS.surprise),
+        thinking:cloneCrop(GAL_CROPS.thinking),
+        regret:cloneCrop(GAL_CROPS.regret)
       },
       voiceSet:'amitaro_gal_01',
       theme:'pink-blue-yellow'
