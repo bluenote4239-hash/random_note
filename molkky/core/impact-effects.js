@@ -57,10 +57,20 @@ function scoreFx(p,fallen){
   if(strong)add('flash',{alpha:.35,color:'#ff296d'},180);
 }
 function miss(p){add('miss',{x:clamp(p.x,150,950),y:clamp(p.y,160,590)},520)}
-window.ImpactEffects={focus:focus,contact:contact,score:scoreFx,miss:miss};
+window.ImpactEffects={focus:focus,contact:contact,score:scoreFx,miss:miss};layer.dataset.ready='true';
 
-var originalLaunch=window.launch,originalImpact=window.impact,originalResolve=window.resolve;
-if(typeof originalLaunch==='function')window.launch=function(){try{var p=proj(aim.x,aim.y);focus(p)}catch(e){}return originalLaunch.apply(this,arguments)};
-if(typeof originalImpact==='function')window.impact=function(ix,iy){try{var p=proj(ix,iy),standing=pins.filter(function(pin){return pin.state!=='fallen'}),closest=standing.map(function(pin){return Math.hypot(pin.x-ix,pin.y-iy)}).sort(function(a,b){return a-b})[0];if(closest<24+power*32)contact(p,power>.74);else miss(p)}catch(e){}return originalImpact.apply(this,arguments)};
-if(typeof originalResolve==='function')window.resolve=function(f,l,ix,iy,L){try{if(f&&f.length)scoreFx(proj(ix,iy),f)}catch(e){}return originalResolve.apply(this,arguments)};
+function aimPoint(){try{return proj(aim.x,aim.y)}catch(e){return{x:550,y:400}}}
+var centerMsg=document.getElementById('centerMsg'),logBox=document.getElementById('log'),lastLog='';
+if(centerMsg)new MutationObserver(function(){
+  var text=centerMsg.textContent||'',p=aimPoint();
+  if(text==='THROW!')focus(p);
+  else if(text==='MISS!!')miss(p);
+}).observe(centerMsg,{childList:true,characterData:true,subtree:true});
+if(logBox)new MutationObserver(function(){
+  var first=(logBox.textContent||'').split('\n')[0];if(first===lastLog||first.indexOf('FALLEN ')!==0)return;lastLog=first;
+  var m=first.match(/^FALLEN ([0-9,]+) \+/);if(!m)return;
+  var ids=m[1].split(',').map(Number),fallen=[];try{fallen=pins.filter(function(pin){return ids.indexOf(pin.n)>=0})}catch(e){}
+  if(!fallen.length)return;var sx=0,sy=0;fallen.forEach(function(pin){var p=proj(pin.x,pin.y);sx+=p.x;sy+=p.y});var hit={x:sx/fallen.length,y:sy/fallen.length};
+  contact(hit,fallen.length>=4);scoreFx(hit,fallen);
+}).observe(logBox,{childList:true,characterData:true,subtree:true});
 })();
