@@ -21,16 +21,16 @@ jobs:
           from pathlib import Path
           root=Path('molkky')
           idx=(root/'index.html').read_text()
-          refs=['core/character-manager.js','characters/gal01/pack.js','core/stage-manager.js','stages/seaside90s/pack.js','core/audio-manager.js','audio/voices/gal01/pack.js','audio/se/default/pack.js','core/legacy-game-bridge.js','audio/bgm/ievan_v29/engine.js','audio/bgm/ievan_v29/pack.js','core/selftest.js']
+          refs=['core/character-manager.js','characters/gal01/pack.js','core/stage-manager.js','stages/seaside90s/pack.js','core/audio-manager.js','audio/voices/gal01/pack.js','audio/se/default/pack.js','audio/bgm/ievan_v29/engine.js','audio/bgm/ievan_v29/pack.js','core/selftest.js']
           for r in refs:
               assert (root/r).exists(), r
               assert r in idx, 'not loaded: '+r
-          assert idx.index('core/legacy-game-bridge.js') < idx.index('game.js')
-          assert idx.index('characters/gal01/pack.js') < idx.index('game.js')
+          assert 'legacy-game-bridge.js' not in idx
+          assert 'GAL_IMGS' not in (root/'game.js').read_text()
           chars=['full.webp','normal.webp','joy.webp','surprise.webp','thinking.webp','regret.webp']
           for n in chars:
-              p=root/'characters/gal01'/n
-              b=p.read_bytes(); assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WEBP',n
+              p=root/'characters/gal01'/n; b=p.read_bytes()
+              assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WEBP',n
           assert not (root/'characters/gal01/atlas.webp').exists(),'atlas is prohibited'
           cp=(root/'characters/gal01/pack.js').read_text()
           for n in chars: assert ('characters/gal01/'+n) in cp,n
@@ -43,15 +43,16 @@ jobs:
               p=root/'audio/voices/gal01'/n; b=p.read_bytes()
               assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WAVE',n
           voice=(root/'audio/voices/gal01/pack.js').read_text()
-          assert 'amitaro.net/download/voice/' not in voice,'external direct voice URL prohibited'
-          for n in voice_names: assert ('audio/voices/gal01/'+n) in voice,n
+          game=(root/'game.js').read_text()
+          assert 'amitaro.net/download/voice/' not in voice+game,'external direct voice URL prohibited'
+          for n in voice_names: assert ('audio/voices/gal01/'+n) in voice+game,n
           se_names=['wood_hit_01.wav','wood_hit_02.wav','wood_hit_03.wav','throw_whoosh.wav','land_01.wav']
           for n in se_names:
               p=root/'audio/se/default'/n; b=p.read_bytes()
               assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WAVE',n
           se=(root/'audio/se/default/pack.js').read_text()
           for n in se_names: assert ('audio/se/default/'+n) in se,n
-          game=(root/'game.js').read_text(); compact=''.join(game.split())
+          compact=''.join(game.split())
           assert '[[[1,-36],[2,36]],[[3,-72],[10,0],[4,72]],[[5,-108],[11,-36],[12,36],[6,108]],[[7,-72],[9,0],[8,72]]]' in compact
           bgm=(root/'audio/bgm/ievan_v29/engine.js').read_text()
           assert "version:'v29'" in bgm and 'master.gain.value=.46' in bgm
