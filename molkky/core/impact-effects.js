@@ -48,15 +48,17 @@ function drawEffect(e,p){
   if(e.type==='miss'){g.save();g.globalAlpha=1-p;g.fillStyle='#d8efff';g.strokeStyle='#10284d';g.lineWidth=10;g.textAlign='center';g.font='1000 56px Arial Black,sans-serif';g.strokeText('スカッ…',e.x,e.y-p*18);g.fillText('スカッ…',e.x,e.y-p*18);g.restore()}
 }
 function shake(strong){var cls=strong?'fx-crush':'fx-hit';game.classList.remove('fx-hit','fx-crush');void game.offsetWidth;game.classList.add(cls);setTimeout(function(){game.classList.remove(cls)},strong?360:240)}
-function focus(p){add('focus',{x:p.x,y:p.y},reduced?220:520)}
-function contact(p,strong){add('flash',{alpha:strong?.72:.48,color:strong?'#fff8b5':'#fff'},90);add('hit',{x:p.x,y:p.y,strong:strong},strong?650:480);shake(strong)}
+function mark(kind){layer.dataset.last=kind;layer.dataset.count=String((Number(layer.dataset.count)||0)+1)}
+function focus(p){mark('focus');add('focus',{x:p.x,y:p.y},reduced?220:520)}
+function contact(p,strong){mark('contact');add('flash',{alpha:strong?.72:.48,color:strong?'#fff8b5':'#fff'},90);add('hit',{x:p.x,y:p.y,strong:strong},strong?650:480);shake(strong)}
 function scoreFx(p,fallen){
+  mark('score');
   var strong=fallen.length>=4,label=fallen.length>=4?'ドッカーン!!':fallen.length>=2?'バキバキィ!!':fallen[0]&&fallen[0].n>=8?'ズギャァン!!':'ズバァン!!';
   var x=clamp(p.x,235,865),y=clamp(p.y,220,555);add('word',{x:x,y:y,label:label,strong:strong,angle:fallen.length%2?-.12:.08},strong?920:760);
   fallen.forEach(function(pin,i){var s=typeof proj==='function'?proj(pin.x,pin.y):p;add('bolt',{a:p,b:s,seed:i+pin.n*.17},strong?560:400)});
   if(strong)add('flash',{alpha:.35,color:'#ff296d'},180);
 }
-function miss(p){add('miss',{x:clamp(p.x,150,950),y:clamp(p.y,160,590)},520)}
+function miss(p){mark('miss');add('miss',{x:clamp(p.x,150,950),y:clamp(p.y,160,590)},520)}
 window.ImpactEffects={focus:focus,contact:contact,score:scoreFx,miss:miss};layer.dataset.ready='true';
 
 function aimPoint(){try{return proj(aim.x,aim.y)}catch(e){return{x:550,y:400}}}
