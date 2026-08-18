@@ -1,0 +1,35 @@
+name: Materialize Molkky character assets
+on:
+  push:
+    paths:
+      - '.github/workflows/molkky_materialize_character_assets.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode approved character images
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd molkky/characters/gal01
+          for n in joy surprise thinking regret; do
+            base64 -d "$n.webp.b64" > "$n.webp"
+            test "$(head -c 4 "$n.webp")" = 'RIFF'
+            test "$(dd if="$n.webp" bs=1 skip=8 count=4 2>/dev/null)" = 'WEBP'
+            test "$(wc -c < "$n.webp")" -gt 1000
+          done
+          rm -f joy.webp.b64 surprise.webp.b64 thinking.webp.b64 regret.webp.b64 normal.webp.b64
+      - name: Commit physical character files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A molkky/characters/gal01
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Materialize approved gal01 image files'
+          git push
