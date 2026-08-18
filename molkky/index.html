@@ -4,36 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MÖLKKY GAL ARCADE</title>
-<link rel="stylesheet" href="style.css?v=9">
-<link rel="stylesheet" href="ipad.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="ipad.css?v=10">
 </head>
 <body>
 <div id="game">
   <canvas id="c"></canvas>
-  <img id="galFull" alt="">
+  <div id="galFull" aria-hidden="true"></div>
   <div id="scan"></div>
   <div id="scoreBox" class="card"><div class="lab">SCORE</div><div id="score">0</div><div id="turn">TURN 1</div></div>
   <div id="goalBox" class="card"><div class="lab">TARGET</div><b>50 JUST</b><div id="miss">MISS × 0</div></div>
-  <div id="galCoach"><div id="galBubble">ナイスー！</div><img id="galIcon" alt="実況ギャル"></div>
+  <div id="galCoach"><div id="galBubble">ナイスー！</div><div id="galIcon" role="img" aria-label="実況ギャル"></div></div>
   <div id="galTag">GAL実況・うるさめ</div>
   <div id="centerMsg"></div>
   <div id="meters" class="card">
     <div class="row"><span>POWER</span><div class="bar"><div id="pf" class="fill"></div></div><span id="pv">0</span></div>
     <div class="row"><span>ACCURACY</span><div class="bar"><div id="af" class="fill acc"></div></div><span id="av">0</span></div>
   </div>
-  <div id="cutin"><div id="cutinSpeed"></div><div id="cutinPanel"></div><img id="cutinImg" alt=""><div id="cutinText"></div></div>
+  <div id="cutin"><div id="cutinSpeed"></div><div id="cutinPanel"></div><div id="cutinImg" role="img" aria-label="ギャルカットイン"></div><div id="cutinText"></div></div>
   <div id="statusTip">指で照準移動 / タップ：POWER → ACCURACY → THROW</div>
   <div id="log">READY</div>
   <div id="gameover"><div class="box"><h1 id="goTitle">PERFECT 50!</h1><p id="goText"></p><button onclick="resetGame()">もう一戦</button></div></div>
 </div>
-<script src="bootstrap.js?v=9"></script>
-<script src="assets.js?v=9"></script>
-<script src="galcompat.js?v=9"></script>
-<script src="game.js?v=9"></script>
-<script src="galfix.js?v=9"></script>
-<script src="bgm29.js?v=9"></script>
-<script src="audiofix.js?v=9"></script>
-<script src="ipad.js?v=9"></script>
-<script src="selftest.js?v=9"></script>
+<script src="bootstrap.js?v=10"></script>
+<script src="assets.js?v=10"></script>
+<script src="galcompat.js?v=10"></script>
+<script src="game.js?v=10"></script>
+<script src="galfix.js?v=10"></script>
+<script src="bgm29.js?v=10"></script>
+<script src="audiofix.js?v=10"></script>
+<script src="ipad.js?v=10"></script>
+<script src="selftest.js?v=10"></script>
 </body>
 </html>
