@@ -1,4 +1,3 @@
-var bgmStep=0;
 window.addEventListener('error',function(e){
   console.error('MOLKKY ERROR',e.message,e.filename,e.lineno,e.colno,e.error);
   var el=document.getElementById('log');
