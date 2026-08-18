@@ -1,0 +1,65 @@
+name: Generate Molkky SE WAV assets
+on:
+  push:
+    paths:
+      - '.github/workflows/molkky_generate_se_assets.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate deterministic SE files
+        shell: python
+        run: |
+          from pathlib import Path
+          import math, random, struct, wave
+          out=Path('molkky/audio/se/default'); out.mkdir(parents=True,exist_ok=True)
+          sr=44100
+          def write(name, dur, fn):
+              n=int(sr*dur); vals=[]
+              for i in range(n):
+                  t=i/sr
+                  v=max(-1,min(1,fn(t,i,n)))
+                  vals.append(struct.pack('<h',int(v*32767)))
+              with wave.open(str(out/name),'wb') as w:
+                  w.setnchannels(1); w.setsampwidth(2); w.setframerate(sr); w.writeframes(b''.join(vals))
+          def wood(seed, freqs, dur=.085):
+              rng=random.Random(seed)
+              phases=[rng.random()*math.tau for _ in freqs]
+              def f(t,i,n):
+                  env=math.exp(-42*t)
+                  s=sum(math.sin(math.tau*fr*t+ph)*amp for fr,ph,amp in zip(freqs,phases,[.58,.30,.16]))
+                  crack=(rng.random()*2-1)*math.exp(-75*t)*.38
+                  return (s+crack)*env
+              return f
+          write('wood_hit_01.wav',.085,wood(101,[690,1060,1580]))
+          write('wood_hit_02.wav',.082,wood(202,[745,1125,1690]))
+          write('wood_hit_03.wav',.090,wood(303,[625,970,1490]))
+          rng=random.Random(404)
+          def whoosh(t,i,n):
+              env=math.sin(math.pi*min(1,t/.16))**.55
+              noise=(rng.random()*2-1)*.24
+              body=math.sin(math.tau*(155+900*t)*t)*.11
+              return (noise+body)*env*(1-t/.18)
+          write('throw_whoosh.wav',.18,whoosh)
+          rng2=random.Random(505)
+          def land(t,i,n):
+              env=math.exp(-30*t)
+              return env*(.46*math.sin(math.tau*118*t)+.18*math.sin(math.tau*235*t)+(rng2.random()*2-1)*.12)
+          write('land_01.wav',.12,land)
+          for p in out.glob('*.wav'):
+              b=p.read_bytes(); assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WAVE',p
+              print(p,len(b))
+      - name: Commit SE WAV files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add molkky/audio/se/default/*.wav
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Generate physical Molkky SE WAV assets'
+          git push
