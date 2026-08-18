@@ -1,0 +1,14 @@
+{
+  "status": "approved_and_locked",
+  "approved_on": "2026-08-18",
+  "rule": "Do not recrop, regenerate, substitute, or infer alternate gal01 artwork. Use only the six user-approved source images represented by these hashes.",
+  "source_format": "png",
+  "assets": {
+    "full": {"sha256": "773143663b1fa2fea1213472519b8e30ff908d48f8fd700dd70bfed33d36ad62", "bytes": 515403},
+    "normal": {"sha256": "92e3985d2a6ecf38b03ab77f130086b287fb201bdce45bf7c09e09f622b7e82c", "bytes": 96751},
+    "joy": {"sha256": "dc5726ff4e7dca0dd1cae463f8e7a7a78a512d08805c05caa451b2b37e7f7b39", "bytes": 92061},
+    "surprise": {"sha256": "fb7be2cf9cb942eb4bcb9d7ffe7f458edea5eeb1a0bf75d22bd7c84aa3ebad1b", "bytes": 97569},
+    "thinking": {"sha256": "95fe28d88370d589f79160f92ddf8f66049a7a3bc39f745de34b86f3ada85316", "bytes": 92530},
+    "regret": {"sha256": "6a7fea2f894aec9a47dcb69ae4488c6704a0d9b94c0bc0cb23faf45bb3756692", "bytes": 87866}
+  }
+}
