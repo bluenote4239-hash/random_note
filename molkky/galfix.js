@@ -1,45 +1,61 @@
-(()=>{
-  const full=document.getElementById('galFull');
-  const icon=document.getElementById('galIcon');
-  const cut=document.getElementById('cutinImg');
+/* Character presentation adapter. No game rules here. */
+(function(){
+  'use strict';
+  var full=document.getElementById('galFull');
+  var icon=document.getElementById('galIcon');
+  var cut=document.getElementById('cutinImg');
 
-  // The expression cells in the old atlas were blank on iPad Safari.
-  // Use the guaranteed-good full-body atlas cell and crop the face from it.
-  function applyFaceFromFull(el){
-    if(!el||typeof GAL_ATLAS_URL==='undefined')return;
-    const w=el.clientWidth||110;
-    // Face window inside the 180x450 full-body atlas cell.
-    const crop={x:38,y:12,w:110,h:110};
-    const s=w/crop.w;
-    el.style.backgroundImage='url("'+GAL_ATLAS_URL+'")';
-    el.style.backgroundRepeat='no-repeat';
-    el.style.backgroundSize=(560*s)+'px '+(460*s)+'px';
-    el.style.backgroundPosition=(-crop.x*s)+'px '+(-crop.y*s)+'px';
-    el.style.backgroundColor='transparent';
+  function manager(){return window.CharacterManager||null;}
+
+  function bind(){
+    var m=manager();
+    if(!m)return false;
+    if(full)m.bindSlot('full',full);
+    if(icon)m.bindSlot('icon',icon);
+    if(cut)m.bindSlot('cutin',cut);
+    m.renderAll('normal');
+    return true;
   }
-  function fitFull(){
+
+  function resizeFull(){
     if(!full)return;
-    const h=full.clientHeight||360;
+    var h=full.clientHeight||360;
     full.style.width=(h*0.4)+'px';
-    if(typeof applyGalCrop==='function')applyGalCrop(full,'full');
+    var m=manager();
+    if(m)m.renderSlot('full','normal');
   }
-  function applyAll(){
-    fitFull();
-    applyFaceFromFull(icon);
-    applyFaceFromFull(cut);
-  }
-  applyAll();
-  setTimeout(applyAll,60);
-  setTimeout(applyAll,250);
-  if(typeof ResizeObserver!=='undefined'&&full)new ResizeObserver(fitFull).observe(full);
-  addEventListener('orientationchange',()=>setTimeout(applyAll,180));
 
-  const oldSetGal=window.setGal;
+  bind();
+  resizeFull();
+  setTimeout(function(){bind();resizeFull();},60);
+  setTimeout(function(){bind();resizeFull();},250);
+
+  if(typeof ResizeObserver!=='undefined'&&full){
+    new ResizeObserver(function(){resizeFull();}).observe(full);
+  }
+  addEventListener('orientationchange',function(){setTimeout(function(){bind();resizeFull();},180);});
+
+  // Wrap presentation events only. Game event/rule logic remains in game.js.
+  var oldSetGal=window.setGal;
   if(typeof oldSetGal==='function'){
-    window.setGal=function(expr,text){oldSetGal(expr,text);applyFaceFromFull(icon)};
+    window.setGal=function(expr,text){
+      oldSetGal(expr,text);
+      var m=manager();
+      if(m)m.renderSlot('icon',expr||'normal');
+    };
   }
-  const oldCutin=window.cutin;
+
+  var oldCutin=window.cutin;
   if(typeof oldCutin==='function'){
-    window.cutin=function(kind,label,expr='joy',ms=850){oldCutin(kind,label,expr,ms);applyFaceFromFull(cut)};
+    window.cutin=function(kind,label,expr,ms){
+      oldCutin(kind,label,expr||'joy',ms===undefined?850:ms);
+      var m=manager();
+      if(m)m.renderSlot('cutin',expr||'joy');
+    };
   }
+
+  addEventListener('molkky:characterchange',function(){
+    bind();
+    resizeFull();
+  });
 })();
