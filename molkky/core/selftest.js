@@ -17,6 +17,7 @@ if(!window.CharacterManager||CharacterManager.list().length!==1)return fail('cha
 if(!window.StageManager||StageManager.list().length!==1)return fail('stage registry');
 if(!window.AudioManager||!window.AudioRuntime)return fail('audio runtime');
 if(!window.PresentationRuntime||!window.StageRuntime)return fail('presentation/stage runtime');
+if(!OFFICIAL_FIELD||OFFICIAL_FIELD.initialDistanceM!==3.5||Math.abs((OFFICIAL_FIELD.molkkaariY-OFFICIAL_FIELD.initialPinY)/OFFICIAL_FIELD.worldUnitsPerMetre-3.5)>.001||OFFICIAL_FIELD.throwOriginY<=OFFICIAL_FIELD.molkkaariY)return fail('official 3.5m field');
 var ch=CharacterManager.get(),st=StageManager.get();if(!ch||ch.id!=='gal01')return fail('active character');if(!st||st.id!=='seaside90s'||st.bgm!=='ievan_v29')return fail('active stage/BGM');
 var vs=AudioManager.getVoices(ch.voiceSet),se=AudioManager.getSe('default');if(!vs||vs.items.length!==8)return fail('voice set');if(!se||!se.wood||!se.whoosh||!se.land)return fail('SE set');if(typeof AudioManager.startBgm!=='function')return fail('physical BGM runtime');
 if(!Array.isArray(pins)||pins.length!==12)return fail('12 pins');var nums=pins.map(function(p){return p.n}).sort(function(a,b){return a-b}).join(',');if(nums!=='1,2,3,4,5,6,7,8,9,10,11,12')return fail('pin numbers');

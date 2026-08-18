@@ -1,0 +1,12 @@
+{
+  "id": "official-molkkaari",
+  "status": "approved-rule-marker",
+  "asset": "images/molkkaari.webp",
+  "sha256": "0828af99e32884bb2865a061550f4704eadc6af9f7c2dd18c1d79b78ccd16794",
+  "pieces": 4,
+  "pieceLengthCm": 24,
+  "pieceWidthCm": 3.2,
+  "pieceThicknessCm": 1.8,
+  "sideAngleDegrees": 45,
+  "initialDistanceM": 3.5
+}
