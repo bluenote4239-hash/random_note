@@ -1,0 +1,41 @@
+name: Molkky Selfcheck
+on:
+  push:
+    paths:
+      - 'molkky/**'
+      - '.github/workflows/molkky_selfcheck.yml'
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find molkky -name '*.js' -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
+      - name: Architecture and rules
+        shell: python
+        run: |
+          from pathlib import Path
+          idx=Path('molkky/index.html').read_text()
+          refs=[
+            'core/character-manager.js','characters/gal01/pack.js',
+            'core/stage-manager.js','stages/seaside90s/pack.js',
+            'core/audio-manager.js','audio/voices/gal01/pack.js',
+            'audio/bgm/ievan_v29/pack.js','core/selftest.js'
+          ]
+          for r in refs:
+            assert (Path('molkky')/r).exists(), r
+            assert r in idx, 'not loaded: '+r
+          game=Path('molkky/game.js').read_text()
+          compact=''.join(game.split())
+          assert '[[[1,-36],[2,36]],[[3,-72],[10,0],[4,72]],[[5,-108],[11,-36],[12,36],[6,108]],[[7,-72],[9,0],[8,72]]]' in compact
+          stage=Path('molkky/stages/seaside90s/pack.js').read_text()
+          assert "bgm:'ievan_v29'" in stage
+          voice=Path('molkky/audio/voices/gal01/pack.js').read_text()
+          assert voice.count('amitaro.net/download/voice/')==8
+          bgm=Path('molkky/bgm29.js').read_text()
+          assert "version:'v29'" in bgm and 'master.gain.value=.46' in bgm
+          print('MOLKKY STATIC SELFTEST PASS')
