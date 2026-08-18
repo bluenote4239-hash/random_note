@@ -1,3 +1,4 @@
+# trigger-v2
 name: Generate Molkky SE WAV assets
 on:
   push:
@@ -26,7 +27,7 @@ jobs:
                   vals.append(struct.pack('<h',int(v*32767)))
               with wave.open(str(out/name),'wb') as w:
                   w.setnchannels(1); w.setsampwidth(2); w.setframerate(sr); w.writeframes(b''.join(vals))
-          def wood(seed, freqs, dur=.085):
+          def wood(seed, freqs):
               rng=random.Random(seed)
               phases=[rng.random()*math.tau for _ in freqs]
               def f(t,i,n):
@@ -41,9 +42,7 @@ jobs:
           rng=random.Random(404)
           def whoosh(t,i,n):
               env=math.sin(math.pi*min(1,t/.16))**.55
-              noise=(rng.random()*2-1)*.24
-              body=math.sin(math.tau*(155+900*t)*t)*.11
-              return (noise+body)*env*(1-t/.18)
+              return ((rng.random()*2-1)*.24+math.sin(math.tau*(155+900*t)*t)*.11)*env*(1-t/.18)
           write('throw_whoosh.wav',.18,whoosh)
           rng2=random.Random(505)
           def land(t,i,n):
