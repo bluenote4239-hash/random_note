@@ -15,7 +15,7 @@ jobs:
         run: |
           set -euo pipefail
           find molkky -name '*.js' -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
-      - name: Architecture rules and assets
+      - name: Architecture rules assets and startup order
         shell: python
         run: |
           from pathlib import Path
@@ -25,12 +25,16 @@ jobs:
             'core/character-manager.js','characters/gal01/pack.js','characters/gal01/atlas.webp',
             'core/stage-manager.js','stages/seaside90s/pack.js',
             'core/audio-manager.js','audio/voices/gal01/pack.js','audio/se/default/pack.js',
-            'audio/bgm/ievan_v29/engine.js','audio/bgm/ievan_v29/pack.js','core/selftest.js'
+            'core/legacy-game-bridge.js','audio/bgm/ievan_v29/engine.js',
+            'audio/bgm/ievan_v29/pack.js','core/selftest.js'
           ]
           for r in refs:
             assert (root/r).exists(), r
           for r in [x for x in refs if not x.endswith('.webp')]:
             assert r in idx, 'not loaded: '+r
+          assert idx.index('core/legacy-game-bridge.js') < idx.index('game.js'), 'legacy bridge must precede fixed game core'
+          assert idx.index('characters/gal01/pack.js') < idx.index('game.js'), 'character pack must precede game core'
+          assert idx.index('audio/voices/gal01/pack.js') < idx.index('game.js'), 'voice pack must precede game core'
           assert 'assets.js' not in idx, 'legacy character asset still loaded'
           assert 'bgm29.js' not in idx, 'root BGM still loaded'
           assert (root/'characters/gal01/atlas.webp').stat().st_size>1000
