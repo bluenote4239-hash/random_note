@@ -1,1 +1,1 @@
-(function(){'use strict';if(!window.StageManager)throw Error('StageManager missing');window.bg=function(){StageManager.draw(ctx,W,H)};window.addEventListener('molkky:stagechange',function(){try{draw()}catch(e){console.error(e)}});try{draw()}catch(e){console.error('stage redraw',e)}})();
+(function(){'use strict';if(!window.StageManager)throw Error('StageManager missing');function draw(ctx,w,h){return StageManager.draw(ctx,w,h)}window.StageRuntime={draw:draw};})();
