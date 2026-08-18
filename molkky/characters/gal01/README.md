@@ -1,0 +1,1 @@
+Character assets are kept outside the game logic. Runtime should reference only files in this directory through CharacterManager. No atlas-coordinate cropping should be used for gameplay presentation.
