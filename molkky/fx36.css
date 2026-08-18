@@ -1,0 +1,8 @@
+#impactFx{position:absolute;inset:0;width:100%;height:100%;z-index:29;pointer-events:none;image-rendering:auto}
+#game.fx-hit{animation:fx-hit-shake .22s steps(2,end)}
+#game.fx-crush{animation:fx-crush-shake .34s steps(2,end)}
+@keyframes fx-hit-shake{0%,100%{transform:translate(0,0)}20%{transform:translate(-5px,2px) rotate(-.15deg)}45%{transform:translate(5px,-3px) rotate(.12deg)}70%{transform:translate(-3px,-1px)}}
+@keyframes fx-crush-shake{0%,100%{transform:translate(0,0)}12%{transform:translate(-10px,4px) rotate(-.25deg)}28%{transform:translate(9px,-6px) rotate(.22deg)}44%{transform:translate(-7px,-2px)}60%{transform:translate(6px,4px)}78%{transform:translate(-3px,-2px)}}
+#fxBadge{position:absolute;left:50%;top:max(8px,env(safe-area-inset-top));z-index:28;transform:translateX(-50%) skew(-8deg);padding:4px 12px;background:#ffea2f;color:#1a0a26;border:3px solid #fff;box-shadow:4px 4px 0 #7c174f;font:1000 12px/1 Arial,sans-serif;letter-spacing:1px;pointer-events:none}
+@media(max-width:900px){#fxBadge{font-size:10px;top:max(5px,env(safe-area-inset-top));padding:3px 8px}#impactFx{z-index:27}}
+@media(prefers-reduced-motion:reduce){#game.fx-hit,#game.fx-crush{animation:none}}
