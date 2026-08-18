@@ -1,0 +1,1 @@
+(function(){'use strict';if(!window.AudioManager)throw Error('AudioManager missing');AudioManager.registerBgm('ievan_v29',{version:'v29',start:function(){if(window.__BGM_V29__&&typeof __BGM_V29__.start==='function')return __BGM_V29__.start();if(typeof window.startBgm==='function')return window.startBgm();throw Error('v29 engine missing')}});})();
