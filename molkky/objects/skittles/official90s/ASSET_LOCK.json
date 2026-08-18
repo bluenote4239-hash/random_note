@@ -1,0 +1,20 @@
+{
+  "id": "official90s",
+  "status": "approved",
+  "activeDirectory": "objects/skittles/official90s/images",
+  "count": 12,
+  "files": {
+    "pin_01.webp": "cf5686c91d37241cda120b1a9171774e9faa4067bf46229bdfff73c20cd1ba89",
+    "pin_02.webp": "34b2a5669f5263555f500bc553db319bec2658d244a683aeafae8b01e272f645",
+    "pin_03.webp": "ae4011c1d800188d801e944405b890168666916dc226f4dc1df50b26172f5b13",
+    "pin_04.webp": "cdb77bf1e92c6918980206b30e8ae40e990a4442dcc6ade07349b3fa27ee4a8e",
+    "pin_05.webp": "30e86714b0fff28e3253c96670d7a7297f00f7de679baae22287cff83798f273",
+    "pin_06.webp": "7a5addf413d441b07770832e0a461a29aa8ce27873d6c3461f8636adbadb7a2a",
+    "pin_07.webp": "bf08aacd759e47d06f1e4f4c6244db0d87a4da3dc89418a22dc8209169366f89",
+    "pin_08.webp": "f115b1c7b7bf2bf31634059b54fa5e2443c42db8488ac9671dad435aec359d85",
+    "pin_09.webp": "2d69a086ca320bb8e4be5d9c7ab15fd0c8980e0810d4df1eef46482b93dd414b",
+    "pin_10.webp": "7d1d02907e684d0aaf6bee5181c05816bd4065028ac0e02356efdaf217a6095b",
+    "pin_11.webp": "c9103e2d61f9ebe02a5977a5400b320bd994430d3287bf952e5e19dded511825",
+    "pin_12.webp": "a52f171c79c49735322c9b8ed33fd8749845ea15d7caade75e81341237f464e9"
+  }
+}
