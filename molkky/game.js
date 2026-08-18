@@ -1,11 +1,10 @@
 const c=document.getElementById('c'),ctx=c.getContext('2d');c.width=1100;c.height=720;const W=c.width,H=c.height;
 const $=id=>document.getElementById(id),ui={score:$('score'),turn:$('turn'),miss:$('miss'),pf:$('pf'),af:$('af'),pv:$('pv'),av:$('av'),msg:$('centerMsg'),bubble:$('galBubble'),icon:$('galIcon'),cutin:$('cutin'),cutinImg:$('cutinImg'),cutinText:$('cutinText'),log:$('log'),go:$('gameover'),goTitle:$('goTitle'),goText:$('goText')};
-$('galFull').src=GAL_IMGS.full;ui.icon.src=GAL_IMGS.normal;ui.cutinImg.src=GAL_IMGS.joy;
-const voices=[['イェイ','https://amitaro.net/download/voice/401_ainote/yeah_01.wav'],['イェァー！','https://amitaro.net/download/voice/401_ainote/yeah_03.wav'],['ナイス♪','https://amitaro.net/download/voice/401_ainote/nice_01.wav'],['ナイス','https://amitaro.net/download/voice/401_ainote/nice_02.wav'],['やった♪','https://amitaro.net/download/voice/103_yorokobu/yatta_01.wav'],['やりぃ♪','https://amitaro.net/download/voice/103_yorokobu/yarii_01.wav'],['すごい！','https://amitaro.net/download/voice/111_ganbaru/sugoi_01.wav'],['さっすがぁ！','https://amitaro.net/download/voice/111_ganbaru/sassugaa_02.wav']];let recent=[];
+const voices=[['イェイ','audio/voices/gal01/yeah_01.wav'],['イェァー！','audio/voices/gal01/yeah_03.wav'],['ナイス♪','audio/voices/gal01/nice_01.wav'],['ナイス','audio/voices/gal01/nice_02.wav'],['やった♪','audio/voices/gal01/yatta_01.wav'],['やりぃ♪','audio/voices/gal01/yarii_01.wav'],['すごい！','audio/voices/gal01/sugoi_01.wav'],['さっすがぁ！','audio/voices/gal01/sassugaa_02.wav']];let recent=[];
 let pins=[],score=0,misses=0,turn=1,phase=0,meter=0,dir=1,power=0,accuracy=.5,raf=0,busy=false,aim={x:550,y:330},projectile=null;
-function setGal(e,t){ui.icon.src=GAL_IMGS[e]||GAL_IMGS.normal;if(t)ui.bubble.textContent=t}
+function setGal(e,t){if(t)ui.bubble.textContent=t}
 function flash(t,ms=650){ui.msg.textContent=t;ui.msg.classList.add('show');setTimeout(()=>ui.msg.classList.remove('show'),ms)}
-function cutin(k,l,e='joy',ms=850){ui.cutin.className=k+' show';ui.cutinText.textContent=l;ui.cutinImg.src=GAL_IMGS[e]||GAL_IMGS.joy;setTimeout(()=>ui.cutin.className='',ms)}
+function cutin(k,l,e='joy',ms=850){ui.cutin.className=k+' show';ui.cutinText.textContent=l;setTimeout(()=>ui.cutin.className='',ms)}
 function lg(t){ui.log.textContent=(t+'\n'+ui.log.textContent).slice(0,900)}
 function voice(d=0){setTimeout(()=>{let p=voices.map((_,i)=>i).filter(i=>!recent.includes(i));if(!p.length)p=voices.map((_,i)=>i);let i=p[Math.floor(Math.random()*p.length)];recent.push(i);while(recent.length>2)recent.shift();let a=new Audio(voices[i][1]);a.volume=.82;a.playbackRate=.98+Math.random()*.04;a.play().catch(()=>{})},d)}
 let ac=null,bgmTimer=null,bgmStep=0;function AC(){if(!ac)ac=new(AudioContext||webkitAudioContext)();if(ac.state==='suspended')ac.resume();return ac}
