@@ -10,5 +10,14 @@
     "surprise": {"sha256": "fb7be2cf9cb942eb4bcb9d7ffe7f458edea5eeb1a0bf75d22bd7c84aa3ebad1b", "bytes": 97569},
     "thinking": {"sha256": "95fe28d88370d589f79160f92ddf8f66049a7a3bc39f745de34b86f3ada85316", "bytes": 92530},
     "regret": {"sha256": "6a7fea2f894aec9a47dcb69ae4488c6704a0d9b94c0bc0cb23faf45bb3756692", "bytes": 87866}
+  },
+  "runtime_format": "webp",
+  "runtime_assets": {
+    "full": {"file": "full.webp", "sha256": "8e97c431a032c48743a90efaadb0da3bd76612507560bf6ad933fe08a7a46ccb", "bytes": 13230},
+    "normal": {"file": "normal.webp", "sha256": "e1a34997ae24f1916e5b5f80d471632d088841087f6f7d97969b8fa3c42adaf6", "bytes": 5374},
+    "joy": {"file": "joy.webp", "sha256": "916157eed658e18c0f360ee37ac35033b8ff70f3bcd2e5b117c028d59bb36213", "bytes": 5290},
+    "surprise": {"file": "surprise.webp", "sha256": "449eef81fc163569c1f516bfaef90f156f19825c0f207904ecdebe26020d35fc", "bytes": 5460},
+    "thinking": {"file": "thinking.webp", "sha256": "e7f899a7b42b438f527b67920577b42d09770215d0a39e4cfa0b3eab3094a12f", "bytes": 5350},
+    "regret": {"file": "regret.webp", "sha256": "da5d3d563bbaeaa47f3690c65dbd140c44bee05a25ac720815523832be2dd196", "bytes": 4048}
   }
 }
