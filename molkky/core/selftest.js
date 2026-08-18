@@ -1,6 +1,17 @@
 (function(){'use strict';
 function fail(m){console.error('SELFTEST FAIL',m);var e=document.getElementById('log');if(e)e.textContent='SELFTEST FAIL: '+m}
 function pass(){var e=document.getElementById('log');if(e)e.textContent='SELFTEST PASS / READY';console.log('SELFTEST PASS')}
+function decodeImages(def,done){
+var names=['full','normal','joy','surprise','thinking','regret'],left=names.length,ended=false;
+function bad(name,reason){if(ended)return;ended=true;done(Error('gal image '+name+' '+reason))}
+names.forEach(function(name){
+var url=def&&def.images&&def.images[name];if(!url)return bad(name,'path');
+var img=new Image();
+img.onload=function(){if(ended)return;if(!img.naturalWidth||!img.naturalHeight)return bad(name,'decode');left--;if(!left){ended=true;done(null)}};
+img.onerror=function(){bad(name,'load')};
+img.src=url;
+});
+}
 window.addEventListener('load',function(){setTimeout(function(){try{
 if(!window.CharacterManager||CharacterManager.list().length!==1)return fail('character registry');
 if(!window.StageManager||StageManager.list().length!==1)return fail('stage registry');
@@ -11,5 +22,5 @@ var vs=AudioManager.getVoices(ch.voiceSet),se=AudioManager.getSe('default');if(!
 if(!Array.isArray(pins)||pins.length!==12)return fail('12 pins');var nums=pins.map(function(p){return p.n}).sort(function(a,b){return a-b}).join(',');if(nums!=='1,2,3,4,5,6,7,8,9,10,11,12')return fail('pin numbers');
 var order=[[1,2],[3,10,4],[5,11,12,6],[7,9,8]],ys=[].concat.apply([],pins.map(function(p){return[p.y]})).filter(function(v,i,a){return a.indexOf(v)===i}).sort(function(a,b){return b-a}),got=ys.map(function(y){return pins.filter(function(p){return p.y===y}).sort(function(a,b){return a.x-b.x}).map(function(p){return p.n})});if(JSON.stringify(got)!==JSON.stringify(order))return fail('official formation');
 CharacterManager.renderAll('normal');var icon=document.getElementById('galIcon'),full=document.getElementById('galFull'),cut=document.getElementById('cutinImg');if(!icon.style.backgroundImage||icon.style.backgroundImage==='none')return fail('icon visual');if(!full.style.backgroundImage||full.style.backgroundImage==='none')return fail('full visual');if(!cut.style.backgroundImage||cut.style.backgroundImage==='none')return fail('cutin visual');
-StageRuntime.draw(ctx,W,H);draw();pass()
+decodeImages(ch,function(err){if(err)return fail(err.message);try{StageRuntime.draw(ctx,W,H);draw();pass()}catch(e){fail(e&&e.message?e.message:String(e))}})
 }catch(e){fail(e&&e.message?e.message:String(e))}},250)})})();
