@@ -98,13 +98,14 @@ if(logBox)new MutationObserver(function(){
   contact(hit,fallen.length>=4);scoreFx(hit,fallen);setTimeout(run,1200);
 }).observe(logBox,{childList:true,characterData:true,subtree:true});
 function pointerWorld(clientX,clientY){var r=base.getBoundingClientRect();return{x:(clientX-r.left)*1100/r.width,y:(clientY-r.top)*720/r.height}}
+function screenToField(point){var y=(point.y-90)/.77;return{x:point.x-(y-360)*.055,y:y}}
 function targetChoice(world){
   var live=pins.filter(function(pin){return pin.state!=='fallen'}).map(function(pin){return{pin:pin,d:Math.hypot(pin.x-world.x,pin.y-world.y)}}).sort(function(a,b){return a.d-b.d});
   if(!live.length)return[];if(live[1]&&Math.abs(live[0].d-live[1].d)<12)return[live[0].pin,live[1].pin].sort(function(a,b){return a.n-b.n});return[live[0].pin];
 }
 function targetKey(list){return list.map(function(pin){return pin.n}).sort(function(a,b){return a-b}).join('/')}
 function applyTarget(clientX,clientY){
-  try{var world=pointerWorld(clientX,clientY),next=targetChoice(world),key=targetKey(next);if(!next.length)return'';aim.x=world.x;aim.y=world.y;targetAim=world;targetPins=next;targetPin=next[0];layer.dataset.target=key;layer.dataset.targetAim=Math.round(world.x)+','+Math.round(world.y);if(selectionLocked&&key!==lockedTargetKey){selectionLocked=false;lockedTargetKey='';delete layer.dataset.targetLocked}run();return key}catch(err){return''}
+  try{var screen=pointerWorld(clientX,clientY),world=screenToField(screen),next=targetChoice(world),key=targetKey(next);if(!next.length)return'';aim.x=world.x;aim.y=world.y;targetAim=world;targetPins=next;targetPin=next[0];layer.dataset.target=key;layer.dataset.targetAim=Math.round(world.x)+','+Math.round(world.y);if(selectionLocked&&key!==lockedTargetKey){selectionLocked=false;lockedTargetKey='';delete layer.dataset.targetLocked}run();return key}catch(err){return''}
 }
 function setTargetFromPointer(e){if(busy||phase!==0||selectionLocked)return;applyTarget(e.clientX,e.clientY)}
 function announceSelection(){
