@@ -43,7 +43,9 @@ jobs:
 
       - name: Build urls.json
         if: github.event_name != 'pull_request'
-        run: python tools/build_urls.py
+        # The official sitemap already represents live entries. Avoid serially
+        # probing hundreds of article URLs again on every scheduled build.
+        run: python tools/build_urls.py --no-validate-urls
 
       - name: Commit and push if changed
         if: github.event_name != 'pull_request'
