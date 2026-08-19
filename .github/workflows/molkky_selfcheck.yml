@@ -31,7 +31,6 @@ jobs:
           root = Path('molkky')
           manifest = json.loads((root / 'ACTIVE_RELEASE.json').read_text())
           index = (root / 'index.html').read_text()
-          fx = (root / 'fx36.html').read_text()
           game = (root / 'game.js').read_text()
 
           def git_blob_sha(path):
@@ -50,9 +49,15 @@ jobs:
               assert git_blob_sha(root / rel) == expected, f'fixed v35 file changed: {rel}'
 
           experiment = manifest['active_experiment']
-          assert experiment['effect_runtime_query'] in fx
+          experiment_entry = root / experiment['entrypoint'].split('?')[0]
+          assert experiment_entry.is_file(), f'missing experiment entrypoint: {experiment_entry}'
+          fx = experiment_entry.read_text()
           assert production['runtime_query'] in fx
           assert production['selftest_query'] in fx
+          for module in experiment['modules']:
+              module_path = root / module['path']
+              assert module_path.is_file(), f'missing experiment module: {module_path}'
+              assert module['html_src'] in fx, f'module not loaded: {module["path"]}'
 
           required = [
               'core/character-manager.js', 'characters/gal01/pack.js',
@@ -71,7 +76,8 @@ jobs:
               'galcompat.js', 'galfix.js', 'selftest.js',
               'core/bgm-continuity.js', 'audio/bgm/ievan_v29/engine.js',
               'gal/normal.webp.b64', 'characters/gal01/atlas.webp',
-              'stages/seaside90s/background.svg'
+              'stages/seaside90s/background.svg',
+              'fx36.html', 'fx36.css', 'core/impact-effects.js'
           ]
           for rel in forbidden_files:
               assert not (root / rel).exists(), f'legacy file exists: {rel}'

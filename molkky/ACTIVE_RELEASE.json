@@ -13,11 +13,22 @@
     }
   },
   "active_experiment": {
-    "version": "fx48",
-    "entrypoint": "fx36.html?v=48",
-    "effect_runtime_query": "core/impact-effects.js?v=47 + effects/manga_overdrive/engine.js?v=48",
+    "version": "fx49",
+    "entrypoint": "experiments/manga_overdrive/index.html?v=49",
     "base_version": "v35",
-    "scope": "input guidance, forward pin recovery, and isolated manga overdrive audiovisual effects prototype"
+    "scope": "input guidance, forward pin recovery, and isolated manga overdrive audiovisual effects prototype",
+    "modules": [
+      {
+        "role": "prototype_gameplay_assist",
+        "path": "experiments/manga_overdrive/prototype-runtime.js",
+        "html_src": "experiments/manga_overdrive/prototype-runtime.js?v=49"
+      },
+      {
+        "role": "manga_audiovisual_effects",
+        "path": "effects/manga_overdrive/engine.js",
+        "html_src": "effects/manga_overdrive/engine.js?v=49"
+      }
+    ]
   },
   "locked_assets": {
     "background": {
@@ -36,6 +47,17 @@
     "removed_to_git_history": [
       "stages/seaside90s/legacy/background_v27.svg"
     ],
-    "rule": "Do not restore, copy, or load retired files unless the user explicitly requests it. Historical prototypes belong in Git history, not in the active molkky directory."
+    "rule": "Do not restore, copy, or load retired files unless the user explicitly requests it. Historical prototypes belong in Git history, not in the active molkky directory.",
+    "retired_active_paths": [
+      "fx36.html",
+      "fx36.css",
+      "core/impact-effects.js"
+    ]
+  },
+  "directory_contract": {
+    "core": "shared production runtimes only",
+    "effects": "replaceable audiovisual effect packages only",
+    "experiments": "prototype entrypoints and prototype-only behavior",
+    "audio_characters_objects_stages": "locked content packages and their metadata"
   }
 }
