@@ -5,6 +5,10 @@ on:
     paths:
       - 'molkky/**'
       - '.github/workflows/molkky_selfcheck.yml'
+  pull_request:
+    paths:
+      - 'molkky/**'
+      - '.github/workflows/molkky_selfcheck.yml'
   workflow_dispatch:
 
 jobs:
