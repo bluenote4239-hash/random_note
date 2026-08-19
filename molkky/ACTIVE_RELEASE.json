@@ -13,20 +13,25 @@
     }
   },
   "active_experiment": {
-    "version": "fx50",
-    "entrypoint": "experiments/manga_overdrive/index.html?v=50",
+    "version": "fx51",
+    "entrypoint": "experiments/manga_overdrive/index.html?v=51",
     "base_version": "v35",
-    "scope": "input guidance, forward pin recovery, isolated manga overdrive effects, and score-40 final approach assistance",
+    "scope": "input guidance, forward pin recovery, isolated manga overdrive visuals and impact audio, and score-40 final approach assistance",
     "modules": [
       {
         "role": "prototype_gameplay_assist",
         "path": "experiments/manga_overdrive/prototype-runtime.js",
-        "html_src": "experiments/manga_overdrive/prototype-runtime.js?v=50"
+        "html_src": "experiments/manga_overdrive/prototype-runtime.js?v=51"
       },
       {
-        "role": "manga_audiovisual_effects",
+        "role": "manga_visual_effects",
         "path": "effects/manga_overdrive/engine.js",
-        "html_src": "effects/manga_overdrive/engine.js?v=50"
+        "html_src": "effects/manga_overdrive/engine.js?v=51"
+      },
+      {
+        "role": "manga_impact_audio",
+        "path": "audio/se/manga_overdrive/synth.js",
+        "html_src": "audio/se/manga_overdrive/synth.js?v=51"
       }
     ]
   },
@@ -56,8 +61,9 @@
   },
   "directory_contract": {
     "core": "shared production runtimes only",
-    "effects": "replaceable audiovisual effect packages only",
+    "effects": "replaceable visual effect packages only; no audio APIs or synthesis",
     "experiments": "prototype entrypoints and prototype-only behavior",
-    "audio_characters_objects_stages": "locked content packages and their metadata"
+    "audio": "all sound generation, sound assets, and audio package metadata",
+    "characters_objects_stages": "locked visual content packages and their metadata"
   }
 }

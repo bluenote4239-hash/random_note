@@ -59,6 +59,13 @@ jobs:
               assert module_path.is_file(), f'missing experiment module: {module_path}'
               assert module['html_src'] in fx, f'module not loaded: {module["path"]}'
 
+          effect_sources = '\n'.join(path.read_text() for path in (root / 'effects').rglob('*.js'))
+          for forbidden_api in ['AudioContext', 'webkitAudioContext', 'createOscillator', 'createBuffer']:
+              assert forbidden_api not in effect_sources, f'audio API leaked into effects/: {forbidden_api}'
+          impact_audio = root / 'audio/se/manga_overdrive/synth.js'
+          assert impact_audio.is_file(), 'missing isolated manga impact audio'
+          assert 'AudioContext' in impact_audio.read_text(), 'impact audio synthesis is not in audio/'
+
           required = [
               'core/character-manager.js', 'characters/gal01/pack.js',
               'core/stage-manager.js', 'stages/seaside90s/pack.js',

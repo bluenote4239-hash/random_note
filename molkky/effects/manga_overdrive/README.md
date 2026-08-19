@@ -1,8 +1,8 @@
 # Manga overdrive effect package
 
-Replaceable audiovisual presentation only.
+Replaceable visual presentation only.
 
-- `engine.js`: canvas flashes, rays, lightning, debris, impact typography, and synthesized impact audio.
+- `engine.js`: canvas flashes, rays, lightning, debris, and impact typography.
 - `style.css`: effect-layer stacking and screen-shake animations.
 
-This package must not contain scoring, collision, pin recovery, targeting, or official-rule logic.
+This package must not contain WebAudio/audio synthesis, scoring, collision, pin recovery, targeting, or official-rule logic. Experimental sound belongs under `audio/`.
