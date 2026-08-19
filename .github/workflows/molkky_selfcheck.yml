@@ -5,13 +5,17 @@ on:
     paths:
       - 'molkky/**'
       - '.github/workflows/molkky_selfcheck.yml'
+  pull_request:
+    paths:
+      - 'molkky/**'
+      - '.github/workflows/molkky_selfcheck.yml'
   workflow_dispatch:
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: JavaScript syntax
         shell: bash
@@ -26,6 +30,7 @@ jobs:
         run: |
           import hashlib
           import json
+          import re
           from pathlib import Path
 
           root = Path('molkky')
@@ -40,20 +45,24 @@ jobs:
           def sha256(path):
               return hashlib.sha256(path.read_bytes()).hexdigest()
 
-          production = manifest['production']
-          assert manifest['status'] == 'prototype_locked'
-          assert production['version'] == 'v35'
-          assert production['runtime_query'] in index
-          assert production['selftest_query'] in index
-          for rel, expected in production['protected_git_blobs'].items():
+          legacy = manifest['legacy_reference']
+          baseline = manifest['prototype_baseline']
+          assert manifest['schema_version'] == 2
+          assert manifest['status'] == 'active_development'
+          assert legacy['version'] == 'v35'
+          assert legacy['status'] == 'frozen_history_only'
+          assert legacy['runtime_query'] in index
+          assert legacy['selftest_query'] in index
+          for rel, expected in legacy['protected_git_blobs'].items():
               assert git_blob_sha(root / rel) == expected, f'fixed v35 file changed: {rel}'
 
           experiment = manifest['active_experiment']
           experiment_entry = root / experiment['entrypoint'].split('?')[0]
           assert experiment_entry.is_file(), f'missing experiment entrypoint: {experiment_entry}'
           fx = experiment_entry.read_text()
-          assert production['runtime_query'] in fx
-          assert production['selftest_query'] in fx
+          assert baseline['version'] == 'local-match-v59'
+          assert baseline['commit'] == 'b4accab286f49f753b05a77ab63423be42da289b'
+          assert experiment['base_version'] == baseline['version']
           for module in experiment['modules']:
               module_path = root / module['path']
               assert module_path.is_file(), f'missing experiment module: {module_path}'
@@ -67,12 +76,12 @@ jobs:
           assert 'AudioContext' in impact_audio.read_text(), 'impact audio synthesis is not in audio/'
 
           bgm_pack = (root / 'audio/bgm/ievan_v29/pack.js').read_text()
-          bgm_runtime = (root / 'audio/bgm/ievan_v29/file-player.js').read_text()
+          bgm_runtime = (root / 'experiments/local_versus/file-bgm-player.js').read_text()
           shared_audio_runtime = (root / 'core/audio-runtime.js').read_text()
           assert "src:'audio/bgm/ievan_v29/ievan_v29.wav'" in bgm_pack
           assert sha256(root / 'audio/bgm/ievan_v29/ievan_v29.wav') == 'f275b957e9b1ca88321ace882c669e1e5f3b4890aedb5ee77ab60b4ab09f69fa'
-          assert "SRC='audio/bgm/ievan_v29/ievan_v29.wav'" in bgm_runtime
-          assert 'decodeAudioData' in bgm_runtime and 'source.loop=true' in bgm_runtime
+          assert "MolkkyContent.required('audio.bgm')" in bgm_runtime
+          assert 'decodeAudioData' in bgm_runtime and 'source.loop=definition.loop!==false' in bgm_runtime
           assert 'createOscillator' not in bgm_runtime and 'createBuffer(' not in bgm_runtime
           assert '__BGM_V29__' not in shared_audio_runtime
           assert 'bgmRequested=false' in ''.join(shared_audio_runtime.split())
@@ -127,6 +136,36 @@ jobs:
           assert 'f.length===1?f[0].n:f.length' in compact
           assert 'misses>=3' in compact
 
+          content_pack_path = root / experiment['prototype_content']
+          content_pack = content_pack_path.read_text()
+          assert "id:'prototype-v59'" in content_pack
+          assert "background:{src:'stages/" in content_pack
+          assert "fit:'stretch'" in content_pack
+          assert "text:{" in content_pack and "audio:{" in content_pack and "images:{" in content_pack
+          asset_refs = re.findall(r"['\"]([^'\"]+\.(?:webp|wav)(?:\?v=\d+)?)['\"]", content_pack)
+          assert len(set(asset_refs)) >= 20
+          for reference in asset_refs:
+              assert (root / reference.split('?')[0]).is_file(), f'content asset missing: {reference}'
+
+          prototype_game = (root / 'experiments/local_versus/game-runtime.js').read_text()
+          prototype_compact = ''.join(prototype_game.split())
+          for gameplay_lock in ['FIELD_Y_SHIFT=80', '[[[1,-36],[2,36]],[[3,-72],[10,0],[4,72]],[[5,-108],[11,-36],[12,36],[6,108]],[[7,-72],[9,0],[8,72]]]', 'score>50){score=25', 'f.length===1?f[0].n:f.length', 'misses>=3']:
+              assert gameplay_lock in prototype_compact, f'prototype gameplay drift: {gameplay_lock}'
+          system_sources = [
+              prototype_game,
+              (root / 'experiments/local_versus/match-runtime.js').read_text(),
+              (root / 'experiments/local_versus/content-runtime.js').read_text(),
+              bgm_runtime,
+              (root / 'experiments/manga_overdrive/prototype-runtime.js').read_text(),
+              (root / 'effects/manga_overdrive/engine.js').read_text(),
+              (root / 'experiments/local_versus/game-selftest.js').read_text(),
+          ]
+          for source in system_sources:
+              for physical_root in ['stages/', 'characters/', 'objects/', 'audio/']:
+                  assert physical_root not in source, f'physical content path leaked into runtime: {physical_root}'
+          for source in system_sources:
+              assert not re.search(r'[\u3040-\u30ff\u3400-\u9fff]', source), 'replaceable Japanese copy leaked into gameplay runtime'
+
           versus = (root / 'experiments/local_versus/match-runtime.js').read_text()
           versus_compact = ''.join(versus.split())
           assert 'players=[makePlayer' in versus_compact
@@ -150,7 +189,7 @@ jobs:
           assert '#game.match-setup-open#versusHud' in versus_css
 
           versus_selftest = ''.join((root / 'experiments/local_versus/match-selftest.js').read_text().split())
-          for required_check in ['initialmatchstate', 'uprightsharedboard', 'defaultCPUopponent', 'weakCPUplan', 'storedWAVsource', 'opponentselector', 'setupscroll', 'setupbounds', 'pre-startHUD', 'nameinputguard', 'restartbinding']:
+          for required_check in ['v59contentpack', 'contentfileBGMruntime', 'contentbinding', 'imagepackbinding', 'contentcatalog', 'initialmatchstate', 'uprightsharedboard', 'defaultCPUopponent', 'weakCPUplan', 'contentWAVsource', 'opponentselector', 'setupscroll', 'setupbounds', 'pre-startHUD', 'nameinputguard', 'restartbinding']:
               assert required_check in versus_selftest
 
           print('MOLKKY ACTIVE RELEASE SELFTEST PASS')
