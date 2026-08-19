@@ -13,8 +13,8 @@
     }
   },
   "active_experiment": {
-    "version": "local-match-v58",
-    "entrypoint": "experiments/local_versus/index.html?v=58",
+    "version": "local-match-v59",
+    "entrypoint": "experiments/local_versus/index.html?v=59",
     "base_version": "v35",
     "scope": "same-device weak CPU or human two-player match with shared official board, continuous stored-file BGM, and the complete v52 manga-overdrive experiment",
     "modules": [

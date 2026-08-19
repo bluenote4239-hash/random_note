@@ -75,6 +75,7 @@ jobs:
           assert 'decodeAudioData' in bgm_runtime and 'source.loop=true' in bgm_runtime
           assert 'createOscillator' not in bgm_runtime and 'createBuffer(' not in bgm_runtime
           assert '__BGM_V29__' not in shared_audio_runtime
+          assert 'bgmRequested=false' in ''.join(shared_audio_runtime.split())
 
           required = [
               'core/character-manager.js', 'characters/gal01/pack.js',
