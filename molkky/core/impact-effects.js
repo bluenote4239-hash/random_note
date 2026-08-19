@@ -112,8 +112,8 @@ function announceSelection(){
   if(nums.length>1)setGal('surprise',nums[0]+'番……いや'+nums[1]+'番？どっち狙い！？');else setGal('normal',nums[0]+'番を狙うのね！');run();
 }
 function lockSelection(e){
-  if(busy||phase!==0||!targetPins.length)return;var synthetic=typeof e.clientX!=='number'||e.clientX===0&&e.clientY===0;
-  if(!synthetic)applyTarget(e.clientX,e.clientY);var key=targetKey(targetPins);if(!key)return;
+  if(busy||phase!==0)return;var synthetic=typeof e.clientX!=='number'||e.clientX===0&&e.clientY===0;
+  if(!synthetic)applyTarget(e.clientX,e.clientY);if(!targetPins.length)return;var key=targetKey(targetPins);if(!key)return;
   if(selectionLocked&&key===lockedTargetKey)return;
   selectionLocked=true;lockedTargetKey=key;layer.dataset.targetLocked=key;announceSelection();e.preventDefault();e.stopImmediatePropagation();
 }
