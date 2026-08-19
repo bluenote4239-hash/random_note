@@ -1,4 +1,5 @@
 #impactFx{position:absolute;inset:0;width:100%;height:100%;z-index:29;pointer-events:none;image-rendering:auto}
+#meters{pointer-events:none}
 #game.fx-hit{animation:fx-hit-shake .22s steps(2,end)}
 #game.fx-crush{animation:fx-crush-shake .34s steps(2,end)}
 @keyframes fx-hit-shake{0%,100%{transform:translate(0,0)}20%{transform:translate(-5px,2px) rotate(-.15deg)}45%{transform:translate(5px,-3px) rotate(.12deg)}70%{transform:translate(-3px,-1px)}}

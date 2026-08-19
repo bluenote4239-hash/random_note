@@ -101,7 +101,7 @@ function pointerWorld(clientX,clientY){var r=base.getBoundingClientRect();return
 function screenToField(point){var y=(point.y-90)/.77;return{x:point.x-(y-360)*.055,y:y}}
 function targetChoice(world){
   var live=pins.filter(function(pin){return pin.state!=='fallen'}).map(function(pin){return{pin:pin,d:Math.hypot(pin.x-world.x,pin.y-world.y)}}).sort(function(a,b){return a.d-b.d});
-  if(!live.length)return[];if(live[1]&&Math.abs(live[0].d-live[1].d)<12)return[live[0].pin,live[1].pin].sort(function(a,b){return a.n-b.n});return[live[0].pin];
+  if(!live.length||live[0].d>50)return[];if(live[1]&&Math.abs(live[0].d-live[1].d)<12)return[live[0].pin,live[1].pin].sort(function(a,b){return a.n-b.n});return[live[0].pin];
 }
 function targetKey(list){return list.map(function(pin){return pin.n}).sort(function(a,b){return a-b}).join('/')}
 function applyTarget(clientX,clientY){

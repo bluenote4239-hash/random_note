@@ -13,9 +13,9 @@
     }
   },
   "active_experiment": {
-    "version": "fx43",
-    "entrypoint": "fx36.html?v=43",
-    "effect_runtime_query": "core/impact-effects.js?v=43",
+    "version": "fx44",
+    "entrypoint": "fx36.html?v=44",
+    "effect_runtime_query": "core/impact-effects.js?v=44",
     "base_version": "v35",
     "scope": "input guidance and presentation effects only"
   },
