@@ -10,6 +10,10 @@ on:
     paths:
       - "tools/build_urls.py"
       - ".github/workflows/build_urls.yml"
+  pull_request:
+    paths:
+      - "tools/build_urls.py"
+      - ".github/workflows/build_urls.yml"
 
 permissions:
   contents: write
@@ -38,9 +42,11 @@ jobs:
           python -m py_compile tools/build_urls.py
 
       - name: Build urls.json
+        if: github.event_name != 'pull_request'
         run: python tools/build_urls.py
 
       - name: Commit and push if changed
+        if: github.event_name != 'pull_request'
         run: |
           if git diff --quiet -- urls.json; then
             echo "No changes in urls.json"
