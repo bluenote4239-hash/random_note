@@ -1,9 +1,18 @@
 #impactFx{position:absolute;inset:0;width:100%;height:100%;z-index:29;pointer-events:none;image-rendering:auto}
-#scoreBox,#goalBox,#galTag,#centerMsg,#log,#meters,#fxBadge{pointer-events:none}
+#scoreBox,#goalBox,#galTag,#centerMsg,#log,#meters,#fxBadge,#finalCall{pointer-events:none}
 #game.fx-hit{animation:fx-hit-shake .22s steps(2,end)}
 #game.fx-crush{animation:fx-crush-shake .34s steps(2,end)}
 @keyframes fx-hit-shake{0%,100%{transform:translate(0,0)}20%{transform:translate(-5px,2px) rotate(-.15deg)}45%{transform:translate(5px,-3px) rotate(.12deg)}70%{transform:translate(-3px,-1px)}}
 @keyframes fx-crush-shake{0%,100%{transform:translate(0,0)}12%{transform:translate(-10px,4px) rotate(-.25deg)}28%{transform:translate(9px,-6px) rotate(.22deg)}44%{transform:translate(-7px,-2px)}60%{transform:translate(6px,4px)}78%{transform:translate(-3px,-2px)}}
 #fxBadge{position:absolute;left:50%;top:max(8px,env(safe-area-inset-top));z-index:28;transform:translateX(-50%) skew(-8deg);padding:4px 12px;background:#ffea2f;color:#1a0a26;border:3px solid #fff;box-shadow:4px 4px 0 #7c174f;font:1000 12px/1 Arial,sans-serif;letter-spacing:1px;pointer-events:none}
-@media(max-width:900px){#fxBadge{font-size:10px;top:max(5px,env(safe-area-inset-top));padding:3px 8px}#impactFx{z-index:27}}
+#finalCall{position:absolute;left:50%;top:132px;z-index:32;min-width:310px;transform:translate(-50%,-18px) skew(-7deg) scale(.82);opacity:0;text-align:center;color:#fff;background:linear-gradient(100deg,rgba(14,4,30,.96),rgba(103,19,137,.94));border:5px solid #fff13a;box-shadow:0 0 0 5px #11061d,10px 10px 0 rgba(255,42,130,.75);transition:opacity .18s,transform .2s;overflow:hidden}
+#finalCall.show{opacity:1;transform:translate(-50%,0) skew(-7deg) scale(1)}
+#finalCall b{display:block;padding:5px 12px;background:#ff2a82;color:#fff13a;font:1000 18px/1 Impact,Arial Black,sans-serif;letter-spacing:3px}
+#finalCall span{display:block;padding:5px 18px 1px;font:1000 42px/.95 Impact,Arial Black,sans-serif;text-shadow:4px 4px 0 #12051d}
+#finalCall small{display:block;padding:4px 12px 7px;color:#7ff7ff;font:1000 13px/1 Arial Black,sans-serif;letter-spacing:1px}
+#finalCall.match{border-color:#5dfff5;box-shadow:0 0 0 5px #11061d,0 0 38px #5dfff5,10px 10px 0 rgba(255,42,130,.8)}
+#finalCall.match b{background:#12b7c7;color:#fff}
+#finalCall.assist{animation:final-assist-pop .42s steps(2,end)}
+@keyframes final-assist-pop{0%,100%{filter:none}25%{filter:brightness(2.4) saturate(2.2);transform:translate(-50%,0) skew(-7deg) scale(1.18)}55%{filter:brightness(1.25);transform:translate(-50%,0) skew(-7deg) scale(.96)}}
+@media(max-width:900px){#fxBadge{font-size:10px;top:max(5px,env(safe-area-inset-top));padding:3px 8px}#impactFx{z-index:27}#finalCall{top:112px;min-width:260px}#finalCall span{font-size:34px}#finalCall small{font-size:11px}}
 @media(prefers-reduced-motion:reduce){#game.fx-hit,#game.fx-crush{animation:none}}

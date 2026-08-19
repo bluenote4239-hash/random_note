@@ -13,20 +13,20 @@
     }
   },
   "active_experiment": {
-    "version": "fx49",
-    "entrypoint": "experiments/manga_overdrive/index.html?v=49",
+    "version": "fx50",
+    "entrypoint": "experiments/manga_overdrive/index.html?v=50",
     "base_version": "v35",
-    "scope": "input guidance, forward pin recovery, and isolated manga overdrive audiovisual effects prototype",
+    "scope": "input guidance, forward pin recovery, isolated manga overdrive effects, and score-40 final approach assistance",
     "modules": [
       {
         "role": "prototype_gameplay_assist",
         "path": "experiments/manga_overdrive/prototype-runtime.js",
-        "html_src": "experiments/manga_overdrive/prototype-runtime.js?v=49"
+        "html_src": "experiments/manga_overdrive/prototype-runtime.js?v=50"
       },
       {
         "role": "manga_audiovisual_effects",
         "path": "effects/manga_overdrive/engine.js",
-        "html_src": "effects/manga_overdrive/engine.js?v=49"
+        "html_src": "effects/manga_overdrive/engine.js?v=50"
       }
     ]
   },

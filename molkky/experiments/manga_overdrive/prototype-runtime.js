@@ -2,6 +2,8 @@
 var game=document.getElementById('game'),base=document.getElementById('c');
 if(!game||!base)return;
 var layer=document.createElement('canvas');layer.id='impactFx';layer.width=1100;layer.height=720;game.appendChild(layer);
+var finalCall=document.createElement('div');finalCall.id='finalCall';finalCall.innerHTML='<b>FINAL APPROACH</b><span></span><small></small>';game.appendChild(finalCall);
+var finalPoints=finalCall.querySelector('span'),finalRoute=finalCall.querySelector('small');
 var g=layer.getContext('2d'),effects=[],running=0,targetPin=null,targetPins=[],targetAim=null,selectionLocked=false,lockedTargetKey='',selectionPulse=0,movedNumbers=new Set(),pendingRecovery=null,reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var TAU=Math.PI*2;
 function now(){return performance.now()}
@@ -109,14 +111,24 @@ function targetChoice(world){
   if(!live.length||live[0].d>50)return[];if(live[1]&&Math.abs(live[0].d-live[1].d)<12)return[live[0].pin,live[1].pin].sort(function(a,b){return a.n-b.n});return[live[0].pin];
 }
 function targetKey(list){return list.map(function(pin){return pin.n}).sort(function(a,b){return a-b}).join('/')}
+function finalRemaining(){return score>=40&&score<50?50-score:0}
+function syncFinalCall(){
+  var rem=finalRemaining(),exact=rem&&selectionLocked&&targetPins.length===1&&targetPin&&targetPin.n===rem;
+  finalCall.classList.toggle('show',!!rem);finalCall.classList.toggle('match',!!exact);
+  if(!rem){delete layer.dataset.finalRemaining;delete layer.dataset.finalTarget;return 0}
+  finalPoints.textContent='あと '+rem+'点！';finalRoute.textContent=exact?rem+'番＝フィニッシュターゲット':selectionLocked&&targetPins.length?targetKey(targetPins)+'番を狙撃中':'番号を選べ';
+  layer.dataset.finalRemaining=String(rem);if(exact)layer.dataset.finalTarget=String(rem);else delete layer.dataset.finalTarget;return rem;
+}
 function restoreTargetAim(){if(!targetAim)return;aim.x=targetAim.x;aim.y=targetAim.y;try{draw()}catch(e){}}
 function applyTarget(clientX,clientY){
   try{var screen=pointerWorld(clientX,clientY),world=screenToField(screen),next=targetChoice(world),key=targetKey(next);if(!next.length){if(selectionLocked)restoreTargetAim();return''}aim.x=world.x;aim.y=world.y;targetAim=world;targetPins=next;targetPin=next[0];layer.dataset.target=key;layer.dataset.targetAim=Math.round(world.x)+','+Math.round(world.y);if(selectionLocked&&key!==lockedTargetKey){selectionLocked=false;lockedTargetKey='';delete layer.dataset.targetLocked}run();return key}catch(err){return''}
 }
 function setTargetFromPointer(e){if(busy||phase!==0)return;if(selectionLocked){restoreTargetAim();return}applyTarget(e.clientX,e.clientY)}
 function announceSelection(){
-  var nums=targetPins.map(function(pin){return pin.n});selectionPulse=now();
-  if(nums.length>1)setGal('surprise',nums[0]+'番……いや'+nums[1]+'番？どっち狙い！？');else setGal('normal',nums[0]+'番を狙うのね！');run();
+  var nums=targetPins.map(function(pin){return pin.n}),rem;selectionPulse=now();rem=syncFinalCall();
+  if(rem&&nums.length===1&&nums[0]===rem)setGal('surprise','あと'+rem+'点！'+rem+'番で決めるのね！');
+  else if(rem)setGal('thinking','あと'+rem+'点！'+targetKey(targetPins)+'番を狙うのね！');
+  else if(nums.length>1)setGal('surprise',nums[0]+'番……いや'+nums[1]+'番？どっち狙い！？');else setGal('normal',nums[0]+'番を狙うのね！');run();
 }
 function lockSelection(e){
   if(busy||phase!==0)return;var synthetic=typeof e.clientX!=='number'||e.clientX===0&&e.clientY===0;
@@ -128,6 +140,13 @@ base.addEventListener('mousemove',setTargetFromPointer,{passive:true});
 base.addEventListener('touchstart',function(e){if(e.touches.length&&!busy&&phase===0){var t=e.touches[0];applyTarget(t.clientX,t.clientY)}},{passive:true});
 base.addEventListener('click',lockSelection,{capture:true});
 addEventListener('keydown',function(e){if(e.code==='Space')lockSelection(e)},{capture:true});
+function applyFinalAssist(){
+  var rem=finalRemaining();if(!rem||busy||phase!==2||!selectionLocked||targetPins.length!==1||!targetPin||targetPin.n!==rem)return;
+  var before=meter;meter=.5+(meter-.5)*.32;var af=document.getElementById('af'),av=document.getElementById('av');if(af)af.style.width=meter*100+'%';if(av)av.textContent=Math.round(meter*100);
+  layer.dataset.finalAssist=rem+':'+Math.round(before*100)+'>'+Math.round(meter*100);finalCall.classList.remove('assist');void finalCall.offsetWidth;finalCall.classList.add('assist');setTimeout(function(){finalCall.classList.remove('assist')},420);
+}
+base.addEventListener('click',applyFinalAssist,{capture:true});
+addEventListener('keydown',function(e){if(e.code==='Space')applyFinalAssist()},{capture:true});
 function applyForwardRecovery(){
   if(!pendingRecovery)return;var moves=[];
   pendingRecovery.items.forEach(function(item,i){var pin=null;try{pin=pins.find(function(p){return p.n===item.n})}catch(e){}if(!pin)return;
@@ -138,6 +157,7 @@ function applyForwardRecovery(){
   });
   layer.dataset.forwardRecovery=moves.join(',');pendingRecovery=null;try{draw()}catch(e){}run();
 }
-var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){applyForwardRecovery();targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
-var scoreBox=document.getElementById('score');if(scoreBox)new MutationObserver(function(){if(scoreBox.textContent==='0'&&turnBox&&turnBox.textContent==='TURN 1'){movedNumbers.clear();delete layer.dataset.numberBadges;run()}}).observe(scoreBox,{childList:true,characterData:true,subtree:true});
+var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){applyForwardRecovery();targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;var rem=syncFinalCall();if(rem)setGal('surprise','あと'+rem+'点！フィニッシュルート探そ！');run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
+var scoreBox=document.getElementById('score');if(scoreBox)new MutationObserver(function(){syncFinalCall();if(scoreBox.textContent==='0'&&turnBox&&turnBox.textContent==='TURN 1'){movedNumbers.clear();delete layer.dataset.numberBadges;delete layer.dataset.finalAssist;run()}}).observe(scoreBox,{childList:true,characterData:true,subtree:true});
+syncFinalCall();
 })();
