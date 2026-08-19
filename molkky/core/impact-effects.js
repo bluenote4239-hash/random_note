@@ -2,7 +2,7 @@
 var game=document.getElementById('game'),base=document.getElementById('c');
 if(!game||!base)return;
 var layer=document.createElement('canvas');layer.id='impactFx';layer.width=1100;layer.height=720;game.appendChild(layer);
-var g=layer.getContext('2d'),effects=[],running=0,targetPin=null,targetPins=[],targetAim=null,selectionLocked=false,lockedTargetKey='',selectionPulse=0,movedNumbers=new Set(),reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var g=layer.getContext('2d'),effects=[],running=0,targetPin=null,targetPins=[],targetAim=null,selectionLocked=false,lockedTargetKey='',selectionPulse=0,movedNumbers=new Set(),pendingRecovery=null,reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var TAU=Math.PI*2;
 function now(){return performance.now()}
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
@@ -99,6 +99,7 @@ if(logBox)new MutationObserver(function(){
   var m=first.match(/^FALLEN ([0-9,]+) \+/);if(!m)return;
   var ids=m[1].split(',').map(Number),fallen=[];ids.forEach(function(n){movedNumbers.add(n)});layer.dataset.numberBadges=Array.from(movedNumbers).sort(function(a,b){return a-b}).join(',');try{fallen=pins.filter(function(pin){return ids.indexOf(pin.n)>=0})}catch(e){}
   if(!fallen.length)return;var sx=0,sy=0;fallen.forEach(function(pin){var p=proj(pin.x,pin.y);sx+=p.x;sy+=p.y});var hit={x:sx/fallen.length,y:sy/fallen.length};
+  pendingRecovery={aimX:targetAim?targetAim.x:aim.x,power:power,items:fallen.map(function(pin){return{n:pin.n,x:pin.x,y:pin.y}})};
   contact(hit,fallen.length>=4);scoreFx(hit,fallen);setTimeout(run,1200);
 }).observe(logBox,{childList:true,characterData:true,subtree:true});
 function pointerWorld(clientX,clientY){var r=base.getBoundingClientRect();return{x:(clientX-r.left)*1100/r.width,y:(clientY-r.top)*720/r.height}}
@@ -127,6 +128,16 @@ base.addEventListener('mousemove',setTargetFromPointer,{passive:true});
 base.addEventListener('touchstart',function(e){if(e.touches.length&&!busy&&phase===0){var t=e.touches[0];applyTarget(t.clientX,t.clientY)}},{passive:true});
 base.addEventListener('click',lockSelection,{capture:true});
 addEventListener('keydown',function(e){if(e.code==='Space')lockSelection(e)},{capture:true});
-var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
+function applyForwardRecovery(){
+  if(!pendingRecovery)return;var moves=[];
+  pendingRecovery.items.forEach(function(item,i){var pin=null;try{pin=pins.find(function(p){return p.n===item.n})}catch(e){}if(!pin)return;
+    var chain=i===0?1:Math.max(.55,.88-i*.1),reach=(28+pendingRecovery.power*62)*chain,spread=(10+pendingRecovery.power*26)*(i===0?.45:1),side=item.x-pendingRecovery.aimX;
+    if(Math.abs(side)<6)side=item.n%2?-1:1;var wobble=(((item.n*17+turn*11)%19)-9)*.7;
+    pin.x=clamp(item.x+(side<0?-1:1)*spread+wobble,75,1025);pin.y=clamp(item.y-reach,150,595);
+    moves.push(item.n+':'+Math.round(item.y)+'>'+Math.round(pin.y));
+  });
+  layer.dataset.forwardRecovery=moves.join(',');pendingRecovery=null;try{draw()}catch(e){}run();
+}
+var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){applyForwardRecovery();targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
 var scoreBox=document.getElementById('score');if(scoreBox)new MutationObserver(function(){if(scoreBox.textContent==='0'&&turnBox&&turnBox.textContent==='TURN 1'){movedNumbers.clear();delete layer.dataset.numberBadges;run()}}).observe(scoreBox,{childList:true,characterData:true,subtree:true});
 })();

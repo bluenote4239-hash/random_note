@@ -13,11 +13,11 @@
     }
   },
   "active_experiment": {
-    "version": "fx46",
-    "entrypoint": "fx36.html?v=46",
-    "effect_runtime_query": "core/impact-effects.js?v=46",
+    "version": "fx47",
+    "entrypoint": "fx36.html?v=47",
+    "effect_runtime_query": "core/impact-effects.js?v=47",
     "base_version": "v35",
-    "scope": "input guidance and presentation effects only"
+    "scope": "input guidance, presentation effects, and forward pin recovery prototype"
   },
   "locked_assets": {
     "background": {
