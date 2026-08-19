@@ -13,10 +13,10 @@
     }
   },
   "active_experiment": {
-    "version": "fx52",
-    "entrypoint": "experiments/manga_overdrive/index.html?v=52",
+    "version": "local-versus-v53",
+    "entrypoint": "experiments/local_versus/index.html?v=53",
     "base_version": "v35",
-    "scope": "input guidance, forward pin recovery, isolated manga overdrive visuals and impact audio, and score-40 final approach assistance",
+    "scope": "same-device two-player pass-and-play with a shared official board, built on the complete v52 manga-overdrive experiment",
     "modules": [
       {
         "role": "prototype_gameplay_assist",
@@ -32,6 +32,11 @@
         "role": "manga_impact_audio",
         "path": "audio/se/manga_overdrive/synth.js",
         "html_src": "audio/se/manga_overdrive/synth.js?v=52"
+      },
+      {
+        "role": "local_versus_match_state",
+        "path": "experiments/local_versus/match-runtime.js",
+        "html_src": "experiments/local_versus/match-runtime.js?v=53"
       }
     ]
   },

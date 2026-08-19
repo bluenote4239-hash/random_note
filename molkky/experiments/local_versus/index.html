@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<base href="../../">
+<title>MÖLKKY GAL ARCADE — LOCAL VERSUS v53</title>
+<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="ipad.css?v=27">
+<link rel="stylesheet" href="experiments/manga_overdrive/shell.css?v=52">
+<link rel="stylesheet" href="effects/manga_overdrive/style.css?v=52">
+<link rel="stylesheet" href="experiments/local_versus/match.css?v=53">
+</head>
+<body>
+<div id="game">
+  <canvas id="c"></canvas>
+  <div id="galFull" aria-hidden="true"></div>
+  <div id="scan"></div>
+  <div id="scoreBox" class="card"><div class="lab">SCORE</div><div id="score">0</div><div id="turn">TURN 1</div></div>
+  <div id="goalBox" class="card"><div class="lab">TARGET</div><b>50 JUST</b><div id="miss">MISS × 0</div></div>
+
+  <section id="versusHud" aria-label="対戦スコア">
+    <article class="versus-player p1" id="playerCard0">
+      <div class="versus-side">1P</div><strong id="playerName0">PLAYER 1</strong>
+      <div class="versus-score"><span id="playerScore0">0</span><small>/ 50</small></div>
+      <div class="versus-miss" id="playerMiss0">MISS × 0</div>
+    </article>
+    <div id="versusCenter"><b>LOCAL<br>VERSUS</b><span id="roundLabel">THROW 1</span></div>
+    <article class="versus-player p2" id="playerCard1">
+      <div class="versus-side">2P</div><strong id="playerName1">PLAYER 2</strong>
+      <div class="versus-score"><span id="playerScore1">0</span><small>/ 50</small></div>
+      <div class="versus-miss" id="playerMiss1">MISS × 0</div>
+    </article>
+  </section>
+  <div id="turnCall" role="status" aria-live="polite"><small>NEXT THROW</small><b></b><span></span></div>
+
+  <div id="galCoach"><div id="galBubble">ナイスー！</div><div id="galIcon" role="img" aria-label="実況ギャル"></div></div>
+  <div id="galTag">GAL実況・うるさめ</div>
+  <div id="centerMsg"></div>
+  <div id="meters" class="card"><div class="row"><span>POWER</span><div class="bar"><div id="pf" class="fill"></div></div><span id="pv">0</span></div><div class="row"><span>ACCURACY</span><div class="bar"><div id="af" class="fill acc"></div></div><span id="av">0</span></div></div>
+  <div id="cutin"><div id="cutinSpeed"></div><div id="cutinPanel"></div><div id="cutinImg" role="img" aria-label="ギャルカットイン"></div><div id="cutinText"></div></div>
+  <div id="statusTip">スキットルを選択 / 画面タップ：POWER → ACCURACY → THROW</div><div id="log">READY</div>
+  <div id="fxBadge">LOCAL VERSUS v53</div>
+
+  <div id="matchSetup" class="show">
+    <form id="matchSetupForm" class="match-panel">
+      <p class="match-kicker">PASS &amp; PLAY</p>
+      <h1>2人対戦</h1>
+      <p class="match-rule">1台を交互に使用・盤面共有・50点ジャスト</p>
+      <label><span>1P</span><input id="playerInput0" maxlength="12" value="PLAYER 1" autocomplete="off"></label>
+      <div class="match-vs">VS</div>
+      <label><span>2P</span><input id="playerInput1" maxlength="12" value="PLAYER 2" autocomplete="off"></label>
+      <button type="submit">対戦開始</button>
+    </form>
+  </div>
+
+  <div id="gameover"><div class="box"><h1 id="goTitle">PERFECT 50!</h1><p id="goText"></p><button onclick="resetGame()">同じ2人でもう一戦</button><button id="changePlayers" type="button">名前を変える</button></div></div>
+</div>
+<script src="bootstrap.js?v=27"></script>
+<script src="core/character-manager.js?v=27"></script>
+<script src="characters/gal01/pack.js?v=27"></script>
+<script src="core/stage-manager.js?v=27"></script>
+<script src="stages/seaside90s/pack.js?v=28"></script>
+<script src="core/audio-manager.js?v=27"></script>
+<script src="audio/voices/gal01/pack.js?v=27"></script>
+<script src="audio/se/default/pack.js?v=27"></script>
+<script src="audio/bgm/ievan_v29/pack.js?v=27"></script>
+<script src="core/presentation-runtime.js?v=27"></script>
+<script src="core/stage-runtime.js?v=27"></script>
+<script src="core/audio-runtime.js?v=27"></script>
+<script src="audio/se/manga_overdrive/synth.js?v=52"></script>
+<script src="game.js?v=35"></script>
+<script src="experiments/manga_overdrive/prototype-runtime.js?v=52"></script>
+<script src="experiments/local_versus/match-runtime.js?v=53"></script>
+<script src="effects/manga_overdrive/engine.js?v=52"></script>
+<script src="ipad.js?v=28"></script>
+<script src="core/selftest.js?v=35"></script>
+<script src="experiments/local_versus/match-selftest.js?v=53"></script>
+</body>
+</html>

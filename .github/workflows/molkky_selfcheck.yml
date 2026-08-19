@@ -116,4 +116,12 @@ jobs:
           assert 'f.length===1?f[0].n:f.length' in compact
           assert 'misses>=3' in compact
 
+          versus = (root / 'experiments/local_versus/match-runtime.js').read_text()
+          versus_compact = ''.join(versus.split())
+          assert 'players=[makePlayer' in versus_compact
+          assert 'active=active?0:1' in versus_compact
+          assert 'pinBoard:pins.map' in versus_compact
+          assert "players[active].score=score" in versus_compact
+          assert "players[active].misses=misses" in versus_compact
+
           print('MOLKKY ACTIVE RELEASE SELFTEST PASS')
