@@ -104,10 +104,11 @@ function targetChoice(world){
   if(!live.length||live[0].d>50)return[];if(live[1]&&Math.abs(live[0].d-live[1].d)<12)return[live[0].pin,live[1].pin].sort(function(a,b){return a.n-b.n});return[live[0].pin];
 }
 function targetKey(list){return list.map(function(pin){return pin.n}).sort(function(a,b){return a-b}).join('/')}
+function restoreTargetAim(){if(!targetAim)return;aim.x=targetAim.x;aim.y=targetAim.y;try{draw()}catch(e){}}
 function applyTarget(clientX,clientY){
-  try{var screen=pointerWorld(clientX,clientY),world=screenToField(screen),next=targetChoice(world),key=targetKey(next);if(!next.length)return'';aim.x=world.x;aim.y=world.y;targetAim=world;targetPins=next;targetPin=next[0];layer.dataset.target=key;layer.dataset.targetAim=Math.round(world.x)+','+Math.round(world.y);if(selectionLocked&&key!==lockedTargetKey){selectionLocked=false;lockedTargetKey='';delete layer.dataset.targetLocked}run();return key}catch(err){return''}
+  try{var screen=pointerWorld(clientX,clientY),world=screenToField(screen),next=targetChoice(world),key=targetKey(next);if(!next.length){if(selectionLocked)restoreTargetAim();return''}aim.x=world.x;aim.y=world.y;targetAim=world;targetPins=next;targetPin=next[0];layer.dataset.target=key;layer.dataset.targetAim=Math.round(world.x)+','+Math.round(world.y);if(selectionLocked&&key!==lockedTargetKey){selectionLocked=false;lockedTargetKey='';delete layer.dataset.targetLocked}run();return key}catch(err){return''}
 }
-function setTargetFromPointer(e){if(busy||phase!==0||selectionLocked)return;applyTarget(e.clientX,e.clientY)}
+function setTargetFromPointer(e){if(busy||phase!==0)return;if(selectionLocked){restoreTargetAim();return}applyTarget(e.clientX,e.clientY)}
 function announceSelection(){
   var nums=targetPins.map(function(pin){return pin.n});selectionPulse=now();
   if(nums.length>1)setGal('surprise',nums[0]+'番……いや'+nums[1]+'番？どっち狙い！？');else setGal('normal',nums[0]+'番を狙うのね！');run();
