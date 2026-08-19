@@ -1,8 +1,9 @@
 (function(){'use strict';
+if(!window.MolkkyContent)throw Error('MolkkyContent missing');var T=function(path,vars){return MolkkyContent.text(path,vars)};
 var game=document.getElementById('game'),base=document.getElementById('c');
 if(!game||!base)return;
 var layer=document.createElement('canvas');layer.id='impactFx';layer.width=1100;layer.height=720;game.appendChild(layer);
-var finalCall=document.createElement('div');finalCall.id='finalCall';finalCall.innerHTML='<b>FINAL APPROACH</b><span></span><small></small>';game.appendChild(finalCall);
+var finalCall=document.createElement('div');finalCall.id='finalCall';finalCall.innerHTML='<b></b><span></span><small></small>';finalCall.querySelector('b').textContent=T('assist.finalTitle');game.appendChild(finalCall);
 var finalPoints=finalCall.querySelector('span'),finalRoute=finalCall.querySelector('small');
 var g=layer.getContext('2d'),effects=[],running=0,targetPin=null,targetPins=[],targetAim=null,selectionLocked=false,lockedTargetKey='',selectionPulse=0,movedNumbers=new Set(),pendingRecovery=null,finalCallTimer=0,reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var TAU=Math.PI*2;
@@ -39,7 +40,7 @@ function word(e,p){
   g.save();g.translate(e.x,y);g.rotate(e.angle||-.1);g.scale(scale,scale);g.textAlign='center';g.textBaseline='middle';
   g.font='1000 '+(e.strong?100:76)+'px Impact,Arial Black,sans-serif';g.lineJoin='round';g.globalAlpha=Math.min(1,p*7)*(1-Math.max(0,(p-.68)/.32));
   g.strokeStyle='#12061f';g.lineWidth=24;g.strokeText(e.label,0,0);g.strokeStyle=e.strong?'#ff276d':'#6931d4';g.lineWidth=14;g.strokeText(e.label,0,0);g.fillStyle='#fff35a';g.fillText(e.label,0,0);
-  g.fillStyle='#fff';g.globalAlpha*=.78;g.font='1000 '+(e.strong?27:21)+'px Arial Black,sans-serif';g.fillText('IMPACT!!',0,e.strong?72:57);g.restore();g.globalAlpha=1;
+  g.fillStyle='#fff';g.globalAlpha*=.78;g.font='1000 '+(e.strong?27:21)+'px Arial Black,sans-serif';g.fillText(T('assist.impact'),0,e.strong?72:57);g.restore();g.globalAlpha=1;
 }
 function drawTarget(t){
   if(!targetPins.length)return;var pair=targetPins.length>1,active=pair?Math.floor(t/105)%2:0,pin=targetPins[active],s;
@@ -56,7 +57,7 @@ function drawTarget(t){
   g.strokeStyle=pair?'#22eaff':'#fff36b';g.lineWidth=5;g.beginPath();g.ellipse(s.x,fy,rx+5,ry+4,0,0,TAU);g.stroke();
   [[-1,0],[1,0],[0,-1],[0,1]].forEach(function(d){var x1=s.x+d[0]*(rx+13),y1=fy+d[1]*(ry+11),x2=s.x+d[0]*(rx+28),y2=fy+d[1]*(ry+24);line(x1,y1,x2,y2,5,pair?'#ffea35':'#22eaff',1)});
   g.fillStyle='#ffea35';g.strokeStyle='#150b29';g.lineWidth=8;g.beginPath();g.moveTo(s.x,labelY+24);g.lineTo(s.x-12,labelY+5);g.lineTo(s.x+12,labelY+5);g.closePath();g.stroke();g.fill();
-  var text='TARGET '+pin.n,w=134,h=38,x=s.x-w/2,y=labelY-h;
+  var text=T('effects.target',{target:pin.n}),w=134,h=38,x=s.x-w/2,y=labelY-h;
   g.fillStyle='rgba(8,17,48,.94)';g.strokeStyle='#fff';g.lineWidth=8;g.beginPath();g.rect(x,y,w,h);g.stroke();g.fill();
   g.strokeStyle=pair?'#22eaff':'#ff3b9e';g.lineWidth=4;g.strokeRect(x,y,w,h);g.font='1000 24px Arial Black,Arial,sans-serif';g.fillStyle='#fff36b';g.strokeStyle='#000';g.lineWidth=5;g.strokeText(text,s.x,y+h/2+1);g.fillText(text,s.x,y+h/2+1);g.restore();
 }
@@ -73,7 +74,7 @@ function drawEffect(e,p){
   if(e.type==='hit'){radial(e.x,e.y,p,reduced?20:(e.strong?76:48),e.strong?'#fff05c':'#fff',e.strong);burst(e.x,e.y,p,e.strong);ring(e.x,e.y,p,e.strong);return}
   if(e.type==='bolt'){bolt(e.a,e.b,p,e.seed);return}
   if(e.type==='word'){word(e,p);return}
-  if(e.type==='miss'){g.save();g.globalAlpha=1-p;g.fillStyle='#d8efff';g.strokeStyle='#10284d';g.lineWidth=10;g.textAlign='center';g.font='1000 56px Arial Black,sans-serif';g.strokeText('スカッ…',e.x,e.y-p*18);g.fillText('スカッ…',e.x,e.y-p*18);g.restore()}
+  if(e.type==='miss'){g.save();g.globalAlpha=1-p;g.fillStyle='#d8efff';g.strokeStyle='#10284d';g.lineWidth=10;g.textAlign='center';g.font='1000 56px Arial Black,sans-serif';g.strokeText(T('assist.missMark'),e.x,e.y-p*18);g.fillText(T('assist.missMark'),e.x,e.y-p*18);g.restore()}
 }
 function shake(strong){var cls=strong?'fx-crush':'fx-hit';game.classList.remove('fx-hit','fx-crush');void game.offsetWidth;game.classList.add(cls);setTimeout(function(){game.classList.remove(cls)},strong?360:240)}
 function mark(kind){layer.dataset.last=kind;layer.dataset.count=String((Number(layer.dataset.count)||0)+1)}
@@ -81,7 +82,7 @@ function focus(p){mark('focus');add('focus',{x:p.x,y:p.y},reduced?220:520)}
 function contact(p,strong){mark('contact');add('flash',{alpha:strong?.72:.48,color:strong?'#fff8b5':'#fff'},90);add('hit',{x:p.x,y:p.y,strong:strong},strong?650:480);shake(strong)}
 function scoreFx(p,fallen){
   mark('score');
-  var strong=fallen.length>=4,label=fallen.length>=4?'ドッカーン!!':fallen.length>=2?'バキバキィ!!':fallen[0]&&fallen[0].n>=8?'ズギャァン!!':'ズバァン!!';
+  var strong=fallen.length>=4,label=T(fallen.length>=4?'assist.hitStrong':fallen.length>=2?'assist.hitMulti':fallen[0]&&fallen[0].n>=8?'assist.hitLong':'assist.hitSingle');
   var x=clamp(p.x,235,865),y=clamp(p.y,220,555);add('word',{x:x,y:y,label:label,strong:strong,angle:fallen.length%2?-.12:.08},strong?920:760);
   fallen.forEach(function(pin,i){var s=typeof proj==='function'?proj(pin.x,pin.y):p;add('bolt',{a:p,b:s,seed:i+pin.n*.17},strong?560:400)});
   if(strong)add('flash',{alpha:.35,color:'#ff296d'},180);
@@ -93,8 +94,8 @@ function aimPoint(){try{return proj(aim.x,aim.y)}catch(e){return{x:550,y:400}}}
 var centerMsg=document.getElementById('centerMsg'),logBox=document.getElementById('log'),lastLog='';
 if(centerMsg)new MutationObserver(function(){
   var text=centerMsg.textContent||'',p=aimPoint();
-  if(text==='THROW!')focus(p);
-  else if(text==='MISS!!')miss(p);
+  if(text===T('game.throw'))focus(p);
+  else if(text===T('game.missFlash'))miss(p);
 }).observe(centerMsg,{childList:true,characterData:true,subtree:true});
 if(logBox)new MutationObserver(function(){
   var first=(logBox.textContent||'').split('\n')[0];if(first===lastLog||first.indexOf('FALLEN ')!==0)return;lastLog=first;
@@ -122,7 +123,7 @@ function syncFinalCall(){
   var rem=finalRemaining(),exact=rem&&selectionLocked&&targetPins.length===1&&targetPin&&targetPin.n===rem;
   finalCall.classList.toggle('match',!!exact);
   if(!rem){hideFinalCall();delete layer.dataset.finalRemaining;delete layer.dataset.finalTarget;return 0}
-  finalPoints.textContent='あと '+rem+'点！';finalRoute.textContent=exact?rem+'番＝フィニッシュターゲット':selectionLocked&&targetPins.length?targetKey(targetPins)+'番を狙撃中':'番号を選べ';
+  finalPoints.textContent=T('assist.remaining',{points:rem});finalRoute.textContent=exact?T('assist.finishTarget',{points:rem}):selectionLocked&&targetPins.length?T('assist.aiming',{targets:targetKey(targetPins)}):T('assist.chooseNumber');
   layer.dataset.finalRemaining=String(rem);if(exact)layer.dataset.finalTarget=String(rem);else delete layer.dataset.finalTarget;return rem;
 }
 function restoreTargetAim(){if(!targetAim)return;aim.x=targetAim.x;aim.y=targetAim.y;try{draw()}catch(e){}}
@@ -132,9 +133,9 @@ function applyTarget(clientX,clientY){
 function setTargetFromPointer(e){if(busy||phase!==0)return;if(selectionLocked){restoreTargetAim();return}applyTarget(e.clientX,e.clientY)}
 function announceSelection(){
   var nums=targetPins.map(function(pin){return pin.n}),rem;selectionPulse=now();rem=syncFinalCall();
-  if(rem&&nums.length===1&&nums[0]===rem)setGal('surprise','あと'+rem+'点！'+rem+'番で決めるのね！');
-  else if(rem)setGal('thinking','あと'+rem+'点！'+targetKey(targetPins)+'番を狙うのね！');
-  else if(nums.length>1)setGal('surprise',nums[0]+'番……いや'+nums[1]+'番？どっち狙い！？');else setGal('normal',nums[0]+'番を狙うのね！');run();
+  if(rem&&nums.length===1&&nums[0]===rem)setGal('surprise',T('assist.finishCoach',{points:rem}));
+  else if(rem)setGal('thinking',T('assist.aimCoach',{points:rem,targets:targetKey(targetPins)}));
+  else if(nums.length>1)setGal('surprise',T('assist.pairCoach',{first:nums[0],second:nums[1]}));else setGal('normal',T('assist.singleCoach',{target:nums[0]}));run();
 }
 function lockSelection(e){
   if(busy||phase!==0)return;var synthetic=typeof e.clientX!=='number'||e.clientX===0&&e.clientY===0;
@@ -163,7 +164,7 @@ function applyForwardRecovery(){
   });
   layer.dataset.forwardRecovery=moves.join(',');pendingRecovery=null;try{draw()}catch(e){}run();
 }
-var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){applyForwardRecovery();targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;var rem=syncFinalCall();if(rem){setGal('surprise','あと'+rem+'点！フィニッシュルート探そ！');flashFinalCall(900)}run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
+var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){applyForwardRecovery();targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;var rem=syncFinalCall();if(rem){setGal('surprise',T('assist.routeCoach',{points:rem}));flashFinalCall(900)}run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
 var scoreBox=document.getElementById('score');if(scoreBox)new MutationObserver(function(){var rem=syncFinalCall();if(rem)flashFinalCall(900);if(scoreBox.textContent==='0'&&turnBox&&turnBox.textContent==='TURN 1'){movedNumbers.clear();delete layer.dataset.numberBadges;delete layer.dataset.finalAssist;run()}}).observe(scoreBox,{childList:true,characterData:true,subtree:true});
 syncFinalCall();
 })();
