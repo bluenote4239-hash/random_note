@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <base href="../../">
-<title>MÖLKKY GAL ARCADE — LOCAL MATCH</title>
+<title>MÖLKKY GAL ARCADE — LOCAL MATCH v61</title>
 <link rel="stylesheet" href="style.css?v=27">
 <link rel="stylesheet" href="ipad.css?v=27">
 <link rel="stylesheet" href="experiments/manga_overdrive/shell.css?v=52">
 <link rel="stylesheet" href="effects/manga_overdrive/style.css?v=52">
-<link rel="stylesheet" href="experiments/local_versus/match.css?v=60">
+<link rel="stylesheet" href="experiments/local_versus/match.css?v=61">
 </head>
 <body>
 <div id="game">
@@ -37,6 +37,12 @@
   <div id="galCoach"><div id="galBubble" data-content-text="ui.initialBubble"></div><div id="galIcon" role="img" aria-label="実況ギャル"></div></div>
   <div id="galTag" data-content-text="ui.coachTag"></div>
   <div id="centerMsg"></div>
+  <div id="throwStyles" class="card" role="group" aria-label="Throw style">
+    <span class="throw-style-title" data-content-text="throwStyles.label"></span>
+    <button type="button" data-throw-style="soft" aria-pressed="false"><b data-content-text="throwStyles.soft"></b><small data-content-text="throwStyles.softHint"></small></button>
+    <button type="button" data-throw-style="standard" aria-pressed="true"><b data-content-text="throwStyles.standard"></b><small data-content-text="throwStyles.standardHint"></small></button>
+    <button type="button" data-throw-style="smash" aria-pressed="false"><b data-content-text="throwStyles.smash"></b><small data-content-text="throwStyles.smashHint"></small></button>
+  </div>
   <div id="meters" class="card"><div class="row"><span data-content-text="ui.power"></span><div class="bar"><div id="pf" class="fill"></div></div><span id="pv">0</span></div><div class="row"><span data-content-text="ui.accuracy"></span><div class="bar"><div id="af" class="fill acc"></div></div><span id="av">0</span></div></div>
   <div id="cutin"><div id="cutinSpeed"></div><div id="cutinPanel"></div><div id="cutinImg" role="img" aria-label="ギャルカットイン"></div><div id="cutinText"></div></div>
   <div id="statusTip" data-content-text="ui.statusTip"></div><div id="log" data-content-text="ui.ready"></div>
@@ -62,7 +68,7 @@
 </div>
 <script src="bootstrap.js?v=27"></script>
 <script src="core/content-manager.js?v=60"></script>
-<script src="content/prototype_v59/pack.js?v=60"></script>
+<script src="content/prototype_v59/pack.js?v=61"></script>
 <script src="core/character-manager.js?v=27"></script>
 <script src="core/stage-manager.js?v=27"></script>
 <script src="core/audio-manager.js?v=58"></script>
@@ -72,13 +78,14 @@
 <script src="core/audio-runtime.js?v=59"></script>
 <script src="experiments/local_versus/file-bgm-player.js?v=60"></script>
 <script src="audio/se/manga_overdrive/synth.js?v=52"></script>
-<script src="experiments/local_versus/game-runtime.js?v=60"></script>
+<script src="experiments/local_versus/throw-styles.js?v=61"></script>
+<script src="experiments/local_versus/game-runtime.js?v=61"></script>
 <script src="experiments/manga_overdrive/prototype-runtime.js?v=52"></script>
 <script src="experiments/local_versus/cpu-easy.js?v=60"></script>
-<script src="experiments/local_versus/match-runtime.js?v=60"></script>
+<script src="experiments/local_versus/match-runtime.js?v=61"></script>
 <script src="effects/manga_overdrive/engine.js?v=52"></script>
 <script src="ipad.js?v=28"></script>
-<script src="experiments/local_versus/game-selftest.js?v=60"></script>
-<script src="experiments/local_versus/match-selftest.js?v=60"></script>
+<script src="experiments/local_versus/game-selftest.js?v=61"></script>
+<script src="experiments/local_versus/match-selftest.js?v=61"></script>
 </body>
 </html>

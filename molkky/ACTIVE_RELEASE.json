@@ -20,11 +20,11 @@
     "role": "source baseline for the content-pack migration; not the active release"
   },
   "active_experiment": {
-    "version": "local-match-v60-content-packs",
-    "entrypoint": "experiments/local_versus/index.html?v=60",
+    "version": "local-match-v61-throw-styles",
+    "entrypoint": "experiments/local_versus/index.html?v=61",
     "base_version": "local-match-v59",
     "prototype_content": "content/prototype_v59/pack.js",
-    "scope": "v59 local match promoted to a replaceable content-pack structure while preserving official gameplay, weak CPU, continuous stored-file BGM, and v52 manga-overdrive effects",
+    "scope": "v60 content-pack build extended with target zoom, a visible throwing Mölkky, and soft/standard/smash throw styles while preserving official scoring, shared-board rules, weak CPU, and stored-file BGM",
     "modules": [
       {
         "role": "content_registry",
@@ -34,7 +34,7 @@
       {
         "role": "prototype_v59_content",
         "path": "content/prototype_v59/pack.js",
-        "html_src": "content/prototype_v59/pack.js?v=60"
+        "html_src": "content/prototype_v59/pack.js?v=61"
       },
       {
         "role": "content_adapter",
@@ -42,9 +42,14 @@
         "html_src": "experiments/local_versus/content-runtime.js?v=60"
       },
       {
+        "role": "throw_style_selection",
+        "path": "experiments/local_versus/throw-styles.js",
+        "html_src": "experiments/local_versus/throw-styles.js?v=61"
+      },
+      {
         "role": "content_driven_gameplay",
         "path": "experiments/local_versus/game-runtime.js",
-        "html_src": "experiments/local_versus/game-runtime.js?v=60"
+        "html_src": "experiments/local_versus/game-runtime.js?v=61"
       },
       {
         "role": "prototype_gameplay_assist",
@@ -74,22 +79,22 @@
       {
         "role": "local_versus_match_state",
         "path": "experiments/local_versus/match-runtime.js",
-        "html_src": "experiments/local_versus/match-runtime.js?v=60"
+        "html_src": "experiments/local_versus/match-runtime.js?v=61"
       },
       {
         "role": "local_versus_ui",
         "path": "experiments/local_versus/match.css",
-        "html_src": "experiments/local_versus/match.css?v=60"
+        "html_src": "experiments/local_versus/match.css?v=61"
       },
       {
         "role": "content_game_selftest",
         "path": "experiments/local_versus/game-selftest.js",
-        "html_src": "experiments/local_versus/game-selftest.js?v=60"
+        "html_src": "experiments/local_versus/game-selftest.js?v=61"
       },
       {
         "role": "local_versus_selftest",
         "path": "experiments/local_versus/match-selftest.js",
-        "html_src": "experiments/local_versus/match-selftest.js?v=60"
+        "html_src": "experiments/local_versus/match-selftest.js?v=61"
       }
     ]
   },

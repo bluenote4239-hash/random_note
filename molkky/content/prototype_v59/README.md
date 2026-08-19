@@ -14,3 +14,7 @@ not know physical image, audio, or dialogue file names.
 
 New SE and voices are added to their arrays. Removing an item requires no runtime
 edit as long as each required category keeps at least one valid file.
+
+The throwing baton is independently replaceable through
+`images.throwingMolkky`. Its object package contains the editable SVG source;
+changing the visual never changes throw force or scoring.

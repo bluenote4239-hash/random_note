@@ -1,7 +1,7 @@
 const {chromium}=require('playwright');
 
 (async()=>{
-  const url=process.argv[2]||'http://127.0.0.1:4173/molkky/experiments/local_versus/index.html?v=60';
+  const url=process.argv[2]||'http://127.0.0.1:4173/molkky/experiments/local_versus/index.html?v=61';
   const browser=await chromium.launch({headless:true});
   const page=await browser.newPage({viewport:{width:1920,height:1080}});
   const problems=[];
@@ -20,13 +20,18 @@ const {chromium}=require('playwright');
     coreLog:document.getElementById('log').textContent,
     p1:document.getElementById('playerInput0').value,
     p2:document.getElementById('playerInput1').value,
-    p2Disabled:document.getElementById('playerInput1').disabled
+    p2Disabled:document.getElementById('playerInput1').disabled,
+    styles:MolkkyThrowStyles.list().map(style=>style.id),
+    selectedStyle:MolkkyThrowStyles.current().id,
+    throwingMolkky:MolkkyThrowView.assetReady()
   }));
-  if(initial.contentPack!=='prototype-v59'||initial.contentVersion!=='59'||!initial.backgroundReady||initial.fileCount<25||initial.selftest!=='pass'||!initial.p2Disabled)throw Error('initial content/setup check failed '+JSON.stringify(initial));
+  if(initial.contentPack!=='prototype-v59'||initial.contentVersion!=='59'||!initial.backgroundReady||initial.fileCount<26||initial.selftest!=='pass'||!initial.p2Disabled||initial.styles.join(',')!=='soft,standard,smash'||initial.selectedStyle!=='standard'||!initial.throwingMolkky)throw Error('initial content/setup check failed '+JSON.stringify(initial));
   await page.click('#matchSetupForm button[type="submit"]');
   await page.waitForFunction(()=>LocalVersus.snapshot().started&&LocalVersus.snapshot().activePlayer===1);
+  await page.click('#throwStyles [data-throw-style="soft"]');
   const target=await page.evaluate(()=>{const pin=pins.find(item=>item.n===4),point=proj(pin.x,pin.y),rect=c.getBoundingClientRect();return{x:rect.left+point.x*rect.width/W,y:rect.top+point.y*rect.height/H}});
-  await page.mouse.click(target.x,target.y);
+  await page.mouse.move(target.x,target.y);
+  await page.waitForFunction(()=>document.getElementById('game').dataset.targetZoom==='4');
   await page.mouse.click(target.x,target.y);
   await page.waitForTimeout(320);
   await page.mouse.click(target.x,target.y);
@@ -39,10 +44,13 @@ const {chromium}=require('playwright');
     selftest:document.getElementById('game').dataset.versusSelftest,
     checks:document.getElementById('game').dataset.versusChecks,
     recovery:document.getElementById('game').dataset.boardRecovery,
-    contentPack:document.getElementById('game').dataset.contentPack
+    contentPack:document.getElementById('game').dataset.contentPack,
+    selectedStyle:MolkkyThrowStyles.current().id,
+    throwingMolkky:document.getElementById('game').dataset.throwingMolkky,
+    targetZoom:document.getElementById('game').dataset.targetZoom
   }));
-  if(result.match.activePlayer!==1||result.match.throwCount<3||!result.match.boardReady||result.bgm.mode!=='content-file-buffer-loop'||result.bgm.pack!=='prototype-v59'||result.selftest!=='pass'||problems.length)throw Error('play check failed '+JSON.stringify({result,problems}));
-  await page.screenshot({path:process.env.MOLKKY_SCREENSHOT||'molkky-v60-smoke.png',fullPage:true});
+  if(result.match.activePlayer!==1||result.match.throwCount<3||!result.match.boardReady||result.match.throwStyle!=='soft'||result.selectedStyle!=='soft'||result.throwingMolkky!=='ready'||result.targetZoom!=='none'||result.bgm.mode!=='content-file-buffer-loop'||result.bgm.pack!=='prototype-v59'||result.selftest!=='pass'||problems.length)throw Error('play check failed '+JSON.stringify({result,problems}));
+  await page.screenshot({path:process.env.MOLKKY_SCREENSHOT||'molkky-v61-smoke.png',fullPage:true});
   console.log(JSON.stringify({initial,result,problems},null,2));
   await browser.close();
 })().catch(error=>{console.error(error);process.exitCode=1});

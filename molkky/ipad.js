@@ -67,5 +67,5 @@
   document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 
   const tip=document.getElementById('statusTip');
-  if(tip) tip.textContent='指で照準移動 / タップ：POWER → ACCURACY → THROW';
+  if(tip&&window.MolkkyContent) tip.textContent=MolkkyContent.text('ui.statusTip');
 })();
