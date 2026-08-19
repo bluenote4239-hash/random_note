@@ -123,5 +123,15 @@ jobs:
           assert 'pinBoard:pins.map' in versus_compact
           assert "players[active].score=score" in versus_compact
           assert "players[active].misses=misses" in versus_compact
+          assert "window.resetGame=resetGame" in versus_compact
+          assert "setup.dataset.spaceGuard='true'" in versus_compact
+
+          versus_css = ''.join((root / 'experiments/local_versus/match.css').read_text().split())
+          assert '#game{overflow:clip}' in versus_css
+          assert '#game.match-setup-open#versusHud' in versus_css
+
+          versus_selftest = ''.join((root / 'experiments/local_versus/match-selftest.js').read_text().split())
+          for required_check in ['initialmatchstate', 'setupscroll', 'setupbounds', 'pre-startHUD', 'nameinputguard', 'restartbinding']:
+              assert required_check in versus_selftest
 
           print('MOLKKY ACTIVE RELEASE SELFTEST PASS')

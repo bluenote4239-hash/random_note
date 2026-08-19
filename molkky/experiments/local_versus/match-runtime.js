@@ -1,6 +1,7 @@
 (function(){'use strict';
 var setup=document.getElementById('matchSetup'),form=document.getElementById('matchSetupForm'),changePlayers=document.getElementById('changePlayers'),turnCall=document.getElementById('turnCall');
 if(!setup||!form||!turnCall)return;
+var gameRoot=document.getElementById('game'),nameInputs=[document.getElementById('playerInput0'),document.getElementById('playerInput1')];
 var baseReset=resetGame,baseUpdate=update,baseFinish=finish,baseEnd=end;
 var players=[makePlayer('PLAYER 1'),makePlayer('PLAYER 2')],active=0,started=false,ended=false,throwCount=1,callTimer=0;
 function makePlayer(name){return{name:name,score:0,misses:0,disqualified:false}}
@@ -28,9 +29,9 @@ function callTurn(message){
 }
 function begin(names){
   players=[makePlayer(cleanName(names[0],'PLAYER 1')),makePlayer(cleanName(names[1],'PLAYER 2'))];active=0;throwCount=1;started=true;ended=false;
-  settleViewport();setup.classList.remove('show');baseReset();loadActive();baseUpdate();render();busy=false;callTurn('1P THROW');setTimeout(function(){setGal('joy',players[0].name+'から！ぶっ倒してこー！')},0);
+  settleViewport();setup.classList.remove('show');gameRoot.classList.remove('match-setup-open');baseReset();loadActive();baseUpdate();render();busy=false;callTurn('1P THROW');setTimeout(function(){setGal('joy',players[0].name+'から！ぶっ倒してこー！')},0);
 }
-function showSetup(){ended=false;started=false;busy=true;ui.go.classList.remove('show');setup.classList.add('show');document.getElementById('playerInput0').value=players[0].name;document.getElementById('playerInput1').value=players[1].name;render()}
+function showSetup(){ended=false;started=false;busy=true;ui.go.classList.remove('show');gameRoot.classList.add('match-setup-open');setup.classList.add('show');document.getElementById('playerInput0').value=players[0].name;document.getElementById('playerInput1').value=players[1].name;render()}
 update=function(){baseUpdate();recordActive();render()};
 finish=function(){
   recordActive();
@@ -45,12 +46,14 @@ end=function(title,text){
   render();
 };
 resetGame=function(){if(!started){showSetup();return}begin([players[0].name,players[1].name])};
+window.resetGame=resetGame;
 form.addEventListener('submit',function(e){e.preventDefault();begin([document.getElementById('playerInput0').value,document.getElementById('playerInput1').value])});
 changePlayers.addEventListener('click',function(e){e.preventDefault();showSetup()});
+nameInputs.forEach(function(input){input.addEventListener('keydown',function(e){if(e.code==='Space')e.stopPropagation()})});setup.dataset.spaceGuard='true';
 window.LocalVersus={
   start:function(a,b){begin([a,b])},
   showSetup:showSetup,
   snapshot:function(){recordActive();return{started:started,ended:ended,activePlayer:active+1,throwCount:throwCount,players:players.map(function(p){return Object.assign({},p)}),pinBoard:pins.map(function(p){return{n:p.n,x:p.x,y:p.y,state:p.state}})}}
 };
-busy=true;render();setup.classList.add('show');
+busy=true;gameRoot.classList.add('match-setup-open');render();setup.classList.add('show');
 })();
