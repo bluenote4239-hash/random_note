@@ -1,10 +1,19 @@
 # Local versus experiment
 
-Local CPU or two-player pass-and-play promoted from the v59 prototype. The v60
-runtime keeps v59 gameplay while separating replaceable content from system code.
+Local CPU or two-player pass-and-play promoted from the v59 prototype. The v61
+runtime keeps the v60 content separation and adds three learnable throw styles.
 
 Release naming: v35 is a frozen historical single-player reference, v59 is the
-prototype baseline, and v60 is the current development build.
+prototype baseline, v60 is the content-structure build, and v61 is current.
+
+- The closest aimed skittle is enlarged and highlighted; the first throw tap
+  locks that visual target until the throw resolves. Collision coordinates do
+  not change when the target is enlarged.
+- The throwing Mölkky has its own replaceable object asset and is visible both
+  at the throw line and rotating through the complete flight.
+- `throw-styles.js` owns SOFT, STANDARD, and SMASH presentation/force profiles.
+  Styles affect scatter, chain reach, and travel only. Official scoring and the
+  shared 12-skittle board rules are unchanged.
 
 - Both players use the same `pins` array, so the official shared board carries
   across turns.
@@ -33,4 +42,4 @@ prototype baseline, and v60 is the current development build.
 Background replacement is a one-line `images.stage.background.src` change in the
 content pack. `fit`, `anchorX`, and `anchorY` support images with a new composition.
 
-Entrypoint: `experiments/local_versus/index.html?v=60`
+Entrypoint: `experiments/local_versus/index.html?v=61`

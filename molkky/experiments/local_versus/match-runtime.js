@@ -40,7 +40,7 @@ function runCpuTurn(){
   later(function(){if(!isCpuTurn())return;showCpuTarget(plan);aim.x=plan.aim.x;aim.y=plan.aim.y;draw();flash('CPU AIM');setGal('surprise',T('match.cpuTarget',{target:plan.target.n}));
     later(function(){if(!isCpuTurn())return;phase=1;power=plan.power;meter=power;ui.pf.style.width=power*100+'%';ui.pv.textContent=Math.round(power*100);flash('CPU POWER');
       later(function(){if(!isCpuTurn())return;phase=2;accuracy=plan.accuracy;meter=accuracy;ui.af.style.width=accuracy*100+'%';ui.av.textContent=Math.round(accuracy*100);flash('CPU ACCURACY');
-        later(function(){if(!isCpuTurn())return;gameRoot.dataset.cpuState='throw';AudioRuntime.startBgm().catch(function(){});launch()},360)
+        later(function(){if(!isCpuTurn())return;gameRoot.dataset.cpuState='throw';AudioRuntime.startBgm().catch(function(){});launch(MolkkyThrowStyles.get('standard'))},360)
       },360)
     },360)
   },plan.thinkMs)
@@ -64,20 +64,20 @@ function callTurn(message){
 }
 function begin(names,mode){
   cancelCpu();opponentMode=mode==='human'?'human':'cpu';players=[makePlayer(cleanName(names[0],T('match.player1')),'human'),makePlayer(opponentMode==='cpu'?T('match.cpuName'):cleanName(names[1],T('match.player2')),opponentMode)];active=0;throwCount=1;started=true;ended=false;
-  settleViewport();setup.classList.remove('show');gameRoot.classList.remove('match-setup-open');baseReset();loadActive();baseUpdate();render();busy=false;AudioRuntime.startBgm().catch(function(){});callTurn(T('match.sideThrow',{side:1}));setTimeout(function(){setGal('joy',T('match.opening',{player:players[0].name}))},0);
+  settleViewport();setup.classList.remove('show');gameRoot.classList.remove('match-setup-open');baseReset();loadActive();baseUpdate();render();busy=false;MolkkyThrowStyles.lock(false);AudioRuntime.startBgm().catch(function(){});callTurn(T('match.sideThrow',{side:1}));setTimeout(function(){setGal('joy',T('match.opening',{player:players[0].name}))},0);
 }
-function showSetup(){cancelCpu();ended=false;started=false;busy=true;ui.go.classList.remove('show');gameRoot.classList.add('match-setup-open');setup.classList.add('show');nameInputs[0].value=players[0].name;modeInputs.forEach(function(input){input.checked=input.value===opponentMode});nameInputs[1].value=opponentMode==='cpu'?T('match.cpuName'):players[1].name;syncModeSetup();render()}
+function showSetup(){cancelCpu();ended=false;started=false;busy=true;MolkkyThrowStyles.lock(true);ui.go.classList.remove('show');gameRoot.classList.add('match-setup-open');setup.classList.add('show');nameInputs[0].value=players[0].name;modeInputs.forEach(function(input){input.checked=input.value===opponentMode});nameInputs[1].value=opponentMode==='cpu'?T('match.cpuName'):players[1].name;syncModeSetup();render()}
 update=function(){baseUpdate();recordActive();render()};
 finish=function(){
   cancelCpu();
   settleSharedBoard();
   recordActive();
-  if(players[active].misses>=3){players[active].disqualified=true;ended=true;busy=true;phase=0;meter=0;ui.pf.style.width=ui.af.style.width='0';ui.pv.textContent=ui.av.textContent='0';baseUpdate();render();draw();return}
+  if(players[active].misses>=3){players[active].disqualified=true;ended=true;busy=true;MolkkyThrowStyles.lock(true);phase=0;meter=0;ui.pf.style.width=ui.af.style.width='0';ui.pv.textContent=ui.av.textContent='0';baseUpdate();render();draw();return}
   active=active?0:1;loadActive();throwCount++;baseFinish();render();callTurn(T('match.sideThrow',{side:active+1}));setTimeout(function(){setGal(players[active].misses===2?'thinking':'normal',T(players[active].misses===2?'match.turnDanger':'match.turnSafe',{player:players[active].name}))},0);
   scheduleCpu();
 };
 end=function(title,text){
-  cancelCpu();recordActive();ended=true;busy=true;
+  cancelCpu();recordActive();ended=true;busy=true;MolkkyThrowStyles.lock(true);
   var winner,loser;
   if(players[0].disqualified||players[1].disqualified){loser=players[0].disqualified?players[0]:players[1];winner=players[0].disqualified?players[1]:players[0];baseEnd(T('match.winTitle',{winner:winner.name}),T('match.disqualified',{loser:loser.name,winnerScore:winner.score,loserScore:loser.score}))}
   else{winner=players[active];baseEnd(T('match.winTitle',{winner:winner.name}),T('match.perfect',{winner:winner.name,p1:players[0].name,p1Score:players[0].score,p2Score:players[1].score,p2:players[1].name}))}
@@ -92,7 +92,7 @@ nameInputs.forEach(function(input){input.addEventListener('keydown',function(e){
 window.LocalVersus={
   start:function(a,b,mode){begin([a,b],mode)},
   showSetup:showSetup,
-  snapshot:function(){recordActive();return{started:started,ended:ended,activePlayer:active+1,throwCount:throwCount,opponentMode:opponentMode,cpuPending:cpuTimers.length>0,boardReady:pins.every(function(p){return p.state==='standing'&&!p.rot&&!p.lean}),players:players.map(function(p){return Object.assign({},p)}),pinBoard:pins.map(function(p){return{n:p.n,x:p.x,y:p.y,state:p.state,rot:p.rot,lean:p.lean}})}}
+  snapshot:function(){recordActive();return{started:started,ended:ended,activePlayer:active+1,throwCount:throwCount,opponentMode:opponentMode,throwStyle:MolkkyThrowStyles.current().id,cpuPending:cpuTimers.length>0,boardReady:pins.every(function(p){return p.state==='standing'&&!p.rot&&!p.lean}),players:players.map(function(p){return Object.assign({},p)}),pinBoard:pins.map(function(p){return{n:p.n,x:p.x,y:p.y,state:p.state,rot:p.rot,lean:p.lean}})}}
 };
 busy=true;gameRoot.classList.add('match-setup-open');render();setup.classList.add('show');
 })();

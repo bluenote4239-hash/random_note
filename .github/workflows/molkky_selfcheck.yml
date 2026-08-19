@@ -142,12 +142,13 @@ jobs:
           assert "background:{src:'stages/" in content_pack
           assert "fit:'stretch'" in content_pack
           assert "text:{" in content_pack and "audio:{" in content_pack and "images:{" in content_pack
-          asset_refs = re.findall(r"['\"]([^'\"]+\.(?:webp|wav)(?:\?v=\d+)?)['\"]", content_pack)
-          assert len(set(asset_refs)) >= 20
+          asset_refs = re.findall(r"['\"]([^'\"]+\.(?:svg|webp|wav)(?:\?v=\d+)?)['\"]", content_pack)
+          assert len(set(asset_refs)) >= 21
           for reference in asset_refs:
               assert (root / reference.split('?')[0]).is_file(), f'content asset missing: {reference}'
 
           prototype_game = (root / 'experiments/local_versus/game-runtime.js').read_text()
+          throw_styles = (root / 'experiments/local_versus/throw-styles.js').read_text()
           prototype_compact = ''.join(prototype_game.split())
           for gameplay_lock in ['FIELD_Y_SHIFT=80', '[[[1,-36],[2,36]],[[3,-72],[10,0],[4,72]],[[5,-108],[11,-36],[12,36],[6,108]],[[7,-72],[9,0],[8,72]]]', 'score>50){score=25', 'f.length===1?f[0].n:f.length', 'misses>=3']:
               assert gameplay_lock in prototype_compact, f'prototype gameplay drift: {gameplay_lock}'
@@ -159,6 +160,7 @@ jobs:
               (root / 'experiments/manga_overdrive/prototype-runtime.js').read_text(),
               (root / 'effects/manga_overdrive/engine.js').read_text(),
               (root / 'experiments/local_versus/game-selftest.js').read_text(),
+              throw_styles,
           ]
           for source in system_sources:
               for physical_root in ['stages/', 'characters/', 'objects/', 'audio/']:
@@ -184,12 +186,19 @@ jobs:
           assert "id:'cpu-easy-v1'" in cpu
           assert "difficulty:'easy'" in cpu
 
+          throw_styles_compact = ''.join(throw_styles.split())
+          for style in ["soft:Object.freeze", "standard:Object.freeze", "smash:Object.freeze"]:
+              assert style in throw_styles_compact, f'missing throw style: {style}'
+          assert "MolkkyContent.required('images.throwingMolkky')" in prototype_game
+          assert "targetScale:1.35" in prototype_compact
+          assert "launch(MolkkyThrowStyles.get('standard'))" in versus_compact
+
           versus_css = ''.join((root / 'experiments/local_versus/match.css').read_text().split())
           assert '#game{overflow:clip}' in versus_css
           assert '#game.match-setup-open#versusHud' in versus_css
 
           versus_selftest = ''.join((root / 'experiments/local_versus/match-selftest.js').read_text().split())
-          for required_check in ['v59contentpack', 'contentfileBGMruntime', 'contentbinding', 'imagepackbinding', 'contentcatalog', 'initialmatchstate', 'uprightsharedboard', 'defaultCPUopponent', 'weakCPUplan', 'contentWAVsource', 'opponentselector', 'setupscroll', 'setupbounds', 'pre-startHUD', 'nameinputguard', 'restartbinding']:
+          for required_check in ['v59contentpack', 'contentfileBGMruntime', 'threethrowstyles', 'throwingmolkkyview', 'throwstyleUI', 'contentbinding', 'imagepackbinding', 'contentcatalog', 'initialmatchstate', 'uprightsharedboard', 'defaultCPUopponent', 'weakCPUplan', 'contentWAVsource', 'opponentselector', 'setupscroll', 'setupbounds', 'pre-startHUD', 'nameinputguard', 'restartbinding']:
               assert required_check in versus_selftest
 
           print('MOLKKY ACTIVE RELEASE SELFTEST PASS')

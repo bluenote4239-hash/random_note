@@ -4,6 +4,8 @@ window.addEventListener('load',function(){setTimeout(function(){try{
   if(!window.MolkkyCpuEasy||MolkkyCpuEasy.id!=='cpu-easy-v1'||typeof MolkkyCpuEasy.plan!=='function')throw Error('weak CPU module');
   if(!window.MolkkyContent||MolkkyContent.activeId!=='prototype-v59'||MolkkyContent.get().version!==59)throw Error('v59 content pack');
   if(!window.ContentFileBgm||typeof ContentFileBgm.start!=='function'||AudioRuntime.startBgm!==ContentFileBgm.start)throw Error('content file BGM runtime');
+  if(!window.MolkkyThrowStyles||MolkkyThrowStyles.list().length!==3||MolkkyThrowStyles.current().id!=='standard')throw Error('three throw styles');
+  if(!window.MolkkyThrowView||!MolkkyThrowView.assetReady())throw Error('throwing molkky view');
   var state=LocalVersus.snapshot();if(!state.players||state.players.length!==2)throw Error('two players');
   if(state.opponentMode!=='cpu'||state.players[1].kind!=='cpu'||state.players[1].name!==MolkkyContent.text('match.cpuName'))throw Error('default CPU opponent');
   if(state.pinBoard.length!==12)throw Error('shared 12-pin board');
@@ -12,6 +14,7 @@ window.addEventListener('load',function(){setTimeout(function(){try{
   if(bgmInfo.mode!=='content-file-buffer-loop'||bgmInfo.src!==pack.audio.bgm.src||bgmInfo.pack!==pack.id)throw Error('content WAV source');
   if(!document.getElementById('playerCard0')||!document.getElementById('playerCard1'))throw Error('versus HUD');
   var game=document.getElementById('game'),setup=document.getElementById('matchSetup'),form=document.getElementById('matchSetupForm'),hud=document.getElementById('versusHud'),rect=form.getBoundingClientRect();
+  if(document.querySelectorAll('#throwStyles [data-throw-style]').length!==3||game.dataset.throwingMolkky!=='ready')throw Error('throw style UI');
   if(game.dataset.contentPack!==pack.id||game.dataset.contentVersion!=='59'||game.dataset.backgroundAsset!==pack.images.stage.background.src)throw Error('content binding');
   if(StageManager.get().background!==pack.images.stage.background.src||CharacterManager.get().images!==pack.images.character.expressions)throw Error('image pack binding');
   if(MolkkyContent.files().length<25||document.getElementById('fxBadge').textContent!==MolkkyContent.text('page.badge'))throw Error('content catalog');
@@ -23,6 +26,6 @@ window.addEventListener('load',function(){setTimeout(function(){try{
   if(setup.dataset.spaceGuard!=='true')throw Error('name input guard');
   if(document.querySelectorAll('input[name="opponentMode"]').length!==2||!document.getElementById('playerInput1').disabled)throw Error('opponent selector');
   if(window.resetGame!==resetGame)throw Error('restart binding');
-  game.dataset.versusSelftest='pass';game.dataset.versusChecks='content,background,images,text,state,board,upright,cpu,selector,file-bgm,setup,scroll,bounds,hud,input,restart';console.log('VERSUS SELFTEST PASS');
+  game.dataset.versusSelftest='pass';game.dataset.versusChecks='content,background,images,text,state,board,upright,cpu,selector,file-bgm,throw-styles,target-zoom,throwing-molkky,setup,scroll,bounds,hud,input,restart';console.log('VERSUS SELFTEST PASS');
 }catch(e){document.getElementById('game').dataset.versusSelftest='fail';console.error('VERSUS SELFTEST FAIL',e&&e.message?e.message:e)}},360)})
 })();
