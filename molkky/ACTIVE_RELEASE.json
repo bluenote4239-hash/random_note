@@ -13,8 +13,8 @@
     }
   },
   "active_experiment": {
-    "version": "local-versus-v56",
-    "entrypoint": "experiments/local_versus/index.html?v=56",
+    "version": "local-versus-v57",
+    "entrypoint": "experiments/local_versus/index.html?v=57",
     "base_version": "v35",
     "scope": "same-device two-player pass-and-play with a shared official board, built on the complete v52 manga-overdrive experiment",
     "modules": [
@@ -36,17 +36,17 @@
       {
         "role": "local_versus_match_state",
         "path": "experiments/local_versus/match-runtime.js",
-        "html_src": "experiments/local_versus/match-runtime.js?v=56"
+        "html_src": "experiments/local_versus/match-runtime.js?v=57"
       },
       {
         "role": "local_versus_ui",
         "path": "experiments/local_versus/match.css",
-        "html_src": "experiments/local_versus/match.css?v=56"
+        "html_src": "experiments/local_versus/match.css?v=57"
       },
       {
         "role": "local_versus_selftest",
         "path": "experiments/local_versus/match-selftest.js",
-        "html_src": "experiments/local_versus/match-selftest.js?v=56"
+        "html_src": "experiments/local_versus/match-selftest.js?v=57"
       }
     ]
   },

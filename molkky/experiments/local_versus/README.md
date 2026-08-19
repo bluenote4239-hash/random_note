@@ -5,6 +5,8 @@ locked v35 game runtime.
 
 - Both players use the same `pins` array, so the official shared board carries
   across turns.
+- At every handoff, all pins are upright at their current field coordinates;
+  leaning pins remain non-scoring but never carry a tilted pose into the next turn.
 - Player name, score, consecutive misses, active turn, disqualification, and
   winner are owned by `match-runtime.js`.
 - The fixed v35 `game.js`, `index.html`, and `core/selftest.js` are not changed.

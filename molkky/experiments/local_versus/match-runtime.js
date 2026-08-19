@@ -13,6 +13,14 @@ function settleViewport(){
 }
 function recordActive(){if(!started||!players[active])return;players[active].score=score;players[active].misses=misses}
 function loadActive(){score=players[active].score;misses=players[active].misses}
+function settleSharedBoard(){
+  var corrected=[];
+  pins.forEach(function(pin){
+    if(pin.state!=='standing'||pin.rot||pin.lean){corrected.push(pin.n);pin.state='standing';pin.rot=0;pin.lean=0}
+  });
+  gameRoot.dataset.boardRecovery=corrected.length?'upright:'+corrected.join(','):'ready';
+  return pins.every(function(pin){return pin.state==='standing'&&!pin.rot&&!pin.lean})
+}
 function render(){
   players.forEach(function(player,i){
     var card=document.getElementById('playerCard'+i),name=document.getElementById('playerName'+i),points=document.getElementById('playerScore'+i),miss=document.getElementById('playerMiss'+i);
@@ -34,6 +42,7 @@ function begin(names){
 function showSetup(){ended=false;started=false;busy=true;ui.go.classList.remove('show');gameRoot.classList.add('match-setup-open');setup.classList.add('show');document.getElementById('playerInput0').value=players[0].name;document.getElementById('playerInput1').value=players[1].name;render()}
 update=function(){baseUpdate();recordActive();render()};
 finish=function(){
+  settleSharedBoard();
   recordActive();
   if(players[active].misses>=3){players[active].disqualified=true;ended=true;busy=true;phase=0;meter=0;ui.pf.style.width=ui.af.style.width='0';ui.pv.textContent=ui.av.textContent='0';baseUpdate();render();draw();return}
   active=active?0:1;loadActive();throwCount++;baseFinish();render();callTurn((active+1)+'P THROW');setTimeout(function(){setGal(players[active].misses===2?'thinking':'normal',players[active].name+'の番！'+(players[active].misses===2?'次は外せないよ！':'狙ってこ！'))},0);
@@ -53,7 +62,7 @@ nameInputs.forEach(function(input){input.addEventListener('keydown',function(e){
 window.LocalVersus={
   start:function(a,b){begin([a,b])},
   showSetup:showSetup,
-  snapshot:function(){recordActive();return{started:started,ended:ended,activePlayer:active+1,throwCount:throwCount,players:players.map(function(p){return Object.assign({},p)}),pinBoard:pins.map(function(p){return{n:p.n,x:p.x,y:p.y,state:p.state}})}}
+  snapshot:function(){recordActive();return{started:started,ended:ended,activePlayer:active+1,throwCount:throwCount,boardReady:pins.every(function(p){return p.state==='standing'&&!p.rot&&!p.lean}),players:players.map(function(p){return Object.assign({},p)}),pinBoard:pins.map(function(p){return{n:p.n,x:p.x,y:p.y,state:p.state,rot:p.rot,lean:p.lean}})}}
 };
 busy=true;gameRoot.classList.add('match-setup-open');render();setup.classList.add('show');
 })();
