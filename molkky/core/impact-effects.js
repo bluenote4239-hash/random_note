@@ -9,7 +9,7 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function easeOut(t){return 1-Math.pow(1-t,3)}
 function add(type,data,duration){effects.push(Object.assign({type:type,start:now(),duration:duration},data||{}));run()}
 function run(){if(!running)running=requestAnimationFrame(frame)}
-function frame(t){running=0;g.clearRect(0,0,1100,720);drawMovedNumbers();effects=effects.filter(function(e){var p=(t-e.start)/e.duration;if(p<0)return true;if(p>=1)return false;drawEffect(e,clamp(p,0,1));return true});drawTarget(t);if(effects.length||targetPins.length>1||t-selectionPulse<360)running=requestAnimationFrame(frame)}
+function frame(t){running=0;g.clearRect(0,0,1100,720);drawMovedNumbers();effects=effects.filter(function(e){var p=(t-e.start)/e.duration;if(p<0)return true;if(p>=1)return false;drawEffect(e,clamp(p,0,1));return true});drawTarget(t);if(effects.length||targetPins.length>1||selectionLocked&&!reduced||t-selectionPulse<360)running=requestAnimationFrame(frame)}
 function line(x1,y1,x2,y2,w,color,alpha){g.globalAlpha=alpha;g.strokeStyle=color;g.lineWidth=w;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.globalAlpha=1}
 function radial(cx,cy,p,count,color,wide){
   g.save();g.translate(cx,cy);g.rotate(p*.08);
@@ -42,9 +42,13 @@ function word(e,p){
 function drawTarget(t){
   if(!targetPins.length)return;var pair=targetPins.length>1,active=pair?Math.floor(t/105)%2:0,pin=targetPins[active],s;
   try{s=proj(pin.x,pin.y)}catch(e){return}
-  var pulse=t-selectionPulse<360?1.12+.08*Math.sin((t-selectionPulse)/45):1,jitter=pair?((Math.floor(t/52)%3)-1)*3:0;
+  var breathe=reduced?.5:.5+.5*Math.sin(t/150),pulse=t-selectionPulse<360?1.12+.08*Math.sin((t-selectionPulse)/45):1+.035*breathe,jitter=pair?((Math.floor(t/52)%3)-1)*3:0;
   var fy=s.y-52*s.k,rx=35*s.k*pulse,ry=24*s.k*pulse,labelY=fy-58*s.k;
   g.save();g.translate(jitter,pair?-jitter*.4:0);g.lineJoin='round';g.textAlign='center';g.textBaseline='middle';
+  var auraY=s.y-15*s.k,auraX=(36+7*breathe)*s.k,auraH=(70+10*breathe)*s.k,glow=g.createRadialGradient(s.x,auraY,2,s.x,auraY,auraH);
+  glow.addColorStop(0,'rgba(255,255,210,.72)');glow.addColorStop(.35,pair?'rgba(255,45,142,.42)':'rgba(34,234,255,.48)');glow.addColorStop(1,'rgba(34,234,255,0)');
+  g.globalCompositeOperation='screen';g.fillStyle=glow;g.globalAlpha=.7+.22*breathe;g.beginPath();g.ellipse(s.x,auraY,auraX,auraH,0,0,TAU);g.fill();
+  g.globalCompositeOperation='source-over';g.globalAlpha=.55+.35*breathe;g.strokeStyle='#fffbd0';g.lineWidth=4+3*breathe;g.shadowColor=pair?'#ff2d8e':'#22eaff';g.shadowBlur=22+16*breathe;g.beginPath();g.ellipse(s.x,auraY,25*s.k,54*s.k,0,0,TAU);g.stroke();g.shadowBlur=0;
   g.globalAlpha=pair?.34:.24;g.fillStyle=pair?'#ff3b9e':'#22eaff';g.beginPath();g.ellipse(s.x,fy,rx+9,ry+7,0,0,TAU);g.fill();
   g.globalAlpha=1;g.strokeStyle='#101126';g.lineWidth=10;g.beginPath();g.ellipse(s.x,fy,rx+5,ry+4,0,0,TAU);g.stroke();
   g.strokeStyle=pair?'#22eaff':'#fff36b';g.lineWidth=5;g.beginPath();g.ellipse(s.x,fy,rx+5,ry+4,0,0,TAU);g.stroke();
