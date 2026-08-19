@@ -5,6 +5,11 @@ var baseReset=resetGame,baseUpdate=update,baseFinish=finish,baseEnd=end;
 var players=[makePlayer('PLAYER 1'),makePlayer('PLAYER 2')],active=0,started=false,ended=false,throwCount=1,callTimer=0;
 function makePlayer(name){return{name:name,score:0,misses:0,disqualified:false}}
 function cleanName(value,fallback){value=String(value||'').replace(/[<>]/g,'').trim().slice(0,12);return value||fallback}
+function settleViewport(){
+  var focused=document.activeElement;if(focused&&typeof focused.blur==='function')focused.blur();
+  function top(){try{scrollTo(0,0)}catch(e){}}
+  top();requestAnimationFrame(top);setTimeout(top,260);
+}
 function recordActive(){if(!started||!players[active])return;players[active].score=score;players[active].misses=misses}
 function loadActive(){score=players[active].score;misses=players[active].misses}
 function render(){
@@ -23,7 +28,7 @@ function callTurn(message){
 }
 function begin(names){
   players=[makePlayer(cleanName(names[0],'PLAYER 1')),makePlayer(cleanName(names[1],'PLAYER 2'))];active=0;throwCount=1;started=true;ended=false;
-  setup.classList.remove('show');baseReset();loadActive();baseUpdate();render();busy=false;callTurn('1P THROW');setTimeout(function(){setGal('joy',players[0].name+'から！ぶっ倒してこー！')},0);
+  settleViewport();setup.classList.remove('show');baseReset();loadActive();baseUpdate();render();busy=false;callTurn('1P THROW');setTimeout(function(){setGal('joy',players[0].name+'から！ぶっ倒してこー！')},0);
 }
 function showSetup(){ended=false;started=false;busy=true;ui.go.classList.remove('show');setup.classList.add('show');document.getElementById('playerInput0').value=players[0].name;document.getElementById('playerInput1').value=players[1].name;render()}
 update=function(){baseUpdate();recordActive();render()};
