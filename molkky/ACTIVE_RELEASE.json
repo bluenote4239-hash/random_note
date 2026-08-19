@@ -13,10 +13,10 @@
     }
   },
   "active_experiment": {
-    "version": "local-versus-v57",
-    "entrypoint": "experiments/local_versus/index.html?v=57",
+    "version": "local-match-v58",
+    "entrypoint": "experiments/local_versus/index.html?v=58",
     "base_version": "v35",
-    "scope": "same-device two-player pass-and-play with a shared official board, built on the complete v52 manga-overdrive experiment",
+    "scope": "same-device weak CPU or human two-player match with shared official board, continuous stored-file BGM, and the complete v52 manga-overdrive experiment",
     "modules": [
       {
         "role": "prototype_gameplay_assist",
@@ -34,19 +34,29 @@
         "html_src": "audio/se/manga_overdrive/synth.js?v=52"
       },
       {
+        "role": "stored_file_bgm_loop",
+        "path": "audio/bgm/ievan_v29/file-player.js",
+        "html_src": "audio/bgm/ievan_v29/file-player.js?v=58"
+      },
+      {
+        "role": "very_easy_cpu",
+        "path": "experiments/local_versus/cpu-easy.js",
+        "html_src": "experiments/local_versus/cpu-easy.js?v=58"
+      },
+      {
         "role": "local_versus_match_state",
         "path": "experiments/local_versus/match-runtime.js",
-        "html_src": "experiments/local_versus/match-runtime.js?v=57"
+        "html_src": "experiments/local_versus/match-runtime.js?v=58"
       },
       {
         "role": "local_versus_ui",
         "path": "experiments/local_versus/match.css",
-        "html_src": "experiments/local_versus/match.css?v=57"
+        "html_src": "experiments/local_versus/match.css?v=58"
       },
       {
         "role": "local_versus_selftest",
         "path": "experiments/local_versus/match-selftest.js",
-        "html_src": "experiments/local_versus/match-selftest.js?v=57"
+        "html_src": "experiments/local_versus/match-selftest.js?v=58"
       }
     ]
   },

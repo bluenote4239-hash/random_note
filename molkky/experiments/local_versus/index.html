@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <base href="../../">
-<title>MÖLKKY GAL ARCADE — LOCAL VERSUS v57</title>
+<title>MÖLKKY GAL ARCADE — LOCAL MATCH v58</title>
 <link rel="stylesheet" href="style.css?v=27">
 <link rel="stylesheet" href="ipad.css?v=27">
 <link rel="stylesheet" href="experiments/manga_overdrive/shell.css?v=52">
 <link rel="stylesheet" href="effects/manga_overdrive/style.css?v=52">
-<link rel="stylesheet" href="experiments/local_versus/match.css?v=57">
+<link rel="stylesheet" href="experiments/local_versus/match.css?v=58">
 </head>
 <body>
 <div id="game">
@@ -25,9 +25,9 @@
       <div class="versus-score"><span id="playerScore0">0</span><small>/ 50</small></div>
       <div class="versus-miss" id="playerMiss0">MISS × 0</div>
     </article>
-    <div id="versusCenter"><b>LOCAL<br>VERSUS</b><span id="roundLabel">THROW 1</span></div>
+    <div id="versusCenter"><b id="matchModeLabel">CPU<br>BATTLE</b><span id="roundLabel">THROW 1</span></div>
     <article class="versus-player p2" id="playerCard1">
-      <div class="versus-side">2P</div><strong id="playerName1">PLAYER 2</strong>
+      <div class="versus-side" id="playerSide1">CPU</div><strong id="playerName1">CPU よわめ</strong>
       <div class="versus-score"><span id="playerScore1">0</span><small>/ 50</small></div>
       <div class="versus-miss" id="playerMiss1">MISS × 0</div>
     </article>
@@ -40,16 +40,20 @@
   <div id="meters" class="card"><div class="row"><span>POWER</span><div class="bar"><div id="pf" class="fill"></div></div><span id="pv">0</span></div><div class="row"><span>ACCURACY</span><div class="bar"><div id="af" class="fill acc"></div></div><span id="av">0</span></div></div>
   <div id="cutin"><div id="cutinSpeed"></div><div id="cutinPanel"></div><div id="cutinImg" role="img" aria-label="ギャルカットイン"></div><div id="cutinText"></div></div>
   <div id="statusTip">スキットルを選択 / 画面タップ：POWER → ACCURACY → THROW</div><div id="log">READY</div>
-  <div id="fxBadge">LOCAL VERSUS v57</div>
+  <div id="fxBadge">LOCAL MATCH v58</div>
 
   <div id="matchSetup" class="show">
     <form id="matchSetupForm" class="match-panel">
-      <p class="match-kicker">PASS &amp; PLAY</p>
-      <h1>2人対戦</h1>
-      <p class="match-rule">1台を交互に使用・盤面共有・50点ジャスト</p>
-      <label><span>1P</span><input id="playerInput0" maxlength="12" value="PLAYER 1" autocomplete="off"></label>
+      <p class="match-kicker">MATCH SETUP</p>
+      <h1>対戦設定</h1>
+      <p class="match-rule">盤面共有・50点ジャスト・公式得点</p>
+      <fieldset class="opponent-choice" aria-label="対戦相手">
+        <label><input type="radio" name="opponentMode" value="cpu" checked><span>CPU よわめ</span></label>
+        <label><input type="radio" name="opponentMode" value="human"><span>人間2P</span></label>
+      </fieldset>
+      <label class="name-row"><span>1P</span><input id="playerInput0" maxlength="12" value="PLAYER 1" autocomplete="off"></label>
       <div class="match-vs">VS</div>
-      <label><span>2P</span><input id="playerInput1" maxlength="12" value="PLAYER 2" autocomplete="off"></label>
+      <label class="name-row"><span id="setupSide1">CPU</span><input id="playerInput1" maxlength="12" value="CPU よわめ" autocomplete="off" disabled></label>
       <button type="submit">対戦開始</button>
     </form>
   </div>
@@ -61,20 +65,22 @@
 <script src="characters/gal01/pack.js?v=27"></script>
 <script src="core/stage-manager.js?v=27"></script>
 <script src="stages/seaside90s/pack.js?v=28"></script>
-<script src="core/audio-manager.js?v=27"></script>
+<script src="core/audio-manager.js?v=58"></script>
 <script src="audio/voices/gal01/pack.js?v=27"></script>
 <script src="audio/se/default/pack.js?v=27"></script>
-<script src="audio/bgm/ievan_v29/pack.js?v=27"></script>
+<script src="audio/bgm/ievan_v29/pack.js?v=58"></script>
 <script src="core/presentation-runtime.js?v=27"></script>
 <script src="core/stage-runtime.js?v=27"></script>
-<script src="core/audio-runtime.js?v=27"></script>
+<script src="core/audio-runtime.js?v=58"></script>
+<script src="audio/bgm/ievan_v29/file-player.js?v=58"></script>
 <script src="audio/se/manga_overdrive/synth.js?v=52"></script>
 <script src="game.js?v=35"></script>
 <script src="experiments/manga_overdrive/prototype-runtime.js?v=52"></script>
-<script src="experiments/local_versus/match-runtime.js?v=57"></script>
+<script src="experiments/local_versus/cpu-easy.js?v=58"></script>
+<script src="experiments/local_versus/match-runtime.js?v=58"></script>
 <script src="effects/manga_overdrive/engine.js?v=52"></script>
 <script src="ipad.js?v=28"></script>
 <script src="core/selftest.js?v=35"></script>
-<script src="experiments/local_versus/match-selftest.js?v=57"></script>
+<script src="experiments/local_versus/match-selftest.js?v=58"></script>
 </body>
 </html>

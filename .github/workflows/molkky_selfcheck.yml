@@ -66,6 +66,16 @@ jobs:
           assert impact_audio.is_file(), 'missing isolated manga impact audio'
           assert 'AudioContext' in impact_audio.read_text(), 'impact audio synthesis is not in audio/'
 
+          bgm_pack = (root / 'audio/bgm/ievan_v29/pack.js').read_text()
+          bgm_runtime = (root / 'audio/bgm/ievan_v29/file-player.js').read_text()
+          shared_audio_runtime = (root / 'core/audio-runtime.js').read_text()
+          assert "src:'audio/bgm/ievan_v29/ievan_v29.wav'" in bgm_pack
+          assert sha256(root / 'audio/bgm/ievan_v29/ievan_v29.wav') == 'f275b957e9b1ca88321ace882c669e1e5f3b4890aedb5ee77ab60b4ab09f69fa'
+          assert "SRC='audio/bgm/ievan_v29/ievan_v29.wav'" in bgm_runtime
+          assert 'decodeAudioData' in bgm_runtime and 'source.loop=true' in bgm_runtime
+          assert 'createOscillator' not in bgm_runtime and 'createBuffer(' not in bgm_runtime
+          assert '__BGM_V29__' not in shared_audio_runtime
+
           required = [
               'core/character-manager.js', 'characters/gal01/pack.js',
               'core/stage-manager.js', 'stages/seaside90s/pack.js',
@@ -127,13 +137,19 @@ jobs:
           assert "setup.dataset.spaceGuard='true'" in versus_compact
           assert "settleSharedBoard();recordActive()" in versus_compact
           assert "pin.state='standing';pin.rot=0;pin.lean=0" in versus_compact
+          assert "opponentMode=mode==='human'?'human':'cpu'" in versus_compact
+          assert 'scheduleCpu()' in versus_compact
+
+          cpu = ''.join((root / 'experiments/local_versus/cpu-easy.js').read_text().split())
+          assert "id:'cpu-easy-v1'" in cpu
+          assert "difficulty:'easy'" in cpu
 
           versus_css = ''.join((root / 'experiments/local_versus/match.css').read_text().split())
           assert '#game{overflow:clip}' in versus_css
           assert '#game.match-setup-open#versusHud' in versus_css
 
           versus_selftest = ''.join((root / 'experiments/local_versus/match-selftest.js').read_text().split())
-          for required_check in ['initialmatchstate', 'uprightsharedboard', 'setupscroll', 'setupbounds', 'pre-startHUD', 'nameinputguard', 'restartbinding']:
+          for required_check in ['initialmatchstate', 'uprightsharedboard', 'defaultCPUopponent', 'weakCPUplan', 'storedWAVsource', 'opponentselector', 'setupscroll', 'setupbounds', 'pre-startHUD', 'nameinputguard', 'restartbinding']:
               assert required_check in versus_selftest
 
           print('MOLKKY ACTIVE RELEASE SELFTEST PASS')
