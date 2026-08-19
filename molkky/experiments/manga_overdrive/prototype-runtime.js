@@ -4,7 +4,7 @@ if(!game||!base)return;
 var layer=document.createElement('canvas');layer.id='impactFx';layer.width=1100;layer.height=720;game.appendChild(layer);
 var finalCall=document.createElement('div');finalCall.id='finalCall';finalCall.innerHTML='<b>FINAL APPROACH</b><span></span><small></small>';game.appendChild(finalCall);
 var finalPoints=finalCall.querySelector('span'),finalRoute=finalCall.querySelector('small');
-var g=layer.getContext('2d'),effects=[],running=0,targetPin=null,targetPins=[],targetAim=null,selectionLocked=false,lockedTargetKey='',selectionPulse=0,movedNumbers=new Set(),pendingRecovery=null,reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var g=layer.getContext('2d'),effects=[],running=0,targetPin=null,targetPins=[],targetAim=null,selectionLocked=false,lockedTargetKey='',selectionPulse=0,movedNumbers=new Set(),pendingRecovery=null,finalCallTimer=0,reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var TAU=Math.PI*2;
 function now(){return performance.now()}
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
@@ -112,10 +112,16 @@ function targetChoice(world){
 }
 function targetKey(list){return list.map(function(pin){return pin.n}).sort(function(a,b){return a-b}).join('/')}
 function finalRemaining(){return score>=40&&score<50?50-score:0}
+function hideFinalCall(){clearTimeout(finalCallTimer);finalCallTimer=0;finalCall.classList.remove('show','assist')}
+function flashFinalCall(ms){
+  if(!finalRemaining()){hideFinalCall();return}
+  clearTimeout(finalCallTimer);finalCall.classList.remove('show');void finalCall.offsetWidth;finalCall.classList.add('show');
+  finalCallTimer=setTimeout(function(){finalCall.classList.remove('show');finalCallTimer=0},ms||900);
+}
 function syncFinalCall(){
   var rem=finalRemaining(),exact=rem&&selectionLocked&&targetPins.length===1&&targetPin&&targetPin.n===rem;
-  finalCall.classList.toggle('show',!!rem);finalCall.classList.toggle('match',!!exact);
-  if(!rem){delete layer.dataset.finalRemaining;delete layer.dataset.finalTarget;return 0}
+  finalCall.classList.toggle('match',!!exact);
+  if(!rem){hideFinalCall();delete layer.dataset.finalRemaining;delete layer.dataset.finalTarget;return 0}
   finalPoints.textContent='あと '+rem+'点！';finalRoute.textContent=exact?rem+'番＝フィニッシュターゲット':selectionLocked&&targetPins.length?targetKey(targetPins)+'番を狙撃中':'番号を選べ';
   layer.dataset.finalRemaining=String(rem);if(exact)layer.dataset.finalTarget=String(rem);else delete layer.dataset.finalTarget;return rem;
 }
@@ -157,7 +163,7 @@ function applyForwardRecovery(){
   });
   layer.dataset.forwardRecovery=moves.join(',');pendingRecovery=null;try{draw()}catch(e){}run();
 }
-var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){applyForwardRecovery();targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;var rem=syncFinalCall();if(rem)setGal('surprise','あと'+rem+'点！フィニッシュルート探そ！');run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
-var scoreBox=document.getElementById('score');if(scoreBox)new MutationObserver(function(){syncFinalCall();if(scoreBox.textContent==='0'&&turnBox&&turnBox.textContent==='TURN 1'){movedNumbers.clear();delete layer.dataset.numberBadges;delete layer.dataset.finalAssist;run()}}).observe(scoreBox,{childList:true,characterData:true,subtree:true});
+var turnBox=document.getElementById('turn');if(turnBox)new MutationObserver(function(){applyForwardRecovery();targetPin=null;targetPins=[];targetAim=null;selectionLocked=false;lockedTargetKey='';delete layer.dataset.target;delete layer.dataset.targetAim;delete layer.dataset.targetLocked;var rem=syncFinalCall();if(rem){setGal('surprise','あと'+rem+'点！フィニッシュルート探そ！');flashFinalCall(900)}run()}).observe(turnBox,{childList:true,characterData:true,subtree:true});
+var scoreBox=document.getElementById('score');if(scoreBox)new MutationObserver(function(){var rem=syncFinalCall();if(rem)flashFinalCall(900);if(scoreBox.textContent==='0'&&turnBox&&turnBox.textContent==='TURN 1'){movedNumbers.clear();delete layer.dataset.numberBadges;delete layer.dataset.finalAssist;run()}}).observe(scoreBox,{childList:true,characterData:true,subtree:true});
 syncFinalCall();
 })();

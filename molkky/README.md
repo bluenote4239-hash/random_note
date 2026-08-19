@@ -3,7 +3,7 @@
 This directory contains only the active runtime and approved assets.
 
 - Fixed production build: `index.html?v=35`
-- Active FX prototype: `experiments/manga_overdrive/index.html?v=51`
+- Active FX prototype: `experiments/manga_overdrive/index.html?v=52`
 - Machine-readable source of truth: `ACTIVE_RELEASE.json`
 
 ```text
