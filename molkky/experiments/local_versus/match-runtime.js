@@ -7,7 +7,7 @@ function makePlayer(name){return{name:name,score:0,misses:0,disqualified:false}}
 function cleanName(value,fallback){value=String(value||'').replace(/[<>]/g,'').trim().slice(0,12);return value||fallback}
 function settleViewport(){
   var focused=document.activeElement;if(focused&&typeof focused.blur==='function')focused.blur();
-  function top(){try{scrollTo(0,0)}catch(e){}}
+  function top(){var root=document.getElementById('game');if(root){root.scrollTop=0;root.scrollLeft=0}try{scrollTo(0,0)}catch(e){}}
   top();requestAnimationFrame(top);setTimeout(top,260);
 }
 function recordActive(){if(!started||!players[active])return;players[active].score=score;players[active].misses=misses}

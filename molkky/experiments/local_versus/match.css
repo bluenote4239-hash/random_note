@@ -1,3 +1,4 @@
+#game{overflow:clip}
 #scoreBox,#goalBox{visibility:hidden}
 #fxBadge{left:auto;right:max(10px,env(safe-area-inset-right));top:auto;bottom:max(10px,env(safe-area-inset-bottom));transform:skew(-8deg)}
 #galCoach{top:122px}#galTag{top:236px}

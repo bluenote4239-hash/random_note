@@ -11,4 +11,4 @@ locked v35 game runtime.
 - Target selection, forward recovery, final-approach assistance, manga effects,
   locked visuals, voices, sound effects, and BGM are reused from v52.
 
-Entrypoint: `experiments/local_versus/index.html?v=54`
+Entrypoint: `experiments/local_versus/index.html?v=55`
