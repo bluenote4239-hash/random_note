@@ -3,7 +3,8 @@
 This directory contains only the active runtime and approved assets.
 
 - Fixed production build: `index.html?v=35`
-- Active FX prototype: `fx36.html?v=47`
+- Active FX prototype: `fx36.html?v=48`
+- Isolated overdrive effects: `effects/manga_overdrive/`
 - Machine-readable source of truth: `ACTIVE_RELEASE.json`
 
 The v35 production files, official rules, collision/scoring/recovery logic, approved

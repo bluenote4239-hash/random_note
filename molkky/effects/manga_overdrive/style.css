@@ -1,0 +1,9 @@
+#mangaFx{position:absolute;inset:0;width:100%;height:100%;z-index:31;pointer-events:none;image-rendering:auto;mix-blend-mode:normal}
+#game.manga-lock{animation:manga-lock-pulse .28s steps(2,end)}
+#game.manga-overdrive{animation:manga-overdrive-shake .52s steps(2,end)}
+#game.manga-crush{animation:manga-crush-shake .72s steps(2,end)}
+@keyframes manga-lock-pulse{0%,100%{filter:none}35%{filter:brightness(1.7) saturate(1.8)}65%{filter:contrast(1.3) hue-rotate(-8deg)}}
+@keyframes manga-overdrive-shake{0%,100%{transform:translate(0,0);filter:none}8%{transform:translate(-13px,7px) rotate(-.35deg);filter:brightness(2.1) saturate(2)}18%{transform:translate(12px,-8px) rotate(.3deg)}30%{transform:translate(-10px,-3px)}45%{transform:translate(8px,6px)}60%{transform:translate(-6px,3px)}78%{transform:translate(4px,-3px)}}
+@keyframes manga-crush-shake{0%,100%{transform:translate(0,0);filter:none}5%{transform:translate(-20px,10px) rotate(-.55deg);filter:brightness(2.4) saturate(2.3)}12%{transform:translate(18px,-12px) rotate(.5deg)}22%{transform:translate(-15px,-7px)}34%{transform:translate(13px,9px)}48%{transform:translate(-10px,6px)}64%{transform:translate(8px,-5px)}82%{transform:translate(-4px,3px)}}
+@media(max-width:900px){#mangaFx{z-index:30}}
+@media(prefers-reduced-motion:reduce){#game.manga-lock,#game.manga-overdrive,#game.manga-crush{animation:none}}

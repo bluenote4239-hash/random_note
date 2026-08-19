@@ -13,11 +13,11 @@
     }
   },
   "active_experiment": {
-    "version": "fx47",
-    "entrypoint": "fx36.html?v=47",
-    "effect_runtime_query": "core/impact-effects.js?v=47",
+    "version": "fx48",
+    "entrypoint": "fx36.html?v=48",
+    "effect_runtime_query": "core/impact-effects.js?v=47 + effects/manga_overdrive/engine.js?v=48",
     "base_version": "v35",
-    "scope": "input guidance, presentation effects, and forward pin recovery prototype"
+    "scope": "input guidance, forward pin recovery, and isolated manga overdrive audiovisual effects prototype"
   },
   "locked_assets": {
     "background": {
