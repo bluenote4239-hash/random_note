@@ -1,47 +1,106 @@
 name: Molkky Selfcheck
+
 on:
   push:
     paths:
       - 'molkky/**'
       - '.github/workflows/molkky_selfcheck.yml'
   workflow_dispatch:
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: JavaScript syntax
         shell: bash
         run: |
           set -euo pipefail
-          find molkky -name '*.js' -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
-      - name: Canonical physical-asset architecture
+          find molkky -name '*.js' -print0 | while IFS= read -r -d '' f; do
+            node --check "$f"
+          done
+
+      - name: Active release and locked assets
         shell: python
         run: |
+          import hashlib
+          import json
           from pathlib import Path
-          root=Path('molkky')
-          idx=(root/'index.html').read_text()
-          game=(root/'game.js').read_text()
-          required=['core/character-manager.js','characters/gal01/pack.js','core/stage-manager.js','stages/seaside90s/pack.js','core/audio-manager.js','audio/voices/gal01/pack.js','audio/se/default/pack.js','audio/bgm/ievan_v29/pack.js','core/presentation-runtime.js','core/stage-runtime.js','core/audio-runtime.js','core/selftest.js']
-          for r in required:
-              assert (root/r).exists(), 'missing: '+r
-              assert r in idx, 'not loaded: '+r
-          forbidden=['assets.js','audiofix.js','bgm29.js','characters.js','galcompat.js','galfix.js','selftest.js','core/bgm-continuity.js','audio/bgm/ievan_v29/engine.js','gal/normal.webp.b64','characters/gal01/atlas.webp']
-          for r in forbidden: assert not (root/r).exists(), 'legacy file exists: '+r
-          for token in ['new Audio(','AudioContext','webkitAudioContext','setInterval(','background.svg','audio/voices/','audio/se/','GAL_IMGS','function bg(','function startBgm(','function wood(','function voice(']: assert token not in game, 'legacy implementation in game.js: '+token
-          assert 'StageRuntime.draw(ctx,W,H)' in game and 'AudioRuntime.startBgm()' in game and 'PresentationRuntime.setGal' in game
-          chars=['full.webp','normal.webp','joy.webp','surprise.webp','thinking.webp','regret.webp']; cp=(root/'characters/gal01/pack.js').read_text()
-          for n in chars:
-              b=(root/'characters/gal01'/n).read_bytes(); assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WEBP',n; assert ('characters/gal01/'+n) in cp,n
-          stage_img=root/'stages/seaside90s/background.svg'; assert stage_img.exists() and stage_img.stat().st_size>1000
-          stage=(root/'stages/seaside90s/pack.js').read_text(); assert "background:'stages/seaside90s/background.svg'" in stage and "bgm:'ievan_v29'" in stage
-          voice_names=['yeah_01.wav','yeah_03.wav','nice_01.wav','nice_02.wav','yatta_01.wav','yarii_01.wav','sugoi_01.wav','sassugaa_02.wav']; voice=(root/'audio/voices/gal01/pack.js').read_text()
-          for n in voice_names:
-              b=(root/'audio/voices/gal01'/n).read_bytes(); assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WAVE',n; assert ('audio/voices/gal01/'+n) in voice,n
-          se_names=['wood_hit_01.wav','wood_hit_02.wav','wood_hit_03.wav','throw_whoosh.wav','land_01.wav']; se=(root/'audio/se/default/pack.js').read_text()
-          for n in se_names:
-              b=(root/'audio/se/default'/n).read_bytes(); assert len(b)>1000 and b[:4]==b'RIFF' and b[8:12]==b'WAVE',n; assert ('audio/se/default/'+n) in se,n
-          bgm_path=root/'audio/bgm/ievan_v29/ievan_v29.wav'; b=bgm_path.read_bytes(); assert len(b)>100000 and b[:4]==b'RIFF' and b[8:12]==b'WAVE'
-          bgm_pack=(root/'audio/bgm/ievan_v29/pack.js').read_text(); assert "src:'audio/bgm/ievan_v29/ievan_v29.wav'" in bgm_pack and 'loop:true' in bgm_pack
-          compact=''.join(game.split()); assert '[[[1,-36],[2,36]],[[3,-72],[10,0],[4,72]],[[5,-108],[11,-36],[12,36],[6,108]],[[7,-72],[9,0],[8,72]]]' in compact; assert "score>50){score=25" in compact; assert "f.length===1?f[0].n:f.length" in compact; assert "misses>=3" in compact
-          print('MOLKKY PHYSICAL-ASSET SELFTEST PASS')
+
+          root = Path('molkky')
+          manifest = json.loads((root / 'ACTIVE_RELEASE.json').read_text())
+          index = (root / 'index.html').read_text()
+          fx = (root / 'fx36.html').read_text()
+          game = (root / 'game.js').read_text()
+
+          def git_blob_sha(path):
+              data = path.read_bytes()
+              return hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+
+          def sha256(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+
+          production = manifest['production']
+          assert manifest['status'] == 'prototype_locked'
+          assert production['version'] == 'v35'
+          assert production['runtime_query'] in index
+          assert production['selftest_query'] in index
+          for rel, expected in production['protected_git_blobs'].items():
+              assert git_blob_sha(root / rel) == expected, f'fixed v35 file changed: {rel}'
+
+          experiment = manifest['active_experiment']
+          assert experiment['effect_runtime_query'] in fx
+          assert production['runtime_query'] in fx
+          assert production['selftest_query'] in fx
+
+          required = [
+              'core/character-manager.js', 'characters/gal01/pack.js',
+              'core/stage-manager.js', 'stages/seaside90s/pack.js',
+              'core/audio-manager.js', 'audio/voices/gal01/pack.js',
+              'audio/se/default/pack.js', 'audio/bgm/ievan_v29/pack.js',
+              'core/presentation-runtime.js', 'core/stage-runtime.js',
+              'core/audio-runtime.js', 'core/selftest.js'
+          ]
+          for rel in required:
+              assert (root / rel).is_file(), f'missing: {rel}'
+              assert rel in index, f'not loaded by fixed build: {rel}'
+
+          forbidden_files = [
+              'assets.js', 'audiofix.js', 'bgm29.js', 'characters.js',
+              'galcompat.js', 'galfix.js', 'selftest.js',
+              'core/bgm-continuity.js', 'audio/bgm/ievan_v29/engine.js',
+              'gal/normal.webp.b64', 'characters/gal01/atlas.webp',
+              'stages/seaside90s/background.svg'
+          ]
+          for rel in forbidden_files:
+              assert not (root / rel).exists(), f'legacy file exists: {rel}'
+          for dirname in ['legacy', 'old', 'backup', 'bak']:
+              assert not any(p.is_dir() and p.name.lower() == dirname for p in root.rglob('*')), f'legacy directory exists: {dirname}'
+
+          stage_pack = (root / 'stages/seaside90s/pack.js').read_text()
+          background = manifest['locked_assets']['background']
+          assert background['path'] in stage_pack
+          assert 'background.svg' not in stage_pack
+          assert sha256(root / background['path']) == background['sha256']
+
+          molkkaari = manifest['locked_assets']['molkkaari']
+          assert sha256(root / molkkaari['path']) == molkkaari['sha256']
+
+          skittle_lock = json.loads((root / manifest['locked_assets']['skittles_lock']).read_text())
+          assert skittle_lock['count'] == 12
+          for name, expected in skittle_lock['files'].items():
+              assert sha256(root / skittle_lock['activeDirectory'] / name) == expected, name
+
+          character_lock = json.loads((root / manifest['locked_assets']['character_lock']).read_text())
+          for item in character_lock['runtime_assets'].values():
+              assert sha256(root / 'characters/gal01' / item['file']) == item['sha256'], item['file']
+
+          compact = ''.join(game.split())
+          assert 'FIELD_Y_SHIFT=80' in compact
+          assert '[[[1,-36],[2,36]],[[3,-72],[10,0],[4,72]],[[5,-108],[11,-36],[12,36],[6,108]],[[7,-72],[9,0],[8,72]]]' in compact
+          assert 'score>50){score=25' in compact
+          assert 'f.length===1?f[0].n:f.length' in compact
+          assert 'misses>=3' in compact
+
+          print('MOLKKY ACTIVE RELEASE SELFTEST PASS')

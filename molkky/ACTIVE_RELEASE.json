@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "prototype_locked",
+  "production": {
+    "version": "v35",
+    "entrypoint": "index.html?v=35",
+    "runtime_query": "game.js?v=35",
+    "selftest_query": "core/selftest.js?v=35",
+    "protected_git_blobs": {
+      "index.html": "aea00ef9d812425c966e2ee9546947cdf2095672",
+      "game.js": "15f502228da3e6f343127451006b41c92c8686f8",
+      "core/selftest.js": "7029076c70435da805c662158003265bd4f90b62"
+    }
+  },
+  "active_experiment": {
+    "version": "fx43",
+    "entrypoint": "fx36.html?v=43",
+    "effect_runtime_query": "core/impact-effects.js?v=43",
+    "base_version": "v35",
+    "scope": "input guidance and presentation effects only"
+  },
+  "locked_assets": {
+    "background": {
+      "path": "stages/seaside90s/images/approved/kof90s_marina/background.webp",
+      "sha256": "479362aa158655ca4b0f8ee97fb216e570a4e9b9df0a9782a86f02e6777ac7a7"
+    },
+    "molkkaari": {
+      "path": "objects/field/official/images/molkkaari.webp",
+      "sha256": "0828af99e32884bb2865a061550f4704eadc6af9f7c2dd18c1d79b78ccd16794"
+    },
+    "skittles_lock": "objects/skittles/official90s/ASSET_LOCK.json",
+    "character_lock": "characters/gal01/ASSET_LOCK.json"
+  },
+  "cleanup_policy": {
+    "working_tree_contains_legacy_runtime": false,
+    "removed_to_git_history": [
+      "stages/seaside90s/legacy/background_v27.svg"
+    ],
+    "rule": "Do not restore, copy, or load retired files unless the user explicitly requests it. Historical prototypes belong in Git history, not in the active molkky directory."
+  }
+}
