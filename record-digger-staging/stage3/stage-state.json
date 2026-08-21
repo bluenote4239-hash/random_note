@@ -1,16 +1,18 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 2,
-  "searchQueriesIssued": 40,
-  "playlistFound": 0,
-  "fullAlbumFound": 2,
+  "attemptedSafely": 7,
+  "searchQueriesIssued": 76,
+  "playlistFound": 1,
+  "fullAlbumFound": 6,
   "otherUsableSource": 0,
   "unresolved": 0,
-  "status": "stopped_serious_youtube_search_recall_problem",
-  "seriousErrors": 1,
+  "status": "in_progress_general_web_search",
+  "seriousErrors": 0,
   "notes": [
-    "Do not classify the remaining 498 as unresolved from web-search absence.",
-    "Bulk YouTube discovery requires a true YouTube search mechanism with adequate recall before resuming Stage 3."
+    "Previous direct-YouTube recall stop has been superseded.",
+    "General web queries that surface YouTube links are now the normal discovery path.",
+    "Kenny Burrell - Earthy corrected to user-verified video r927Prjj-9k.",
+    "Do not mark an album unresolved after only one failed query formulation."
   ]
 }
