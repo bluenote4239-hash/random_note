@@ -1,5 +1,7 @@
 {
-  "revision": 1,
-  "totalAlbums": 0,
-  "files": []
+  "revision": 2,
+  "totalAlbums": 2,
+  "files": [
+    {"file": "albums-0001.json", "count": 2}
+  ]
 }
