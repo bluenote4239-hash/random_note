@@ -1,0 +1,15 @@
+{
+  "stage": 2,
+  "target": 500,
+  "attempted": 40,
+  "verified": 32,
+  "approximateOrAmbiguous": 7,
+  "unresolved": 1,
+  "nextCandidateOrdinal": 41,
+  "status": "in_progress",
+  "scope": "artist_album_tracks_year_label_only",
+  "notes": [
+    "Practical metadata policy: preserve simple year/label ambiguity instead of exhaustive reissue normalization.",
+    "Do not research covers, YouTube, timestamps, or production JSON during Stage 2."
+  ]
+}
