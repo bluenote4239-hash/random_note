@@ -1,0 +1,58 @@
+{
+  "stage": 3,
+  "status": "in_progress",
+  "method": "general_web_search_to_youtube",
+  "results": [
+    {
+      "artist": "Stan Getz",
+      "album": "Stan Getz Quartets",
+      "youtubeStatus": "playlist_found",
+      "sourceType": "youtube_playlist",
+      "url": "https://www.youtube.com/watch?v=Z1IOaIg6NEg&list=PLVG1KRr_9ktFf6lr1GRP5laME1fGy66Id",
+      "videoId": "Z1IOaIg6NEg",
+      "playlistId": "PLVG1KRr_9ktFf6lr1GRP5laME1fGy66Id",
+      "timestamps": null,
+      "note": "Album identified by an external jazz recommendation page linking directly to the YouTube playlist."
+    },
+    {
+      "artist": "Lee Konitz",
+      "album": "Subconscious-Lee",
+      "youtubeStatus": "full_album_found",
+      "sourceType": "full_album_video",
+      "url": "https://www.youtube.com/watch?v=y4_3nXr-hAM",
+      "videoId": "y4_3nXr-hAM",
+      "timestamps": null,
+      "note": "External jazz recommendation page identifies this link as Subconscious-Lee."
+    },
+    {
+      "artist": "Elmo Hope Sextet",
+      "album": "Informal Jazz",
+      "youtubeStatus": "full_album_found",
+      "sourceType": "full_album_video",
+      "url": "https://www.youtube.com/watch?v=tPGO4xTPFTY",
+      "videoId": "tPGO4xTPFTY",
+      "timestamps": ["0:00","11:22","21:11","30:22"],
+      "note": "Direct full-album YouTube result; description includes the four LP tracks and timestamps."
+    },
+    {
+      "artist": "Paul Quinichette",
+      "album": "On the Sunny Side",
+      "youtubeStatus": "full_album_found",
+      "sourceType": "full_album_video",
+      "url": "https://www.youtube.com/watch?v=F--nIj-fy8Y",
+      "videoId": "F--nIj-fy8Y",
+      "timestamps": ["0:00","8:02","19:55","25:49"],
+      "note": "Direct YouTube result for the original Prestige LP; side/track timestamps in description."
+    },
+    {
+      "artist": "Zoot Sims",
+      "album": "Zoot!",
+      "youtubeStatus": "full_album_found",
+      "sourceType": "full_album_video",
+      "url": "https://www.youtube.com/watch?v=DMHKm3Z_rOQ",
+      "videoId": "DMHKm3Z_rOQ",
+      "timestamps": null,
+      "note": "Direct YouTube full-album result. Description lists all seven LP tracks; no reliable start timestamps were exposed."
+    }
+  ]
+}
