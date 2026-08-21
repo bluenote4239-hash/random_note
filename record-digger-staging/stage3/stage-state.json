@@ -1,18 +1,19 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 7,
-  "searchQueriesIssued": 76,
+  "attemptedSafely": 27,
+  "searchQueriesIssued": 135,
   "playlistFound": 1,
-  "fullAlbumFound": 6,
+  "fullAlbumFound": 7,
   "otherUsableSource": 0,
-  "unresolved": 0,
+  "unresolved": 19,
   "status": "in_progress_general_web_search",
   "seriousErrors": 0,
   "notes": [
     "Previous direct-YouTube recall stop has been superseded.",
     "General web queries that surface YouTube links are now the normal discovery path.",
     "Kenny Burrell - Earthy corrected to user-verified video r927Prjj-9k.",
-    "Do not mark an album unresolved after only one failed query formulation."
+    "Unresolved is accepted after multiple reasonable query formulations; Stage 3 continues without stopping.",
+    "Latest verified addition: Gene Ammons - Hi Fidelity Jam Session, video FV80gUbiWUI with four timestamps."
   ]
 }
