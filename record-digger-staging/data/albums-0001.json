@@ -1,0 +1,65 @@
+[
+  {
+    "id": "rec_00000001",
+    "artist": "Blue Mitchell",
+    "album": "Blue's Moods",
+    "year": 1960,
+    "label": "Riverside",
+    "tracks": [
+      {"title": "I'll Close My Eyes"},
+      {"title": "Avars"},
+      {"title": "Scrapple from the Apple"},
+      {"title": "Kinda Vague"},
+      {"title": "Sir John"},
+      {"title": "When I Fall in Love"},
+      {"title": "Sweet Pumpkin"},
+      {"title": "I Wish I Knew"}
+    ],
+    "youtube": {
+      "status": "candidate",
+      "type": "playlist",
+      "playlistId": "PL0q2VleZJVElLv0I4YVt4fXLX3zHf4v_L",
+      "trackVideoIds": [
+        "ESsfwRbPds4",
+        "Gw9zhbRJE4g",
+        "UiVS_W3KruI",
+        "65XDWMDr8Js",
+        "xZ0zBk7UOG4",
+        "a8s5r0T0nK0",
+        "OPQWpEZsfaI",
+        "P-GFJxQ_05k"
+      ]
+    },
+    "coverSources": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Blue%27s_Moods",
+      "https://www.allmusic.com/album/blues-moods-mw0000197301",
+      "https://s-oom.tistory.com/5806"
+    ]
+  },
+  {
+    "id": "rec_00000002",
+    "artist": "Harold Land",
+    "album": "The Fox",
+    "year": 1960,
+    "label": "Hifijazz",
+    "tracks": [
+      {"title": "The Fox"},
+      {"title": "Mirror Mind Rose"},
+      {"title": "One Second, Please"},
+      {"title": "Sims A-Plenty"},
+      {"title": "Little Chris"},
+      {"title": "One Down"}
+    ],
+    "youtube": {
+      "status": "candidate",
+      "type": "full_album",
+      "videoId": "6ZqJc8HDTi0"
+    },
+    "coverSources": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Fox_(Harold_Land_album)",
+      "https://www.self-titledmag.com/david-axelrod-playlist/"
+    ]
+  }
+]
