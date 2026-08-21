@@ -1,0 +1,27 @@
+{
+  "stage": 2,
+  "range": "41-500",
+  "attempted": 460,
+  "mode": "coarse_pass_for_later_repair",
+  "candidateSource": "../stage1/candidates-0001.json through ../stage1/candidates-0005.json",
+  "fieldPolicy": {
+    "artist": "inherit candidate artist verbatim",
+    "album": "inherit candidate album verbatim",
+    "label": "infer from candidate sourceEvidence catalog when possible; preserve ambiguity rather than resolve reissues",
+    "year": "use source-catalog era as approximate when exact issue year is not immediately available",
+    "tracks": "unresolved entries are explicitly deferred; do not invent song titles"
+  },
+  "catalogApproximationRules": [
+    {"sourceContains":"prestige-records","label":"Prestige","yearApprox":"1950s / early 1960s"},
+    {"sourceContains":"riverside-records/catalog-jazzland","label":"Jazzland / Riverside","yearApprox":"late 1950s / early 1960s"},
+    {"sourceContains":"Contemporary_Records","label":"Contemporary","yearApprox":"1950s / 1960s"},
+    {"sourceContains":"Savoy_Records","label":"Savoy","yearApprox":"1950s / 1960s"},
+    {"sourceContains":"Pacific_Jazz_Records","label":"Pacific Jazz","yearApprox":"1950s / 1960s"},
+    {"sourceContains":"Bethlehem_Records","label":"Bethlehem","yearApprox":"1950s / early 1960s"},
+    {"sourceContains":"riverside-records","label":"Riverside","yearApprox":"1950s / 1960s"},
+    {"sourceContains":"EmArcy_Records","label":"EmArcy","yearApprox":"1950s / 1960s"},
+    {"sourceContains":"Argo_Records","label":"Argo","yearApprox":"1956 / 1965"}
+  ],
+  "status": "attempted_all",
+  "qualityNote": "This pass intentionally prioritizes moving every candidate through Stage 2. Exact issue years, reissue histories and track sequences remain editable and may be repaired during later listening/YouTube work. No track titles were fabricated."
+}
