@@ -1,15 +1,18 @@
 {
   "stage": 2,
   "target": 500,
-  "attempted": 40,
+  "attempted": 500,
   "verified": 32,
   "approximateOrAmbiguous": 7,
-  "unresolved": 1,
-  "nextCandidateOrdinal": 41,
-  "status": "in_progress",
+  "unresolved": 461,
+  "nextCandidateOrdinal": null,
+  "status": "complete_attempted_all",
   "scope": "artist_album_tracks_year_label_only",
   "notes": [
-    "Practical metadata policy: preserve simple year/label ambiguity instead of exhaustive reissue normalization.",
-    "Do not research covers, YouTube, timestamps, or production JSON during Stage 2."
+    "Candidates 1-40 received detailed metadata work; 32 verified, 7 approximate/ambiguous, 1 unresolved.",
+    "Candidates 41-500 received a coarse Stage 2 pass using Stage 1 artist/album plus source-catalog label/era inference where possible.",
+    "Track titles were not fabricated when unavailable; those records remain explicitly unresolved for later repair.",
+    "Practical policy: preserve simple year/label ambiguity instead of exhaustive reissue normalization.",
+    "No covers, YouTube, timestamps, prices, or production JSON were researched during Stage 2."
   ]
 }
