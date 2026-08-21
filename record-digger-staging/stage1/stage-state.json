@@ -1,0 +1,16 @@
+{
+  "currentStage": 1,
+  "stageName": "candidate_hunt",
+  "candidateCount": 100,
+  "targetCandidateCount": 1000,
+  "candidateFiles": [
+    {"file": "candidates-0001.json", "count": 100}
+  ],
+  "hardGate": {
+    "stage2Allowed": false,
+    "reason": "candidateCount < 1000"
+  },
+  "notes": [
+    "Stage 1 only. No metadata enrichment, YouTube search, cover work, timestamps, or production JSON until about 1000 unique candidates."
+  ]
+}
