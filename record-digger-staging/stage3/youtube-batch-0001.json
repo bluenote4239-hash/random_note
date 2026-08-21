@@ -1,0 +1,30 @@
+{
+  "stage": 3,
+  "status": "stopped_method_invalid",
+  "searchesIssued": 40,
+  "safeResultsRecorded": 2,
+  "results": [
+    {
+      "artist": "Sanford Gold",
+      "album": "Piano d'Or",
+      "youtubeStatus": "full_album_found",
+      "sourceType": "full_album_video",
+      "url": "https://www.youtube.com/watch?v=y1CILa8CIl0",
+      "videoId": "y1CILa8CIl0",
+      "timestamps": ["0:00","2:32","4:58","7:48","10:45","12:47","14:52","17:29","20:17","22:52","25:08","27:36"],
+      "note": "Direct indexed YouTube result with tracklist/timestamps in description."
+    },
+    {
+      "artist": "Kenny Burrell",
+      "album": "Earthy",
+      "youtubeStatus": "full_album_found",
+      "sourceType": "full_album_video",
+      "url": "https://www.youtube.com/watch?v=8-2RC0Ia3LU",
+      "videoId": "8-2RC0Ia3LU",
+      "timestamps": null,
+      "note": "Verified indirectly via JazzWax complete-album YouTube embed; embed ID recovered from source."
+    }
+  ],
+  "problem": "Available web search does not expose YouTube search results with sufficient recall for bulk catalog classification. A 40-album exact-query batch returned only one direct YouTube result, while a separate web page proved another album had a complete YouTube embed. Therefore treating absent search results as youtubeStatus=unresolved would create widespread false negatives.",
+  "nextAction": "Use a true YouTube search mechanism (YouTube Data API, yt-dlp/search-capable local process, or equivalent) before resuming Stage 3. Do not mark the remaining candidates unresolved from web-search absence alone."
+}
