@@ -1,19 +1,29 @@
 {
-  "currentStage": 1,
-  "stageName": "candidate_hunt",
-  "candidateCount": 400,
-  "targetCandidateCount": 1000,
+  "currentStage": 2,
+  "stageName": "metadata_trial_complete",
+  "candidateCount": 500,
+  "targetCandidateCount": 500,
   "candidateFiles": [
-    {"file": "candidates-0001.json", "count": 100},
-    {"file": "candidates-0002.json", "count": 100},
-    {"file": "candidates-0003.json", "count": 100},
-    {"file": "candidates-0004.json", "count": 100}
+    {"file":"candidates-0001.json","count":100},
+    {"file":"candidates-0002.json","count":100},
+    {"file":"candidates-0003.json","count":100},
+    {"file":"candidates-0004.json","count":100},
+    {"file":"candidates-0005.json","count":100}
   ],
   "hardGate": {
-    "stage2Allowed": false,
-    "reason": "candidateCount < 1000"
+    "stage1Closed": true,
+    "stage2Allowed": true,
+    "stage3Allowed": false,
+    "reason": "Temporary 500-candidate gate reached; 20-record metadata trial completed and awaiting workflow review."
+  },
+  "stage2Trial": {
+    "attempted": 20,
+    "file": "../stage2/metadata-trial-0001.json",
+    "status": "complete_waiting_review"
   },
   "notes": [
-    "Stage 1 only. No metadata enrichment, YouTube search, cover work, timestamps, or production JSON until about 1000 unique candidates."
+    "Do not add more candidates until review.",
+    "Do not expand Stage 2 beyond the 20-record trial until review.",
+    "Do not begin YouTube, cover, timestamp, or production JSON work."
   ]
 }
