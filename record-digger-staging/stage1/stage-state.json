@@ -1,10 +1,11 @@
 {
   "currentStage": 1,
   "stageName": "candidate_hunt",
-  "candidateCount": 100,
+  "candidateCount": 200,
   "targetCandidateCount": 1000,
   "candidateFiles": [
-    {"file": "candidates-0001.json", "count": 100}
+    {"file": "candidates-0001.json", "count": 100},
+    {"file": "candidates-0002.json", "count": 100}
   ],
   "hardGate": {
     "stage2Allowed": false,
