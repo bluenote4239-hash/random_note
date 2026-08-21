@@ -1,0 +1,16 @@
+{
+  "stage": 3,
+  "target": 500,
+  "attemptedSafely": 2,
+  "searchQueriesIssued": 40,
+  "playlistFound": 0,
+  "fullAlbumFound": 2,
+  "otherUsableSource": 0,
+  "unresolved": 0,
+  "status": "stopped_serious_youtube_search_recall_problem",
+  "seriousErrors": 1,
+  "notes": [
+    "Do not classify the remaining 498 as unresolved from web-search absence.",
+    "Bulk YouTube discovery requires a true YouTube search mechanism with adequate recall before resuming Stage 3."
+  ]
+}
