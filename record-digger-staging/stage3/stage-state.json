@@ -1,23 +1,23 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 220,
-  "searchQueriesIssued": 552,
+  "attemptedSafely": 230,
+  "searchQueriesIssued": 580,
   "playlistFound": 2,
-  "fullAlbumFound": 33,
+  "fullAlbumFound": 35,
   "otherUsableSource": 1,
-  "unresolved": 184,
-  "secondPassAttempted": 12,
+  "unresolved": 192,
+  "secondPassAttempted": 17,
   "secondPassRescued": 0,
-  "stillUnresolvedAfterSecondPass": 12,
+  "stillUnresolvedAfterSecondPass": 17,
   "status": "in_progress_first_and_second_pass",
   "seriousErrors": 0,
   "notes": [
     "General web queries that surface YouTube links are the normal discovery path.",
     "Kenny Burrell - Earthy uses the user-verified video r927Prjj-9k.",
-    "Candidates 201-220 attempted in this pass; Bobby Scott - The Compositions Of Bobby Scott added as a verified full-album video (PmpV0VsXDuk).",
-    "Second-pass rescue started immediately for 12 earlier unresolved candidates using exact-title, original/reissue-title, and track-assisted searches.",
-    "Chet Baker in Milan surfaced an official album track on YouTube (Jskis0Z2b_o) but no verified album-complete source yet, so it remains unresolved after second pass.",
-    "No serious errors. Continue first pass from candidate 221 and second-pass rescue in parallel."
+    "Candidates 221-230 attempted in this pass.",
+    "New verified full-album sources: The Smith-Glamann Quintet - Poinciana (T8FLx9JuMAc) and Frank Rosolino - I Play Trombone (6WDK6xp_AOo), the latter with six description timestamps.",
+    "Five additional unresolved albums received second-pass rescue attempts using title aliases and distinctive-track searches; none produced a verified album-complete YouTube source in this pass.",
+    "No serious errors. Continue first pass from candidate 231 and second-pass rescue in parallel."
   ]
 }
