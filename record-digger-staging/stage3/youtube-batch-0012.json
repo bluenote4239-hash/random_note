@@ -1,0 +1,25 @@
+{
+  "stage": 3,
+  "status": "in_progress",
+  "method": "general_web_search_to_youtube",
+  "candidateRange": "221-230",
+  "results": [
+    {"artist":"The Smith-Glamann Quintet","album":"Poinciana","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=T8FLx9JuMAc","videoId":"T8FLx9JuMAc","timestamps":null,"note":"Verified exact-title FULL ALBUM upload indexed by general web search."},
+    {"artist":"Frances Faye","album":"I'm Wild Again","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem, full-album and YouTube-domain searches attempted; album metadata surfaced but no verified album-complete YouTube source."},
+    {"artist":"Herbie Mann Quartet","album":"Flamingo","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and YouTube-domain searches attempted; album and track metadata surfaced but no verified album-complete YouTube source."},
+    {"artist":"Charlie Mariano","album":"Charlie Mariano","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Artist/title/Bethlehem YouTube searches attempted; no verified album-complete source surfaced."},
+    {"artist":"Frank Rosolino","album":"I Play Trombone","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=6WDK6xp_AOo","videoId":"6WDK6xp_AOo","timestamps":["00:00","07:06","11:28","17:41","25:33","33:10"],"note":"Verified exact-title full-album upload with six description timestamps."},
+    {"artist":"Charlie Shavers","album":"Gershwin, Shavers And Strings","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and YouTube-domain searches attempted; no verified album-complete source surfaced."},
+    {"artist":"The Six","album":"The Six","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Bethlehem/jazz/title YouTube searches attempted; name ambiguity remained and no verified album-complete source surfaced."},
+    {"artist":"Bud Freeman","album":"Bud Freeman","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Bethlehem and full-album YouTube searches attempted; no verified album-complete source surfaced."},
+    {"artist":"Conte Candoli","album":"Conte Candoli","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Bethlehem and full-album YouTube searches attempted; no verified album-complete source surfaced."},
+    {"artist":"Stu Williamson","album":"Stu Williamson Plays","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and original-title alias Sapphire searches attempted; no verified album-complete YouTube source surfaced."}
+  ],
+  "secondPassRescue": [
+    {"artist":"Jack Montrose","album":"Arranged By Montrose","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with exact title, Pacific Jazz, Meet Mr. Gordon and reissue/title-alias searches; no album-complete YouTube source verified."},
+    {"artist":"Chico Hamilton Quintet","album":"In Hi Fi","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with exact title plus distinctive tracks Jonalah/Chrissie/Topsy; individual-track references surfaced, but no album-complete YouTube source verified."},
+    {"artist":"John Lewis, Percy Heath, Bill Perkins, Chico Hamilton, Jim Hall","album":"Grand Encounter - 2 Degrees East-3 Degrees West","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with title aliases and distinctive tracks. Multiple individual YouTube embeds surfaced, including Love Me or Leave Me, but no verified album-complete source."},
+    {"artist":"Bud Shank Quartet","album":"Jazz At Cal-Tech","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with exact title and distinctive track When Lights Are Low; no verified album-complete YouTube source surfaced."},
+    {"artist":"The Bill Perkins Octet","album":"On Stage","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with exact title, Pacific Jazz WP/PJ 1221, and Song of the Islands; no verified album-complete YouTube source surfaced."}
+  ]
+}
