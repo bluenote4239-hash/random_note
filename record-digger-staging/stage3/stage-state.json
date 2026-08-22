@@ -1,23 +1,24 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 250,
-  "searchQueriesIssued": 638,
+  "attemptedSafely": 260,
+  "searchQueriesIssued": 672,
   "playlistFound": 2,
-  "fullAlbumFound": 38,
+  "fullAlbumFound": 40,
   "otherUsableSource": 1,
-  "unresolved": 209,
-  "secondPassAttempted": 27,
-  "secondPassRescued": 0,
-  "stillUnresolvedAfterSecondPass": 27,
+  "unresolved": 218,
+  "secondPassAttempted": 32,
+  "secondPassRescued": 1,
+  "stillUnresolvedAfterSecondPass": 31,
   "status": "in_progress_first_and_second_pass",
   "seriousErrors": 0,
   "notes": [
     "General web queries that surface YouTube links are the normal discovery path.",
     "Kenny Burrell - Earthy uses the user-verified video r927Prjj-9k.",
-    "Candidates 241-250 attempted in this pass.",
-    "New verified full-album source: Charlie Mariano - Charlie Mariano Plays (-aVKk6LHvmA); description lists all ten LP tracks and session details.",
-    "Five additional unresolved Prestige albums received second-pass rescue attempts using catalog numbers, alternate titles and distinctive-track searches; none produced a verified album-complete YouTube source in this pass.",
-    "No serious errors. Continue first pass from candidate 251 and second-pass rescue in parallel."
+    "Candidates 251-260 attempted in this pass.",
+    "New first-pass verified full-album source: Mel Torme With The Marty Paich Dek-Tette (nufz3Vj2W4w).",
+    "Second-pass rescue succeeded for Oscar Pettiford - Oscar Pettiford by using alternate title Another One; verified full-album video f0x-lxFS4RI.",
+    "Four additional second-pass candidates were retried with catalog numbers, alternate titles and distinctive tracks but remain unresolved.",
+    "No serious errors. Continue first pass from candidate 261 and second-pass rescue in parallel."
   ]
 }
