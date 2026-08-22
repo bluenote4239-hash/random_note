@@ -1,0 +1,25 @@
+{
+  "stage": 3,
+  "status": "in_progress",
+  "method": "general_web_search_to_youtube",
+  "candidateRange": "251-260",
+  "results": [
+    {"artist":"Mel Torme","album":"Mel Torme With The Marty Paich Dek-Tette","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=nufz3Vj2W4w","videoId":"nufz3Vj2W4w","timestamps":null,"note":"Verified YouTube result explicitly titled Mel Tormé & The Marty Paich Dek-Tette (Full Album). Description lists all twelve album tracks and recording/session personnel, but gives track durations rather than chapter-start timestamps."},
+    {"artist":"Peggy Connelly","album":"Peggy Connelly","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, jazz/Bethlehem, full-album and YouTube-domain searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Claude Williamson","album":"Claude Williamson","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem and 1956-session searches attempted; album/reissue metadata surfaced, but no verified album-complete YouTube source."},
+    {"artist":"Stu Williamson","album":"Stu Williamson","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem and artist-discography searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Chris Connor","album":"Chris","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Retitled form The Rich Sound Of Chris Connor plus Bethlehem BCP-56 and exact-title searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"The Six","album":"The View From Jazzbo's Head","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title/Bethlehem searches attempted with jazz qualifiers to reduce name ambiguity; no verified album-complete YouTube source surfaced."},
+    {"artist":"Herbie Mann","album":"Herbie Mann Plays","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem BCP-58 and track-context searches attempted; album metadata and track list surfaced but no verified album-complete YouTube source."},
+    {"artist":"Sal Salvador","album":"Frivolous Sal","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and Sal Salvador YouTube-oriented searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Duke Ellington","album":"Historically Speaking - The Duke","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and remaster searches surfaced album metadata and album-associated individual YouTube embeds, but no verified album-complete video or album-order playlist was confirmed."},
+    {"artist":"Howard McGhee","album":"Life Is Just A Bowl Of Cherries","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem BCP-61 and distinctive-track searches attempted; complete album metadata surfaced but no verified album-complete YouTube source."}
+  ],
+  "secondPassRescue": [
+    {"artist":"Bud Freeman","album":"Bud Freeman","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-29 and distinctive tracks Newport-News/At Sundown; no verified album-complete YouTube source surfaced."},
+    {"artist":"Conte Candoli","album":"Conte Candoli","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-30, reissue title Toots Sweet and distinctive track Full Count; album equivalence was confirmed but no verified album-complete YouTube source surfaced."},
+    {"artist":"Stu Williamson","album":"Stu Williamson Plays","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-31, original title Sapphire and distinctive-track searches; no verified album-complete YouTube source surfaced."},
+    {"artist":"Jack Teagarden","album":"Jazz Great","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-32, exact-title and album-track context; no verified album-complete YouTube source surfaced."},
+    {"artist":"Oscar Pettiford","album":"Oscar Pettiford","secondPassAttempted":true,"youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=f0x-lxFS4RI","videoId":"f0x-lxFS4RI","timestamps":null,"note":"Rescued via alternate/original release title Another One. Verified YouTube result explicitly titled Oscar Pettiford - Another One (FULL ALBUM); Bethlehem BCP-33 is documented as the same 1955 album."}
+  ]
+}
