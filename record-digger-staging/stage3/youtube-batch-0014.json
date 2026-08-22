@@ -1,0 +1,25 @@
+{
+  "stage": 3,
+  "status": "in_progress",
+  "method": "general_web_search_to_youtube",
+  "candidateRange": "241-250",
+  "results": [
+    {"artist":"Howard McGhee","album":"The Return Of Howard McGhee","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem BCP-42, track-assisted and full-album YouTube-oriented searches attempted; album metadata and complete track listings surfaced, but no verified album-complete YouTube source."},
+    {"artist":"Johnny Hartman","album":"Songs From The Heart","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem BCP-43 and distinctive-track searches attempted; complete album metadata surfaced, but no verified album-complete YouTube source."},
+    {"artist":"Various Artists","album":"The Jazz City Workshop","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title/Bethlehem and YouTube-oriented searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Helen Carr","album":"Why Do I Love You","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title/Bethlehem and full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Russ Garcia Orchestra","album":"Four Horns And A Lush Life","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and full-album YouTube-oriented searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Terry Morel","album":"Songs Of A Woman In Love","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title/Bethlehem and full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Max Bennett","album":"Max Bennett","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title with Bethlehem/jazz qualifiers and full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Charlie Mariano","album":"Charlie Mariano Plays","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=-aVKk6LHvmA","videoId":"-aVKk6LHvmA","timestamps":null,"note":"Verified YouTube result explicitly titled Charlie Mariano - Charlie Mariano Plays (Full Album). Description lists the ten LP tracks and recording-session details; no chapter-start timestamps were provided."},
+    {"artist":"Max Bennett","album":"Max Bennett Plays","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title/Bethlehem and full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Joe Derise","album":"Joe Derise","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem and Joe Derise Sings/reissue-context searches attempted; album/reissue metadata surfaced but no verified album-complete YouTube source."}
+  ],
+  "secondPassRescue": [
+    {"artist":"Milt Jackson","album":"Milt Jackson Quartet","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Prestige PRLP 7003, alternate title Soul Pioneers and distinctive track context; authoritative album metadata surfaced but no verified album-complete YouTube source."},
+    {"artist":"Gerry Mulligan","album":"Mulligan Plays Mulligan","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried using exact title plus track titles Funhouse/Mulligan's Too and Prestige context; no verified album-complete YouTube source surfaced."},
+    {"artist":"Phil Woods Quartet","album":"Woodlore","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Prestige PRLP 7018 and distinctive tracks Woodlore/Strollin' With Pam; album metadata surfaced but no verified album-complete YouTube source."},
+    {"artist":"Phil Woods Septet","album":"Pairing Off","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Prestige PRLP 7046 and distinctive tracks The Stanley Stomper/Pairing Off; album metadata surfaced but no verified album-complete YouTube source."},
+    {"artist":"Elmo Hope","album":"Meditations","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Prestige PRLP 7010, alternate title Elmo Hope Memorial Album and distinctive-track context; no verified album-complete YouTube source surfaced."}
+  ]
+}
