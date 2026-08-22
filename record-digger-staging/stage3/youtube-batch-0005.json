@@ -1,0 +1,22 @@
+{
+  "stage": 3,
+  "status": "in_progress",
+  "method": "general_web_search_to_youtube",
+  "results": [
+    {"artist":"Kenny Drew","album":"Hard Bop","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Clark Terry & Eddie Henry","album":"Cruisin'","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Mundell Lowe","album":"Low Down Guitar","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Searched both Jazzland title and original Riverside title A Grand Night For Swinging; no verified album-complete YouTube source surfaced."},
+    {"artist":"Kenny Drew","album":"Tough Piano Trio","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Clark Terry & Kenny Dorham","album":"Top Trumpets","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Various Artists","album":"East Coast Sounds","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted using featured-artist names; no verified album-complete YouTube source surfaced."},
+    {"artist":"Wilbur Ware","album":"The Chicago Cookers","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=PJvaGpU5gZY","videoId":"PJvaGpU5gZY","timestamps":["0:00","3:57","7:14","12:47","19:18","22:18","27:00","31:35"],"note":"Verified complete YouTube upload under original Riverside title The Chicago Sound; same Wilbur Ware/Johnny Griffin session later reissued by Jazzland as The Chicago Cookers."},
+    {"artist":"Randy Weston","album":"Greenwich Village Jazz","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Searched both Jazzland title and original title Jazz à la Bohemia; no verified album-complete YouTube source surfaced."},
+    {"artist":"Kenny Dorham","album":"Kenny Dorham & Friends","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Don Elliott","album":"Double Trumpet Doings","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Searched both Jazzland title and original Riverside title Counterpoint for Six Valves; no verified album-complete YouTube source surfaced."},
+    {"artist":"Mel Rhyne","album":"Organ-izing","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Woody Herman","album":"The Fourth Herd","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Chet Baker","album":"Chet Baker in Milan","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Charlie Rouse","album":"Takin' Care of Business","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"General-web and site:youtube.com searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Harold Land","album":"West Coast Blues!","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=4IBQSZaNAbA","videoId":"4IBQSZaNAbA","timestamps":["0:00","6:49","13:55","19:56","27:43","32:36"],"note":"Verified full-album YouTube upload with all six LP tracks and description timestamps; upload sequence differs from one documented LP listing, accepted as album-complete listening source."}
+  ]
+}
