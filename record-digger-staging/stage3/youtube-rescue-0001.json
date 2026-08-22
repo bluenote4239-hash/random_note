@@ -1,0 +1,20 @@
+{
+  "stage": 3,
+  "pass": 2,
+  "status": "in_progress",
+  "method": "stronger_general_web_rescue",
+  "results": [
+    {"artist":"Kenny Drew","album":"Hard Bop","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact-title/full-album and track-assisted searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Clark Terry & Eddie Henry","album":"Cruisin'","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact-title search plus session/title variants attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Mundell Lowe","album":"Low Down Guitar","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried under original Riverside title A Grand Night For Swinging and distinctive track titles; web sources confirm title equivalence but no verified album-complete YouTube URL surfaced."},
+    {"artist":"Kenny Drew","album":"Tough Piano Trio","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact-title/full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Clark Terry & Kenny Dorham","album":"Top Trumpets","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact title, artist pair, and Riverside/Jazzland title-variant searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Randy Weston","album":"Greenwich Village Jazz","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried under original title Jazz à la Bohemia plus distinctive-title searches; no verified album-complete YouTube source surfaced."},
+    {"artist":"Kenny Dorham","album":"Kenny Dorham & Friends","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact-title/full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Don Elliott","album":"Double Trumpet Doings","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried under original Riverside title Counterpoint for Six Valves and artist/title variants; no verified album-complete YouTube URL surfaced."},
+    {"artist":"Mel Rhyne","album":"Organ-izing","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact-title/full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Woody Herman","album":"The Fourth Herd","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact-title/full-album and distinctive-track search attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Chet Baker","album":"Chet Baker in Milan","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Official YouTube track from the album was found (Look For The Silver Lining, video Jskis0Z2b_o), proving album material is on YouTube, but no verified album-order playlist or full-album video surfaced in this rescue pass."},
+    {"artist":"Charlie Rouse","album":"Takin' Care of Business","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Exact-title plus distinctive track Blue Farouq searches attempted; no verified album-complete YouTube source surfaced."}
+  ]
+}
