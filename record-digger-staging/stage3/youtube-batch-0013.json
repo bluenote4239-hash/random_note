@@ -1,0 +1,25 @@
+{
+  "stage": 3,
+  "status": "in_progress",
+  "method": "general_web_search_to_youtube",
+  "candidateRange": "231-240",
+  "results": [
+    {"artist":"Jack Teagarden","album":"Jazz Great","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem BCP-32 and YouTube searches attempted; album metadata surfaced but no verified album-complete YouTube source."},
+    {"artist":"Oscar Pettiford","album":"Oscar Pettiford","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title/Bethlehem full-album searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Mel Torme","album":"It's A Blue World","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"YouTube title-track upload surfaced, but no verified album-complete source was confirmed in this pass."},
+    {"artist":"Bobby Troup","album":"The Distinctive Style Of Bobby Troup","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and Bethlehem BCP-35 searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Dexter Gordon","album":"Daddy Plays The Horn","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=oxQWSWuABWc","videoId":"oxQWSWuABWc","timestamps":["00:00","09:06","16:56","21:15","26:12","34:05"],"note":"Verified YouTube upload explicitly titled Dexter Gordon - Daddy Plays The Horn (Full Album), with six description timestamps."},
+    {"artist":"Stan Levey","album":"This Time The Drum's On Me","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title and Bethlehem full-album searches attempted; album metadata surfaced but no verified album-complete YouTube source."},
+    {"artist":"Red Mitchell","album":"Jam For Your Bread","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact-title, Bethlehem BCP-38 and reissue-title searches attempted; no verified album-complete YouTube source surfaced."},
+    {"artist":"Sal Salvador","album":"Shades Of Sal Salvador","youtubeStatus":"full_album_found","sourceType":"full_album_video","url":"https://www.youtube.com/watch?v=-9UJcTKpzBA","videoId":"-9UJcTKpzBA","timestamps":null,"note":"Verified exact-title FULL ALBUM YouTube upload."},
+    {"artist":"Herbie Mann / Sam Most Quintet","album":"The Herbie Mann-Sam Most Quintet","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Exact title plus later reissue title The Mann with the Most searched; no verified album-complete YouTube source surfaced."},
+    {"artist":"Ralph Sharon","album":"Ralph Sharon","youtubeStatus":"unresolved","sourceType":null,"url":null,"videoId":null,"timestamps":null,"note":"Bethlehem BCP-41, Ralph Sharon Trio and full-album YouTube searches attempted; no verified album-complete source surfaced."}
+  ],
+  "secondPassRescue": [
+    {"artist":"Frances Faye","album":"I'm Wild Again","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-23, exact title and track/reissue context; album metadata and non-YouTube streams surfaced but no verified album-complete YouTube source."},
+    {"artist":"Herbie Mann Quartet","album":"Flamingo","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-24 and distinctive track titles; complete track metadata surfaced, but no verified album-complete YouTube source."},
+    {"artist":"Charlie Mariano","album":"Charlie Mariano","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-25 and 1955 exact-title variants; no verified album-complete YouTube source surfaced."},
+    {"artist":"Charlie Shavers","album":"Gershwin, Shavers And Strings","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-27 and exact title variants; no verified album-complete YouTube source surfaced."},
+    {"artist":"The Six","album":"The Six","secondPassAttempted":true,"youtubeStatus":"unresolved","note":"Retried with Bethlehem BCP-28, year and jazz qualifiers to reduce name ambiguity; no verified album-complete YouTube source surfaced."}
+  ]
+}
