@@ -1,20 +1,23 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 200,
-  "searchQueriesIssued": 500,
+  "attemptedSafely": 220,
+  "searchQueriesIssued": 552,
   "playlistFound": 2,
-  "fullAlbumFound": 32,
+  "fullAlbumFound": 33,
   "otherUsableSource": 1,
-  "unresolved": 165,
-  "status": "in_progress_general_web_search",
+  "unresolved": 184,
+  "secondPassAttempted": 12,
+  "secondPassRescued": 0,
+  "stillUnresolvedAfterSecondPass": 12,
+  "status": "in_progress_first_and_second_pass",
   "seriousErrors": 0,
   "notes": [
-    "Previous direct-YouTube recall stop has been superseded.",
     "General web queries that surface YouTube links are the normal discovery path.",
     "Kenny Burrell - Earthy uses the user-verified video r927Prjj-9k.",
-    "Unresolved is accepted after reasonable query variants; Stage 3 continues without stopping.",
-    "Candidates 181-200 attempted in this pass.",
-    "New verified sources: Bud Shank/Bob Brookmeyer - Strings And Trombones; The Bud Shank Quartet; Chet Baker Sings playlist; Jim Hall - Jazz Guitar; Gerry Mulligan Quartet - Recorded In Boston At Storyville."
+    "Candidates 201-220 attempted in this pass; Bobby Scott - The Compositions Of Bobby Scott added as a verified full-album video (PmpV0VsXDuk).",
+    "Second-pass rescue started immediately for 12 earlier unresolved candidates using exact-title, original/reissue-title, and track-assisted searches.",
+    "Chet Baker in Milan surfaced an official album track on YouTube (Jskis0Z2b_o) but no verified album-complete source yet, so it remains unresolved after second pass.",
+    "No serious errors. Continue first pass from candidate 221 and second-pass rescue in parallel."
   ]
 }
