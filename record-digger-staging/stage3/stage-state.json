@@ -1,12 +1,12 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 180,
-  "searchQueriesIssued": 453,
-  "playlistFound": 1,
-  "fullAlbumFound": 28,
+  "attemptedSafely": 200,
+  "searchQueriesIssued": 500,
+  "playlistFound": 2,
+  "fullAlbumFound": 32,
   "otherUsableSource": 1,
-  "unresolved": 150,
+  "unresolved": 165,
   "status": "in_progress_general_web_search",
   "seriousErrors": 0,
   "notes": [
@@ -14,7 +14,7 @@
     "General web queries that surface YouTube links are the normal discovery path.",
     "Kenny Burrell - Earthy uses the user-verified video r927Prjj-9k.",
     "Unresolved is accepted after reasonable query variants; Stage 3 continues without stopping.",
-    "Candidates 141-180 attempted in this pass.",
-    "New verified full-album sources: Sun Ra - The Futuristic Sounds Of Sun Ra; Perry Robinson 4 - Funk Dumpling; Archie Shepp-Bill Dixon Quartet; Paul Bley - Footloose!; Valdo Williams - New Advanced Jazz; Marc Levin - The Dragon Suite; Paul Jeffrey Quintet - Electrifying Sounds; Doug Carn Trio."
+    "Candidates 181-200 attempted in this pass.",
+    "New verified sources: Bud Shank/Bob Brookmeyer - Strings And Trombones; The Bud Shank Quartet; Chet Baker Sings playlist; Jim Hall - Jazz Guitar; Gerry Mulligan Quartet - Recorded In Boston At Storyville."
   ]
 }
