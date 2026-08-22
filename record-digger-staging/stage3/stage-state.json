@@ -1,12 +1,12 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 60,
-  "searchQueriesIssued": 192,
+  "attemptedSafely": 100,
+  "searchQueriesIssued": 270,
   "playlistFound": 1,
-  "fullAlbumFound": 12,
+  "fullAlbumFound": 17,
   "otherUsableSource": 0,
-  "unresolved": 47,
+  "unresolved": 82,
   "status": "in_progress_general_web_search",
   "seriousErrors": 0,
   "notes": [
@@ -14,6 +14,6 @@
     "General web queries that surface YouTube links are the normal discovery path.",
     "Kenny Burrell - Earthy uses the user-verified video r927Prjj-9k.",
     "Unresolved is accepted after reasonable query variants; Stage 3 continues without stopping.",
-    "Latest verified additions: Wilbur Ware - The Chicago Cookers via complete original-title upload The Chicago Sound, and Harold Land - West Coast Blues! full album."
+    "Candidates 61-100 attempted in this pass. New verified full-album sources include Chet Baker with Fifty Italian Strings, Barney Kessel Easy Like, To Swing or Not to Swing, Music to Listen to Barney Kessel By, and Shelly Manne & His Friends My Fair Lady."
   ]
 }
