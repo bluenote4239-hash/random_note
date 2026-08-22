@@ -1,24 +1,22 @@
 {
   "stage": 3,
   "target": 500,
-  "attemptedSafely": 260,
-  "searchQueriesIssued": 672,
-  "playlistFound": 2,
-  "fullAlbumFound": 40,
+  "attemptedSafely": 360,
+  "searchQueriesIssued": 772,
+  "playlistFound": 3,
+  "fullAlbumFound": 45,
   "otherUsableSource": 1,
-  "unresolved": 218,
+  "unresolved": 312,
   "secondPassAttempted": 32,
   "secondPassRescued": 1,
   "stillUnresolvedAfterSecondPass": 31,
-  "status": "in_progress_first_and_second_pass",
+  "status": "in_progress_ultra_fast_first_pass",
   "seriousErrors": 0,
   "notes": [
-    "General web queries that surface YouTube links are the normal discovery path.",
-    "Kenny Burrell - Earthy uses the user-verified video r927Prjj-9k.",
-    "Candidates 251-260 attempted in this pass.",
-    "New first-pass verified full-album source: Mel Torme With The Marty Paich Dek-Tette (nufz3Vj2W4w).",
-    "Second-pass rescue succeeded for Oscar Pettiford - Oscar Pettiford by using alternate title Another One; verified full-album video f0x-lxFS4RI.",
-    "Four additional second-pass candidates were retried with catalog numbers, alternate titles and distinctive tracks but remain unresolved.",
-    "No serious errors. Continue first pass from candidate 261 and second-pass rescue in parallel."
+    "Ultra-fast first pass enabled: quick artist+album YouTube search, no detailed track/timestamp/edition verification.",
+    "Candidates 261-360 attempted in one fast-pass batch.",
+    "New verified sources in this batch: Osie Johnson - The Happy Jazz Of Osie Johnson playlist; Cannonball Adderley Quintet - In San Francisco full album; Dinah Washington - Dinah Jams full album; Paul Quinichette - Moods full album; Kitty White - A New Voice In Jazz full album; Gerry Mulligan Sextet - Presenting The Gerry Mulligan Sextet full album.",
+    "No second-pass rescue was performed in this fast-pass batch.",
+    "Continue first pass from candidate 361."
   ]
 }
